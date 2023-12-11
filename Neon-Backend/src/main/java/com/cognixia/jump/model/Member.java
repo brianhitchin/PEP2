@@ -21,7 +21,7 @@ public class Member implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn( name="team_id", referencedColumnName = "team_id", nullable = false )
-	private Team team_id;
+	private Team team;
 	
 	@NotBlank
 	private String name;
@@ -114,7 +114,7 @@ public class Member implements Serializable {
 	}
 
 	public void setTeam_id(Team team_id) {
-		this.team_id = team_id;
+		this.team = team_id;
 	}
 
 	@Override

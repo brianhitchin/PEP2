@@ -36,7 +36,7 @@ public class Team implements Serializable{
     private Manager manager;
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
-	@OneToMany(mappedBy="member", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="team", cascade = CascadeType.ALL)
 	private List<Member> member; //---------------THIS NEEDS TO BE IMPORTED LATER-------------------
 	
 	public Team() {
