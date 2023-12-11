@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cognixia.jump.exception.ManagerHasTeamException;
+import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.Team;
 import com.cognixia.jump.repository.TeamRepository;
 import com.cognixia.jump.service.TeamService;
@@ -39,7 +41,7 @@ public class TeamController {
 	
 	@CrossOrigin
 	@PostMapping("/team/add")
-	public ResponseEntity<?> addTeam(@RequestHeader(value="authorization") String header, @RequestBody Team newTeam) {
+	public ResponseEntity<?> addTeam(@RequestHeader(value="authorization") String header, @RequestBody Team newTeam) throws ResourceNotFoundException, ManagerHasTeamException {
 		
 		Team createdTeam = service.addTeam(header, newTeam);
 		return ResponseEntity.status(201).body(createdTeam);		

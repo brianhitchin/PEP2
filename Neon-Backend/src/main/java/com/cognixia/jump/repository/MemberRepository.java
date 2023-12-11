@@ -13,6 +13,6 @@ import com.cognixia.jump.model.Member;
 public interface MemberRepository extends JpaRepository<Member, Integer>{
 
 	@Query("select m from Member m where team_id = ?1")
-	public Optional<List<Member>> memberByTeam(Integer team_id);
+	public List<Member> memberByTeam(Integer team_id);
 	
 }

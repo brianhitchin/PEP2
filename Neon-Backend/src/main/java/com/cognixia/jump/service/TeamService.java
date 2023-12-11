@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+import com.cognixia.jump.exception.ManagerHasTeamException;
+import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.Manager;
 import com.cognixia.jump.model.Team;
 import com.cognixia.jump.repository.ManagerRepository;
@@ -49,31 +51,25 @@ public class TeamService {
 		
 	}
 	
-	public Team addTeam(String header, Team newTeam) {
+	public Team addTeam(String header, Team newTeam) throws ManagerHasTeamException, ResourceNotFoundException {
 		
 		if( header == null || !header.startsWith("Bearer "))
-            return null; /* Some error to indicate not logged in or not correct header */
+            throw new ResourceNotFoundException("token"); 
 
         String jwt = header.substring(7);
         String username = jwtUtil.extractUsername(jwt);
 		
-		Optional<Manager> foundManager = managerRepo.findByUsername(username);
+		Manager foundManager = managerRepo.findByUsername(username).get();
 		
-		if (foundManager.isPresent()) {
-			Manager manager = foundManager.get();
-			
-			if (manager.getTeam() != null) {
-				return null;
-			}
-			
-			manager.setTeam(newTeam);
+		if (foundManager.getTeam() != null) {
+			throw new ManagerHasTeamException(); 
 		}
-		
+			
 		newTeam.setTeam_Id(-1);
-		
 		Team added = repo.save(newTeam);
-		
+		foundManager.setTeam(newTeam);
 		return added;
+
 	}
 	
 }
