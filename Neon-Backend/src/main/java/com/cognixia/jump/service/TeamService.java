@@ -49,4 +49,31 @@ public class TeamService {
 		
 	}
 	
+	public Team addTeam(String header, Team newTeam) {
+		
+		if( header == null || !header.startsWith("Bearer "))
+            return null; /* Some error to indicate not logged in or not correct header */
+
+        String jwt = header.substring(7);
+        String username = jwtUtil.extractUsername(jwt);
+		
+		Optional<Manager> foundManager = managerRepo.findByUsername(username);
+		
+		if (foundManager.isPresent()) {
+			Manager manager = foundManager.get();
+			
+			if (manager.getTeam() != null) {
+				return null;
+			}
+			
+			manager.setTeam(newTeam);
+		}
+		
+		newTeam.setTeam_Id(-1);
+		
+		Team added = repo.save(newTeam);
+		
+		return added;
+	}
+	
 }

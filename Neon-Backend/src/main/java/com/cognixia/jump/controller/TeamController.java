@@ -41,7 +41,8 @@ public class TeamController {
 	@PostMapping("/team/add")
 	public ResponseEntity<?> addTeam(@RequestHeader(value="authorization") String header, @RequestBody Team newTeam) {
 		
-		Team createdTeam = service.
+		Team createdTeam = service.addTeam(header, newTeam);
+		return ResponseEntity.status(201).body(createdTeam);		
 		
 	}
 	
