@@ -11,6 +11,11 @@ public class Manager implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public static enum Role {
+
+        ROLE_MANAGER, ROLE_ADMIN
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer managerId;
@@ -28,18 +33,26 @@ public class Manager implements Serializable {
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "team_id", nullable = false, unique = true)
+    @JoinColumn(name = "team_id", nullable = true, unique = true)
     private Team team;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    @Column(columnDefinition = "boolean default true")
+    private boolean enabled;
 
     // Constructors
     public Manager() {}
 
-    public Manager(Integer id, String name, String username, String password, Team team){
+    public Manager(Integer id, String name, String username, String password, Team team, boolean enabled){
         this.managerId = id;
         this.name = name;
         this.username = username;
         this.password = password;
         this.team = team;
+        this.enabled = enabled;
     }
 
     // getters/setters
@@ -83,6 +96,22 @@ public class Manager implements Serializable {
         this.team = team;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "Manager[" +
@@ -91,6 +120,8 @@ public class Manager implements Serializable {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", team=" + team +
+                ", role=" + role +
+                ", enabled=" + enabled +
                 ']';
     }
 }
