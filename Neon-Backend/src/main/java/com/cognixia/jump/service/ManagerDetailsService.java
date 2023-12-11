@@ -1,6 +1,7 @@
 package com.cognixia.jump.service;
 
 import com.cognixia.jump.model.Manager;
+import com.cognixia.jump.repository.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
