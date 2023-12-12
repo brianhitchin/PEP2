@@ -1,34 +1,42 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
+import ManagerApi from "../apis/ManagerApi";
 
 const CreateAccount = () => {
   const history = useNavigate(); // Access the history object
   const { isLoggedIn } = useAuth();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [account, setAccount] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    setAccount({
+      ...account,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // ACCOUNT CREATION HERE 
-    if (username.trim() !== '' && password.trim() !== '') {
+    // ACCOUNT CREATION HERE
+    if (account.username.trim() !== "" && account.password.trim() !== "") {
       // Perform your account creation logic
+      ManagerApi.signup(account);
 
       // Assuming account creation is successful
-      alert('Account successfully created');
+      alert("Account successfully created");
 
       // Redirect to the Home page
-      history('/home');
+      history("/home");
     }
-
-    setUsername('');
-    setPassword('');
   };
 
   if (isLoggedIn) {
     // If the user is already logged in, redirect to the Home page
-    history('/home');
+    history("/home");
   }
 
   return (
@@ -47,8 +55,8 @@ const CreateAccount = () => {
                     type="text"
                     id="username"
                     className="form-control"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    value={account.username}
+                    onChange={(e) => handleChange(e)}
                     required
                   />
                 </div>
@@ -58,8 +66,8 @@ const CreateAccount = () => {
                     type="password"
                     id="password"
                     className="form-control"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={account.password}
+                    onChange={(e) => setAccount(e.target.value)}
                     required
                   />
                 </div>
