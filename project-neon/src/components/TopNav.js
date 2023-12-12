@@ -52,7 +52,7 @@ const TopNav = () => {
           </li>
         </ul>
         <ul className="navbar-nav ml-auto">
-          <li className="nav-item">
+          <li className="nav-item logout">
             {isLoggedIn ? (
               <>
                 <Link className="nav-link" to="/home" onClick={logout}>
