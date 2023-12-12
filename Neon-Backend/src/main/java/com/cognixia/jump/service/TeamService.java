@@ -68,6 +68,7 @@ public class TeamService {
 		newTeam.setTeam_Id(-1);
 		Team added = repo.save(newTeam);
 		foundManager.setTeam(newTeam);
+		managerRepo.save(foundManager);
 		return added;
 
 	}
