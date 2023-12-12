@@ -1,5 +1,6 @@
 package com.cognixia.jump.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,5 +81,25 @@ public class MemberService {
         repo.save(editedMember);
 		return editedMember;
         
+	}
+
+	public Member createMember(String header, Member member) throws ResourceNotFoundException {
+
+		if( header == null || !header.startsWith("Bearer "))
+			throw new ResourceNotFoundException("token");
+
+		String jwt = header.substring(7);
+		String username = jwtUtil.extractUsername(jwt);
+
+		//Team foundManagerTeam = managerRepo.findByUsername(username).get().getTeam();
+
+		member.setId(null);
+		Member created = repo.save(member);
+
+		// Add to team
+		//foundManagerTeam.getMember().add(created);
+		//teamRepo.save(foundManagerTeam);
+
+		return created;
 	}
 }
