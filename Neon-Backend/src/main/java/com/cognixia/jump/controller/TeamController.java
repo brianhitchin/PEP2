@@ -42,10 +42,10 @@ public class TeamController {
 	@CrossOrigin
 	@PostMapping("/team/add")
 	public ResponseEntity<?> addTeam(@RequestHeader(value="authorization") String header, @RequestBody Team newTeam) throws ResourceNotFoundException, ManagerHasTeamException {
-		
+
 		Team createdTeam = service.addTeam(header, newTeam);
-		return ResponseEntity.status(201).body(createdTeam);		
-		
+		return ResponseEntity.status(201).body(createdTeam);
+
 	}
-	
+
 }
