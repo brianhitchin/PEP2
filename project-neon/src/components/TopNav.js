@@ -29,15 +29,9 @@ const TopNav = () => {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item active">
-            {isLoggedIn ? (
               <Link className="nav-link" to="/home">
                 Home
               </Link>
-            ) : (
-              <a className="nav-link" href="#" onClick={() => handleItemClick("Home")}>
-                Home
-              </a>
-            )}
           </li>
           <li className="nav-item">
             {isLoggedIn ? (

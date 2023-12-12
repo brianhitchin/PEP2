@@ -1,4 +1,5 @@
 import './App.css';
+import CreateAccount from './components/CreateAccount';
 import Home from './components/Home';
 import Login from './components/Login';
 import TestPage from './components/TestPage';
@@ -13,9 +14,10 @@ function App() {
         <div>
           <TopNav/>
           <Routes>
-            <Route path ='/' element ={<Login/>} exact />
+            <Route path ='/' element ={<Home/>} exact />
             <Route path ='/home' element = {<Home/>} exact />
             <Route path = '/testpage' element = {<TestPage/>} exact />
+            <Route path = '/create' element = {<CreateAccount/>} exact />
           </Routes>
         </div>
 

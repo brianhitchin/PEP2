@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import LoggedInScreen from './LoggedInScreen';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
-const Login = () => {
+const CreateAccount = () => {
+  const history = useNavigate(); // Access the history object
+  const { isLoggedIn } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { isLoggedIn, login } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // ACCOUNT CREATION HERE 
     if (username.trim() !== '' && password.trim() !== '') {
-      login();
+      // Perform your account creation logic
+
+      // Assuming account creation is successful
+      alert('Account successfully created');
+
+      // Redirect to the Home page
+      history('/home');
     }
 
     setUsername('');
@@ -20,7 +27,8 @@ const Login = () => {
   };
 
   if (isLoggedIn) {
-    return <LoggedInScreen />;
+    // If the user is already logged in, redirect to the Home page
+    history('/home');
   }
 
   return (
@@ -29,7 +37,7 @@ const Login = () => {
         <div className="col-md-6">
           <div className="card">
             <div className="card-header">
-              <h3>Login</h3>
+              <h3>Create Account</h3>
             </div>
             <div className="card-body">
               <form onSubmit={handleSubmit}>
@@ -56,14 +64,8 @@ const Login = () => {
                   />
                 </div>
                 <button type="submit" className="btn btn-primary mt-2">
-                  Login
+                  Create
                 </button>
-                {/* "Create Account" button */}
-              <Link to="/create">
-                <button className="btn btn-danger btn-create-account mt-2 float-end">
-                  Create Account
-                </button>
-              </Link>
               </form>
             </div>
           </div>
@@ -73,4 +75,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default CreateAccount;
