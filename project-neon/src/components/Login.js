@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import LoggedInScreen from './LoggedInScreen';
+import { useAuth } from './AuthContext';
 
 const Login = () => {
   // State to store login credentials and authentication status
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const {isLoggedIn, login} = useAuth();
 
   // Function to handle form submission
   const handleSubmit = (e) => {
@@ -14,7 +15,7 @@ const Login = () => {
     // LOG IN LOGIC HERE 
     if (username.trim() !== '' && password.trim() !== '') {
       // Update the state to indicate a successful login
-      setLoggedIn(true);
+      login();
     }
 
     // Reset form fields after submission
