@@ -11,6 +11,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // can fix username logic here, this is temporary. Change login logic in AuthContext.js
     if (username.trim() !== '' && password.trim() !== '') {
       login();
     }

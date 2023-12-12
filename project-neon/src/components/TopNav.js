@@ -8,9 +8,9 @@ const TopNav = () => {
   const handleItemClick = (itemName) => {
     if (!isLoggedIn) {
       alert(`You need to log in to access ${itemName}`);
-      // You may choose to redirect to the login page or take other actions
+      // Prevents actions from being taken
     }
-    // Add any other logic you want for handling the click
+    // additional logic here if necessary 
   };
 
   return (
