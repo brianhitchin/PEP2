@@ -6,6 +6,7 @@ import ManagerApi from "../apis/ManagerApi";
 const CreateAccount = () => {
   const history = useNavigate(); // Access the history object
   const { isLoggedIn } = useAuth();
+
   const [account, setAccount] = useState({
     username: "",
     password: "",
@@ -19,13 +20,16 @@ const CreateAccount = () => {
   };
 
   const handleSubmit = (e) => {
+
     e.preventDefault();
 
     // ACCOUNT CREATION HERE
     if (account.username.trim() !== "" && account.password.trim() !== "") {
+
+      console.log("TEST")
       // Perform your account creation logic
       ManagerApi.signup(account);
-
+      console.log("TEST2")
       // Assuming account creation is successful
       alert("Account successfully created");
 
@@ -55,8 +59,9 @@ const CreateAccount = () => {
                     type="text"
                     id="username"
                     className="form-control"
+                    name = "username"
                     value={account.username}
-                    onChange={(e) => handleChange(e)}
+                    onChange={handleChange}
                     required
                   />
                 </div>
@@ -65,9 +70,10 @@ const CreateAccount = () => {
                   <input
                     type="password"
                     id="password"
+                    name = "password"
                     className="form-control"
                     value={account.password}
-                    onChange={(e) => setAccount(e.target.value)}
+                    onChange={handleChange}
                     required
                   />
                 </div>

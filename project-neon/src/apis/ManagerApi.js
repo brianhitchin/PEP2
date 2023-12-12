@@ -4,7 +4,7 @@ const BASE = "http://localhost:8080" // edit this with your AWS endpoint
 const URI = BASE + "/api"
 
 const ManagerApi = {
-    
+
     getAll: (setStudentList) => {
 
         fetch(URI + "/students")
@@ -15,30 +15,34 @@ const ManagerApi = {
             .catch( error => { console.log(error) } )
     },
 
-    signup: (manager) => {
-        
+    signup: (account) => {
+
         fetch(URI + "/signup", {
             method: "POST",
-            body: JSON.stringify(manager),
+            body: JSON.stringify(account),
             headers: { "Content-Type": "application/json" }
         })
             .then( result => result.json() )
             .then( data => {
 
+                console.log(account)
                   fetch(URI + "/managers")
                         .then( result => result.json() )
                         .then( data => {
-                              console.log(manager)
-                              for(let x in data){
-                                    if(x.username === manager.username){
-                                          console.log("This username already exists")
-                                    }
-                              }
-            } )
-            .catch( error => { 
+                            console.log(account)
+
+                            for (let x in data) {
+                                if (x.username === account.username) {
+                                    console.log("This username already exists")
+                                }
+                            }
+                        })
+            })
+            .catch( error => {
                 console.log(error);
-            } )
-      })},
+            })
+    }
+}
 
     update: (student, studentList, setStudentList) => {
 
@@ -74,7 +78,7 @@ const ManagerApi = {
                 else {
                     alert("Error updating student, email choosen may already be in use by another student")
                 }
-                
+
             } )
             .catch(error => { console.log(error); })
 
