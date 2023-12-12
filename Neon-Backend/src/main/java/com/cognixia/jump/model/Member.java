@@ -113,8 +113,12 @@ public class Member implements Serializable {
 		this.faults = faults;
 	}
 
-	public void setTeam_id(Team team_id) {
-		this.team = team_id;
+	public void setTeam(Team team_id) {
+		this.team = team;
+	}
+	
+	public Team getTeam() {
+		return team;
 	}
 
 	@Override
