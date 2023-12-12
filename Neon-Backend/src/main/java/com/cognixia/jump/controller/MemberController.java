@@ -11,6 +11,8 @@ import com.cognixia.jump.model.Member;
 import com.cognixia.jump.model.Team;
 import com.cognixia.jump.service.MemberService;
 
+import javax.validation.Valid;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
@@ -30,7 +32,7 @@ public class MemberController {
 	}
 
 	@PostMapping("/members/add")
-	public ResponseEntity<?> addMember(@RequestHeader(value="authorization") String header, @RequestBody Member member) throws ResourceNotFoundException {
+	public ResponseEntity<?> addMember(@RequestHeader(value="authorization") String header, @Valid @RequestBody Member member) throws ResourceNotFoundException {
 
 		Member newMember = service.createMember(header, member);
 		return ResponseEntity.status(201).body(newMember);
