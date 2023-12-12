@@ -91,14 +91,19 @@ public class MemberService {
 		String jwt = header.substring(7);
 		String username = jwtUtil.extractUsername(jwt);
 
-		//Team foundManagerTeam = managerRepo.findByUsername(username).get().getTeam();
+		Team foundManagerTeam = managerRepo.findByUsername(username).get().getTeam();
 
 		member.setId(null);
+		member.setTeam(foundManagerTeam);
 		Member created = repo.save(member);
 
-		// Add to team
-		//foundManagerTeam.getMember().add(created);
-		//teamRepo.save(foundManagerTeam);
+		//Add to team
+		List<Member> allMembers = foundManagerTeam.getMember();
+		allMembers.add(created);
+
+		foundManagerTeam.setMember(allMembers);
+
+		teamRepo.save(foundManagerTeam);
 
 		return created;
 	}
