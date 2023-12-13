@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 public class Manager implements Serializable {
@@ -123,5 +124,18 @@ public class Manager implements Serializable {
                 ", role=" + role +
                 ", enabled=" + enabled +
                 ']';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Manager)) return false;
+        Manager manager = (Manager) o;
+        return isEnabled() == manager.isEnabled() && Objects.equals(getManagerId(), manager.getManagerId()) && Objects.equals(getName(), manager.getName()) && Objects.equals(getUsername(), manager.getUsername()) && Objects.equals(getPassword(), manager.getPassword()) && Objects.equals(getTeam(), manager.getTeam()) && getRole() == manager.getRole();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getManagerId(), getName(), getUsername(), getPassword(), getTeam(), getRole(), isEnabled());
     }
 }

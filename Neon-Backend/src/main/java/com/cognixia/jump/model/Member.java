@@ -1,6 +1,7 @@
 package com.cognixia.jump.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -125,5 +126,17 @@ public class Member implements Serializable {
 		return "Member [id=" + id + ", name=" + name + ", jersey_num=" + jersey_num + ", scores=" + scores
 				+ ", assists=" + assists + ", playtime=" + playtime + ", faults=" + faults + "]";
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Member)) return false;
+		Member member = (Member) o;
+		return Objects.equals(getId(), member.getId()) && Objects.equals(getTeam(), member.getTeam()) && Objects.equals(getName(), member.getName()) && Objects.equals(getJersey_num(), member.getJersey_num()) && Objects.equals(getScores(), member.getScores()) && Objects.equals(getAssists(), member.getAssists()) && Objects.equals(getPlaytime(), member.getPlaytime()) && Objects.equals(getFaults(), member.getFaults());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getId(), getTeam(), getName(), getJersey_num(), getScores(), getAssists(), getPlaytime(), getFaults());
+	}
 }
