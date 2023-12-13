@@ -20,35 +20,34 @@ public class Member implements Serializable {
 	private Integer id;
 	
 	@ManyToOne
-	@JoinColumn( name="team_id", referencedColumnName = "team_id", nullable = true )
+	@JoinColumn( name="team_id", referencedColumnName = "team_id", nullable = true)
 	private Team team;
 	
 	@NotBlank
 	private String name;
-	
-	@NotBlank
+
+
 	private Integer jersey_num;
 	
-	@NotBlank
+
 	private Integer scores;
 	
-	@NotBlank
+
 	private Integer assists;
 	
-	@NotBlank
+
 	private Integer playtime;
 	
-	@NotBlank
+
 	private Integer faults;
 	
 	public Member() {
 		
 	}
-	
-	public Member(Integer id, String name,  Integer jersey_num,  Integer scores,
-			 Integer assists,  Integer playtime, Integer faults) {
-		super();
+
+	public Member(Integer id, Team team, String name, Integer jersey_num, Integer scores, Integer assists, Integer playtime, Integer faults) {
 		this.id = id;
+		this.team = team;
 		this.name = name;
 		this.jersey_num = jersey_num;
 		this.scores = scores;
@@ -113,7 +112,7 @@ public class Member implements Serializable {
 		this.faults = faults;
 	}
 
-	public void setTeam(Team team_id) {
+	public void setTeam(Team team) {
 		this.team = team;
 	}
 	

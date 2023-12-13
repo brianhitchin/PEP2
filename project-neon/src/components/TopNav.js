@@ -3,14 +3,14 @@ import { useAuth } from "./AuthContext";
 import { Link } from "react-router-dom";
 
 const TopNav = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
 
   const handleItemClick = (itemName) => {
     if (!isLoggedIn) {
       alert(`You need to log in to access ${itemName}`);
-      // You may choose to redirect to the login page or take other actions
+      // Prevents actions from being taken
     }
-    // Add any other logic you want for handling the click
+    // additional logic here if necessary 
   };
 
   return (
@@ -27,26 +27,41 @@ const TopNav = () => {
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav ml-auto">
+        <ul className="navbar-nav">
           <li className="nav-item active">
-            {isLoggedIn ? (
-              <Link className="nav-link" to="/home">
-                Home
-              </Link>
-            ) : (
-              <a className="nav-link" href="#" onClick={() => handleItemClick("Home")}>
-                Home
-              </a>
-            )}
+            <Link className="nav-link" to="/home">
+              Home
+            </Link>
           </li>
           <li className="nav-item">
             {isLoggedIn ? (
-              <Link className="nav-link" to="/testpage">
-                TESTPAGE
-              </Link>
+              <>
+                <Link className="nav-link" to="/testpage">
+                  TESTPAGE
+                </Link>
+              </>
             ) : (
-              <a className="nav-link" href="#" onClick={() => handleItemClick("TESTPAGE")}>
+              <a
+                className="nav-link"
+                href="#"
+                onClick={() => handleItemClick("TESTPAGE")}
+              >
                 TESTPAGE
+              </a>
+            )}
+          </li>
+        </ul>
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item logout">
+            {isLoggedIn ? (
+              <>
+                <Link className="nav-link" to="/home" onClick={logout}>
+                  Logout
+                </Link>
+              </>
+            ) : (
+              <a>
+                
               </a>
             )}
           </li>

@@ -7,14 +7,13 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
 
   const login = () => {
-    // Perform your login logic here
-    // For simplicity, let's just set isLoggedIn to true
+    // Perform login logic here
+    // Sets to true for testing purposes
     setLoggedIn(true);
   };
 
   const logout = () => {
-    // Perform your logout logic here
-    // For simplicity, let's just set isLoggedIn to false
+    // Logout logic should not matter unless we need the frontend to know
     setLoggedIn(false);
   };
 

@@ -1,34 +1,29 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import LoggedInScreen from './LoggedInScreen';
 import { useAuth } from './AuthContext';
 
 const Login = () => {
-  // State to store login credentials and authentication status
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const {isLoggedIn, login} = useAuth();
+  const { isLoggedIn, login } = useAuth();
 
-  // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // LOG IN LOGIC HERE 
+    // can fix username logic here, this is temporary. Change login logic in AuthContext.js
     if (username.trim() !== '' && password.trim() !== '') {
-      // Update the state to indicate a successful login
       login();
     }
 
-    // Reset form fields after submission
     setUsername('');
     setPassword('');
   };
 
-  // Render the Dashboard component if isLoggedIn is true
   if (isLoggedIn) {
     return <LoggedInScreen />;
   }
 
-  // Render the login form otherwise
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -64,6 +59,12 @@ const Login = () => {
                 <button type="submit" className="btn btn-primary mt-2">
                   Login
                 </button>
+                {/* "Create Account" button */}
+              <Link to="/create">
+                <button className="btn btn-danger btn-create-account mt-2 float-end">
+                  Create Account
+                </button>
+              </Link>
               </form>
             </div>
           </div>
