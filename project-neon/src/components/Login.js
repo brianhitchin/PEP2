@@ -21,7 +21,6 @@ const Login = () => {
           .then(token => {
 
             // store to localStorage
-            console.log(token)
             localStorage.setItem('jwt', token)
             login();
           })

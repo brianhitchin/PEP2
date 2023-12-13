@@ -19,18 +19,21 @@ import com.cognixia.jump.model.Team;
 import com.cognixia.jump.repository.TeamRepository;
 import com.cognixia.jump.service.TeamService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class TeamController {
 
 	@Autowired
 	TeamService service;
-	
+
+	@CrossOrigin
 	@GetMapping("/teams")
 	public List<Team> getAllTeams() {
 		return service.getAllTeams();		
 	}
-	
+
+	@CrossOrigin
 	@GetMapping("/team")
 	public ResponseEntity<?> getTeam(@RequestHeader(value="authorization") String header ) {
 		
