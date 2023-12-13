@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LoggedInScreen from './LoggedInScreen';
 import { useAuth } from './AuthContext';
-import ManagerApi from "../apis/ManagerApi";
+import TeamApi from '../apis/TeamApi';
+import ManagerApi from '../apis/ManagerApi';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -17,6 +18,7 @@ const Login = () => {
     if (username.trim() !== '' && password.trim() !== '') {
 
       // Attempt to log in
+      
       ManagerApi.login(username, password)
           .then(token => {
 
