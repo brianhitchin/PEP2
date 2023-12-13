@@ -26,11 +26,11 @@ const MemberApi = {
         let myToken = "Bearer " + token;
 
         fetch(URI + "/members/add",  {
+            method: 'POST',
+            body: JSON.stringify(member),
             headers: {
-                method: 'POST',
                 "Content-Type": "application/json",
-                "Authorization": myToken,
-                body: JSON.stringify(member),
+                "Authorization": myToken
             }
         })
         .then( result => result.json() )

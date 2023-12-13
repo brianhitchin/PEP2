@@ -8,7 +8,7 @@ const TeamMembers = () => {
   const [members, setMembers] = useState([]);
   const [addedMember, setAddedMember] = useState({
     id: 0,
-    team: '',
+    team: null,
     name: '',
     jersey_num: 0,
     assists: 0,
@@ -18,6 +18,7 @@ const TeamMembers = () => {
   })
   const [ap, setAp] = useState(false)
 
+
   let token;
 
   // Simulate API call
@@ -25,6 +26,8 @@ const TeamMembers = () => {
 
     token = localStorage.getItem('jwt')
     MemberApi.getMyMember(token, setMembers)
+    MemberApi.getMyMember(localStorage.getItem('jwt'), setMembers)
+
 
   }, []);
 
@@ -37,10 +40,11 @@ const TeamMembers = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    MemberApi.addMember(token, addedMember, members, setMembers)
+    console.log('addedmember', addedMember)
+    MemberApi.addMember(localStorage.getItem('jwt'), addedMember, members, setMembers)
     setAddedMember({
       id: 0,
-      team: '',
+      team: null,
       name: '',
       jersey_num: 0,
       assists: 0,
@@ -48,6 +52,7 @@ const TeamMembers = () => {
       playtime: 0,
       faults: 0
     })
+    setAp(false)
   }
 
   return (
