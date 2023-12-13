@@ -65,9 +65,6 @@ const LoggedInScreen = ({ onCreateTeam }) => {
                     Create Team
                   </button>
                 </Link>
-                <button className="btn btn-danger" onClick={enableTrue}>
-                  temp: hasTeam = true
-                </button>
               </div>
             </div>
           )}
