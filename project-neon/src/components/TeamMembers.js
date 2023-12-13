@@ -68,7 +68,7 @@ const TeamMembers = () => {
     MemberApi.addMember(localStorage.getItem('jwt'), addedMember, members, setMembers)
     setAddedMember({
       id: 0,
-      team: '',
+      team: null,
       name: '',
       jersey_num: 0,
       assists: 0,
