@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LoggedInScreen from './LoggedInScreen';
 import { useAuth } from './AuthContext';
+import ManagerApi from "../apis/ManagerApi";
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -9,15 +10,25 @@ const Login = () => {
   const { isLoggedIn, login } = useAuth();
 
   const handleSubmit = (e) => {
+
     e.preventDefault();
 
     // can fix username logic here, this is temporary. Change login logic in AuthContext.js
     if (username.trim() !== '' && password.trim() !== '') {
-      login();
-    }
 
-    setUsername('');
-    setPassword('');
+      // Attempt to log in
+      ManagerApi.login(username, password)
+          .then(token => {
+
+            // store to localStorage
+            console.log(token)
+            localStorage.setItem('jwt', token)
+            login();
+          })
+          .catch(error => {
+            console.log('Login failed: ', error)
+          })
+    }
   };
 
   if (isLoggedIn) {

@@ -4,11 +4,18 @@ import { useAuth } from "./AuthContext";
 import ManagerApi from "../apis/ManagerApi";
 
 const CreateAccount = () => {
+
   const history = useNavigate(); // Access the history object
   const { isLoggedIn } = useAuth();
+
   const [account, setAccount] = useState({
+    name: "",
     username: "",
     password: "",
+    managerId: -1,
+    team: null,
+    role: "ROLE_MANAGER",
+    enabled: true
   });
 
   const handleChange = (event) => {
@@ -18,19 +25,25 @@ const CreateAccount = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  // ACCOUNT CREATION HERE
+  const createAccount = (e) => {
+
     e.preventDefault();
 
-    // ACCOUNT CREATION HERE
-    if (account.username.trim() !== "" && account.password.trim() !== "") {
-      // Perform your account creation logic
-      ManagerApi.signup(account);
+    if (account.username.trim() !== "" && account.password.trim() !== "" && account.name.trim() !== "") {
 
-      // Assuming account creation is successful
-      alert("Account successfully created");
-
-      // Redirect to the Home page
-      history("/home");
+      ManagerApi.doesUsernameExist(account)
+          .then(usernameExists => {
+            if (usernameExists) {
+              console.log("Username already exists");
+              alert("This username already exists.");
+            } else {
+              ManagerApi.createUser(account, setAccount);
+              console.log("Created user " + account.username);
+              alert("Account successfully created");
+              history("/home");
+            }
+          })
     }
   };
 
@@ -48,32 +61,51 @@ const CreateAccount = () => {
               <h3>Create Account</h3>
             </div>
             <div className="card-body">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={createAccount}>
+
+                <div className="form-group">
+                  <label htmlFor="username">Name:</label>
+                  <input
+                      type="text"
+                      id="username"
+                      className="form-control"
+                      name = "name"
+                      value={account.name}
+                      onChange={handleChange}
+                      required
+                  />
+                </div>
+
                 <div className="form-group">
                   <label htmlFor="username">Username:</label>
                   <input
                     type="text"
                     id="username"
                     className="form-control"
+                    name = "username"
                     value={account.username}
-                    onChange={(e) => handleChange(e)}
+                    onChange={handleChange}
                     required
                   />
                 </div>
+
                 <div className="form-group">
                   <label htmlFor="password">Password:</label>
                   <input
                     type="password"
                     id="password"
+                    name = "password"
                     className="form-control"
                     value={account.password}
-                    onChange={(e) => setAccount(e.target.value)}
+                    onChange={handleChange}
                     required
                   />
                 </div>
+
                 <button type="submit" className="btn btn-primary mt-2">
                   Create
                 </button>
+
               </form>
             </div>
           </div>
