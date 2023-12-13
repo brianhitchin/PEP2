@@ -1,5 +1,6 @@
 import './App.css';
 import CreateAccount from './components/CreateAccount';
+import CreateTeam from './components/CreateTeam';
 import Home from './components/Home';
 import Login from './components/Login';
 import TestPage from './components/TestPage';
@@ -18,6 +19,7 @@ function App() {
             <Route path ='/home' element = {<Home/>} exact />
             <Route path = '/testpage' element = {<TestPage/>} exact />
             <Route path = '/create' element = {<CreateAccount/>} exact />
+            <Route path = '/createTeam' element = {<CreateTeam/>} exact />
           </Routes>
         </div>
 
