@@ -49,7 +49,7 @@ public class MemberController {
 	}
 
 	@CrossOrigin
-	@PutMapping("/members/{memberId}")
+	@PutMapping("/mymembers")
 	public ResponseEntity<?> editMember(@RequestHeader(value="authorization") String header, @RequestBody Member editMember) throws ResourceNotFoundException {
 		return ResponseEntity.status(200).body(service.editMember(header, editMember));
 	}

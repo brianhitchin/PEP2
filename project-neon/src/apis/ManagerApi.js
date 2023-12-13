@@ -1,10 +1,13 @@
 
 // const BASE = "http://localhost:8080"  // use this if running locally
+import {useNavigate} from "react-router-dom";
+
 const BASE = "http://localhost:8080" // edit this with your AWS endpoint
 const URI = BASE + "/api"
 
+
 const ManagerApi = {
-    
+
     getAll: (setStudentList) => {
 
         fetch(URI + "/students")
@@ -15,30 +18,75 @@ const ManagerApi = {
             .catch( error => { console.log(error) } )
     },
 
-    signup: (manager) => {
-        
-        fetch(URI + "/signup", {
-            method: "POST",
-            body: JSON.stringify(manager),
-            headers: { "Content-Type": "application/json" }
-        })
+    doesUsernameExist: (account) => {
+
+        // First, Check if the username already exists in the DB
+        return fetch(URI + "/managers")
             .then( result => result.json() )
             .then( data => {
 
-                  fetch(URI + "/managers")
-                        .then( result => result.json() )
-                        .then( data => {
-                              console.log(manager)
-                              for(let x in data){
-                                    if(x.username === manager.username){
-                                          console.log("This username already exists")
-                                    }
-                              }
-            } )
-            .catch( error => { 
+                    for (let x of data) {
+                        if (x.username === account.username) {
+                            // Username is already in the database
+                            return true;
+                        }
+                    }
+                    return false;
+            })
+            .catch( error => {
+                    console.log(error);
+                    return false;
+            })
+    },
+
+    createUser: (account, setAccount) => {
+
+        // Username is not in the database
+        // Create user
+        fetch(URI + "/signup", {
+            method: "POST",
+            body: JSON.stringify(account),
+            headers: { "Content-Type": "application/json" }
+        })
+            .then( newResult => newResult.json() )
+            .then( newData => {
+
+                setAccount(newData);
+
+            })
+            .catch( error => {
                 console.log(error);
-            } )
-      })},
+            })
+    },
+
+    login: (username, password) => {
+        return fetch(URI + "/authenticate", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password,
+            }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    // Log more details about the response
+                    console.error('Authentication failed. Response:', response);
+                    return Promise.reject('Authentication failed');
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data.jwt;
+            })
+            .catch(error => {
+                // Log more details about the error
+                console.error('An error occurred during authentication:', error);
+                throw error; // Propagate the error to the next catch block
+            });
+    },
 
     update: (student, studentList, setStudentList) => {
 
@@ -74,7 +122,7 @@ const ManagerApi = {
                 else {
                     alert("Error updating student, email choosen may already be in use by another student")
                 }
-                
+
             } )
             .catch(error => { console.log(error); })
 

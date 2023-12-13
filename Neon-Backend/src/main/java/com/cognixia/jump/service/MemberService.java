@@ -2,9 +2,11 @@ package com.cognixia.jump.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import com.cognixia.jump.exception.ResourceNotFoundException;
@@ -58,15 +60,15 @@ public class MemberService {
 		
 		List<Member> foundManagerTeamMemberList = managerRepo.findByUsername(username).get().getTeam().getMember();
 		
-		List<Integer> memberIds = null;
+		List<Integer> memberIds = new ArrayList<>();
 		
 		for (Member m: foundManagerTeamMemberList) {
-			memberIds.add(m.getId());
-		}
-		
-		if (memberIds.contains(memberId)) {
-			repo.deleteById(memberId);
-			return true;
+
+			if(Objects.equals(m.getId(), memberId)){
+				System.out.println("TEST?!!");
+				repo.deleteById(memberId.intValue());
+				return true;
+			}
 		}
 		
 		return false;
