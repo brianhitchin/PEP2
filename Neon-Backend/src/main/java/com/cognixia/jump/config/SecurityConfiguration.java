@@ -38,15 +38,19 @@ public class SecurityConfiguration {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/account").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/account/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PATCH,"/api/account/**").hasRole("MANAGER")
-                .antMatchers(HttpMethod.GET, "/api/customer").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/customer/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PATCH,"/api/customer/account").hasAnyRole("ADMIN", "MANAGER")
-                .antMatchers(HttpMethod.POST,"/api/customer").permitAll()
-                .antMatchers("/authenticate").permitAll()
-                .anyRequest().authenticated()
+//                .antMatchers(HttpMethod.GET, "/api/managers").hasRole("ADMIN")
+//
+//
+//
+//                .antMatchers(HttpMethod.GET, "/api/account/**").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.PATCH,"/api/account/**").hasRole("MANAGER")
+//                .antMatchers(HttpMethod.GET, "/api/customer").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.GET, "/api/customer/**").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.PATCH,"/api/customer/account").hasAnyRole("ADMIN", "MANAGER")
+//                .antMatchers(HttpMethod.POST,"/api/customer").permitAll()
+//                .antMatchers("/authenticate").permitAll()
+//                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

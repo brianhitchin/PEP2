@@ -1,6 +1,7 @@
 package com.cognixia.jump.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,35 +21,34 @@ public class Member implements Serializable {
 	private Integer id;
 	
 	@ManyToOne
-	@JoinColumn( name="team_id", referencedColumnName = "team_id", nullable = false )
+	@JoinColumn( name="team_id", referencedColumnName = "team_id", nullable = true)
 	private Team team;
 	
 	@NotBlank
 	private String name;
-	
-	@NotBlank
+
+
 	private Integer jersey_num;
 	
-	@NotBlank
+
 	private Integer scores;
 	
-	@NotBlank
+
 	private Integer assists;
 	
-	@NotBlank
+
 	private Integer playtime;
 	
-	@NotBlank
+
 	private Integer faults;
 	
 	public Member() {
 		
 	}
-	
-	public Member(Integer id, @NotBlank String name, @NotBlank Integer jersey_num, @NotBlank Integer scores,
-			@NotBlank Integer assists, @NotBlank Integer playtime, @NotBlank Integer faults) {
-		super();
+
+	public Member(Integer id, Team team, String name, Integer jersey_num, Integer scores, Integer assists, Integer playtime, Integer faults) {
 		this.id = id;
+		this.team = team;
 		this.name = name;
 		this.jersey_num = jersey_num;
 		this.scores = scores;
@@ -113,8 +113,12 @@ public class Member implements Serializable {
 		this.faults = faults;
 	}
 
-	public void setTeam_id(Team team_id) {
-		this.team = team_id;
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+	
+	public Team getTeam() {
+		return team;
 	}
 
 	@Override
@@ -122,5 +126,17 @@ public class Member implements Serializable {
 		return "Member [id=" + id + ", name=" + name + ", jersey_num=" + jersey_num + ", scores=" + scores
 				+ ", assists=" + assists + ", playtime=" + playtime + ", faults=" + faults + "]";
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Member)) return false;
+		Member member = (Member) o;
+		return Objects.equals(getId(), member.getId()) && Objects.equals(getTeam(), member.getTeam()) && Objects.equals(getName(), member.getName()) && Objects.equals(getJersey_num(), member.getJersey_num()) && Objects.equals(getScores(), member.getScores()) && Objects.equals(getAssists(), member.getAssists()) && Objects.equals(getPlaytime(), member.getPlaytime()) && Objects.equals(getFaults(), member.getFaults());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getId(), getTeam(), getName(), getJersey_num(), getScores(), getAssists(), getPlaytime(), getFaults());
+	}
 }

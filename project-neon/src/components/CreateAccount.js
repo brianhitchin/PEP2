@@ -1,34 +1,55 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
+import ManagerApi from "../apis/ManagerApi";
 
 const CreateAccount = () => {
+
   const history = useNavigate(); // Access the history object
   const { isLoggedIn } = useAuth();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const [account, setAccount] = useState({
+    name: "",
+    username: "",
+    password: "",
+    managerId: -1,
+    team: null,
+    role: "ROLE_MANAGER",
+    enabled: true
+  });
+
+  const handleChange = (event) => {
+    setAccount({
+      ...account,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  // ACCOUNT CREATION HERE
+  const createAccount = (e) => {
+
     e.preventDefault();
 
-    // ACCOUNT CREATION HERE 
-    if (username.trim() !== '' && password.trim() !== '') {
-      // Perform your account creation logic
+    if (account.username.trim() !== "" && account.password.trim() !== "" && account.name.trim() !== "") {
 
-      // Assuming account creation is successful
-      alert('Account successfully created');
-
-      // Redirect to the Home page
-      history('/home');
+      ManagerApi.doesUsernameExist(account)
+          .then(usernameExists => {
+            if (usernameExists) {
+              console.log("Username already exists");
+              alert("This username already exists.");
+            } else {
+              ManagerApi.createUser(account, setAccount);
+              console.log("Created user " + account.username);
+              alert("Account successfully created");
+              history("/home");
+            }
+          })
     }
-
-    setUsername('');
-    setPassword('');
   };
 
   if (isLoggedIn) {
     // If the user is already logged in, redirect to the Home page
-    history('/home');
+    history("/home");
   }
 
   return (
@@ -40,32 +61,51 @@ const CreateAccount = () => {
               <h3>Create Account</h3>
             </div>
             <div className="card-body">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={createAccount}>
+
+                <div className="form-group">
+                  <label htmlFor="username">Name:</label>
+                  <input
+                      type="text"
+                      id="username"
+                      className="form-control"
+                      name = "name"
+                      value={account.name}
+                      onChange={handleChange}
+                      required
+                  />
+                </div>
+
                 <div className="form-group">
                   <label htmlFor="username">Username:</label>
                   <input
                     type="text"
                     id="username"
                     className="form-control"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    name = "username"
+                    value={account.username}
+                    onChange={handleChange}
                     required
                   />
                 </div>
+
                 <div className="form-group">
                   <label htmlFor="password">Password:</label>
                   <input
                     type="password"
                     id="password"
+                    name = "password"
                     className="form-control"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={account.password}
+                    onChange={handleChange}
                     required
                   />
                 </div>
+
                 <button type="submit" className="btn btn-primary mt-2">
                   Create
                 </button>
+
               </form>
             </div>
           </div>

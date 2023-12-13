@@ -11,7 +11,7 @@ import com.cognixia.jump.model.Team;
 @Repository
 public interface TeamRepository extends JpaRepository<Team, Integer>{
 
-	@Query("select t from Team t where team_id = 1?")
+	@Query("select t from Team t where team_id = ?1")
 	public Optional<Team> teamByManager(Integer team_id);
 	
 }
