@@ -3,31 +3,40 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import TeamMembers from "./TeamMembers";
 import ManagerApi from "../apis/ManagerApi";
+import TeamApi from "../apis/TeamApi";
 
 const LoggedInScreen = ({ onCreateTeam }) => {
 
   const [hasTeam, setTeam] = useState(false);
+  const [teamData, setTeamData] = useState({
+    id: 0, 
+    name: "", 
+    type: ""
+  });
 
   const enableTrue = (e) => {
     e.preventDefault();
     setTeam(true);
   };
 
-  useEffect( () => {
-
-    // console.log("Does it work tho" + localStorage.getItem("jwt"));
-    ManagerApi.getTeam(localStorage.getItem("jwt"))
-        .then(hasTeam => {
-          if(hasTeam){
-            setTeam(true)
-          }
-          else{
-            setTeam(false)
-          }
-        })
-
-  }, [])
-
+  useEffect(() => {
+    TeamApi.getTeam(localStorage.getItem("jwt"))
+      .then((data) => {
+        if (data !== null) {
+          // Team exists
+          setTeam(true);
+          setTeamData(data); // Update teamData with the fetched data
+          console.log(teamData)
+        } else {
+          // No team found
+          setTeam(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -36,7 +45,7 @@ const LoggedInScreen = ({ onCreateTeam }) => {
             // Display a card if the user has a team
             <div className="card h-100"> {/* Set the card height to 100% of the parent */}
               <div className="card-header">
-                <h3>Your Team</h3>
+                <h3>Your team: {teamData.name}</h3>
               </div>
               <div className="card-body">
                 {/* Add content for the team card */}

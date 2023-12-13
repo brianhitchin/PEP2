@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import TeamApi from '../apis/TeamApi';
 
 const CreateTeam = () => {
 
@@ -24,6 +25,7 @@ const history = useNavigate();
     
 
     // USE THE API TO CREATE A TEAM HERE 
+    TeamApi.addTeam(team, localStorage.getItem("jwt"))
 
     alert('Team successfully created');
     history("/home");
