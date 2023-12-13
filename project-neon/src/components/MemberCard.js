@@ -6,11 +6,11 @@ const MemberCard = ({ member }) => {
   const {
     assists,
     faults,
-    jerseyNumber,
+    jersey_num,
     name,
     playtime,
     scores,
-    teamId,
+    teamId = member.team.team_Id
   } = member;
 
   return (
@@ -19,7 +19,7 @@ const MemberCard = ({ member }) => {
         <h5>{name}</h5>
       </div>
       <div className="card-body">
-        <p>Jersey Number: {jerseyNumber}</p>
+        <p>Jersey Number: {jersey_num}</p>
         <p>Assists: {assists}</p>
         <p>Faults: {faults}</p>
         <p>Playtime: {playtime}</p>
