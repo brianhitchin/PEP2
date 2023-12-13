@@ -38,24 +38,24 @@ const MemberApi = {
         .catch(error => { console.log(error); })
     },
 
-    deleteMember: (token, id) => {
+    deleteMember: (token, id, setMember) => {
 
         let myToken = "Bearer " + token;
 
         fetch(URI + "/members/" + id,  {
+            method: 'DELETE',
             headers: {
-                method: 'DELETE',
                 "Content-Type": "application/json",
                 "Authorization": myToken
             }
         })
             .then( result => {
 
-                return result.json()
-            } )
-            .then( data => {
-
-                console.log("Deleted member id: " + id);
+                if (result.ok) {
+                    console.log("Member deleted successfully.");
+                } else {
+                    console.log("Failed to delete member. Status: " + result.status);
+                }
 
             } )
             .catch(error => { console.log(error); })
@@ -65,34 +65,15 @@ const MemberApi = {
 
     updateMember: (token, member) => {
 
-        /*
-                How the member object should look when being used:
-         */
-        
-        // {
-        //     "id": 2,
-        //     "team": {
-        //     "team_Id": 4,
-        //         "name": "test12345TEAM",
-        //         "type": "Soccer"
-        // },
-        //     "name": "test12345MEMBERUPDATED",
-        //     "jersey_num": 1,
-        //     "scores": 2,
-        //     "assists": 3,
-        //     "playtime": 4,
-        //     "faults": 5
-        // }
-
         let myToken = "Bearer " + token;
 
-        fetch(URI + "/mymembers/",  {
+        fetch(URI + "/mymembers",  {
+            method: 'PUT',
             headers: {
-                method: 'PUT',
-                body: JSON.stringify(member),
                 "Content-Type": "application/json",
                 "Authorization": myToken
-            }
+            },
+            body: JSON.stringify(member)
         })
             .then( result => {
 

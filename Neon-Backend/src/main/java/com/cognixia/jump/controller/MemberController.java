@@ -20,17 +20,20 @@ public class MemberController {
 
 	@Autowired
 	MemberService service;
-	
+
+	@CrossOrigin
 	@GetMapping("/members")
 	public ResponseEntity<?> getAllMembers() {
 		return ResponseEntity.status(200).body(service.getAllMembers());
 	}
-	
+
+	@CrossOrigin
 	@GetMapping("/mymembers")
 	public ResponseEntity<?> getMembersByTeam(@RequestHeader(value="authorization") String header) throws ResourceNotFoundException {
 		return ResponseEntity.status(200).body(service.getMembersByTeam(header));
 	}
 
+	@CrossOrigin
 	@PostMapping("/members/add")
 	public ResponseEntity<?> addMember(@RequestHeader(value="authorization") String header, @Valid @RequestBody Member member) throws ResourceNotFoundException {
 
@@ -38,7 +41,8 @@ public class MemberController {
 		return ResponseEntity.status(201).body(newMember);
 
 	}
-	
+
+	@CrossOrigin
 	@DeleteMapping("/members/{memberId}")
 	public ResponseEntity<?> deleteMemberById(@RequestHeader(value="authorization") String header, @PathVariable Integer memberId) throws ResourceNotFoundException {
 		if (service.deleteMember(header, memberId)) {

@@ -18,41 +18,11 @@ const TeamMembers = () => {
   })
   const [ap, setAp] = useState(false)
 
-  const dummyMembers = [
-    {
-      assists: 1,
-      faults: 1,
-      jerseyNumber: 1,
-      name: "One",
-      playtime: 1,
-      scores: 1,
-      teamId: 1,
-    },
-    {
-      assists: 2,
-      faults: 2,
-      jerseyNumber: 2,
-      name: "Two",
-      playtime: 2,
-      scores: 2,
-      teamId: 2,
-    },
-    {
-      assists: 3,
-      faults: 3,
-      jerseyNumber: 3,
-      name: "Three",
-      playtime: 3,
-      scores: 3,
-      teamId: 3,
-    },
-  ];
-
   let token;
 
   // Simulate API call
   useEffect(() => {
-    
+
     token = localStorage.getItem('jwt')
     MemberApi.getMyMember(token, setMembers)
 
@@ -83,7 +53,7 @@ const TeamMembers = () => {
   return (
     <div className="container mt-5">
       <div className="row">
-        {dummyMembers.map((member) => (
+        {members.map((member) => (
           <div key={member.id} className="col-md-6">
             <MemberCard member={member} />
           </div>
@@ -92,7 +62,7 @@ const TeamMembers = () => {
       <button className="btn btn-primary" onClick={() => setAp(!ap)}>
         {ap ? "Cancel" : "Add Player"}
       </button>
-      { ap && 
+      { ap &&
         <div className="card-body">
           <div className="form-group">
             <label htmlFor="teamName">Name:</label>
