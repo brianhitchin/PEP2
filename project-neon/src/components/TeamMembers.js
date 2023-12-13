@@ -8,7 +8,7 @@ const TeamMembers = () => {
   const [members, setMembers] = useState([]);
   const [addedMember, setAddedMember] = useState({
     id: 0,
-    team: '',
+    team: null,
     name: '',
     jersey_num: 0,
     assists: 0,
@@ -48,13 +48,10 @@ const TeamMembers = () => {
     },
   ];
 
-  let token;
-
   // Simulate API call
   useEffect(() => {
     
-    token = localStorage.getItem('jwt')
-    MemberApi.getMyMember(token, setMembers)
+    MemberApi.getMyMember(localStorage.getItem('jwt'), setMembers)
 
   }, []);
 
@@ -67,7 +64,8 @@ const TeamMembers = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    MemberApi.addMember(token, addedMember, members, setMembers)
+    console.log('addedmember', addedMember)
+    MemberApi.addMember(localStorage.getItem('jwt'), addedMember, members, setMembers)
     setAddedMember({
       id: 0,
       team: '',
@@ -78,12 +76,13 @@ const TeamMembers = () => {
       playtime: 0,
       faults: 0
     })
+    setAp(false)
   }
 
   return (
     <div className="container mt-5">
       <div className="row">
-        {dummyMembers.map((member) => (
+        {members.map((member) => (
           <div key={member.id} className="col-md-6">
             <MemberCard member={member} />
           </div>
