@@ -2,6 +2,7 @@ package com.cognixia.jump.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -80,7 +81,18 @@ public class Team implements Serializable{
 	public void setMember(List<Member> member) {
 		this.member = member;
 	}
-	
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Team)) return false;
+		Team team = (Team) o;
+		return Objects.equals(getTeam_Id(), team.getTeam_Id()) && Objects.equals(getName(), team.getName()) && Objects.equals(getType(), team.getType()) && Objects.equals(getManager(), team.getManager()) && Objects.equals(getMember(), team.getMember());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getTeam_Id(), getName(), getType(), getManager(), getMember());
+	}
 }
 

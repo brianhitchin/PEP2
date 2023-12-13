@@ -57,20 +57,41 @@ public class MemberService {
 
         String jwt = header.substring(7);
         String username = jwtUtil.extractUsername(jwt);
-		
-		List<Member> foundManagerTeamMemberList = managerRepo.findByUsername(username).get().getTeam().getMember();
-		
-		List<Integer> memberIds = new ArrayList<>();
-		
-		for (Member m: foundManagerTeamMemberList) {
 
-			if(Objects.equals(m.getId(), memberId)){
-				System.out.println("TEST?!!");
-				repo.deleteById(memberId.intValue());
+		Manager manager = managerRepo.findByUsername(username).get();
+		Team team = manager.getTeam();
+		List<Member> members = team.getMember();
+
+		for (int i = 0; i < members.size(); i++) {
+			System.out.println(members);
+			System.out.println("Member " + members.get(i).getId() + " || memberID: " + memberId);
+
+			if (members.get(i).getId().equals(memberId)) {
+				System.out.println("DELETE HERE");
+
+				// Remove member from list
+				Member memberToDelete = members.get(i);
+				members.remove(i);
+
+				// Delete member from the repository
+				repo.delete(memberToDelete);
+
+				// Update team
+				team.setMember(members);
+				teamRepo.save(team);
+
+				// Update manager
+				manager.setTeam(team);
+				managerRepo.save(manager);
+
+				System.out.println(manager);
+				System.out.println(team);
+				System.out.println(members);
+
 				return true;
 			}
 		}
-		
+
 		return false;
 
 	}
