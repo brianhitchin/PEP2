@@ -28,14 +28,7 @@ const Login = () => {
           .catch(error => {
             console.log('Login failed: ', error)
           })
-
-
     }
-
-
-
-    setUsername('');
-    setPassword('');
   };
 
   if (isLoggedIn) {
