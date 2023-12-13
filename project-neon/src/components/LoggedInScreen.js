@@ -1,15 +1,32 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import TeamMembers from "./TeamMembers";
+import ManagerApi from "../apis/ManagerApi";
 
 const LoggedInScreen = ({ onCreateTeam }) => {
+
   const [hasTeam, setTeam] = useState(false);
 
   const enableTrue = (e) => {
     e.preventDefault();
     setTeam(true);
   };
+
+  useEffect( () => {
+
+    // console.log("Does it work tho" + localStorage.getItem("jwt"));
+    ManagerApi.getTeam(localStorage.getItem("jwt"))
+        .then(hasTeam => {
+          if(hasTeam){
+            setTeam(true)
+          }
+          else{
+            setTeam(false)
+          }
+        })
+
+  }, [])
 
   return (
     <div className="container mt-5">

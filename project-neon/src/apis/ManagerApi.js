@@ -88,6 +88,37 @@ const ManagerApi = {
             });
     },
 
+    getTeam: (token) => {
+
+        let myToken = "Bearer " + token;
+
+        return fetch(URI + "/team",  {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": myToken
+            }
+        })
+            .then( result => {
+                console.log(result)
+                return result.json()
+            } )
+            .then( data => {
+
+                console.log(data)
+
+                if(data.name != null){
+                    return true
+                }
+                else{
+                    return false
+                }
+
+
+            } )
+            .catch(error => { console.log(error); })
+
+
+    },
     update: (student, studentList, setStudentList) => {
 
         fetch(URI + "/update/student",  {
