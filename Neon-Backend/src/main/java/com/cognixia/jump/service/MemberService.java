@@ -84,10 +84,6 @@ public class MemberService {
 				manager.setTeam(team);
 				managerRepo.save(manager);
 
-				System.out.println(manager);
-				System.out.println(team);
-				System.out.println(members);
-
 				return true;
 			}
 		}
