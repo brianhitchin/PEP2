@@ -100,7 +100,7 @@ const MemberApi = {
             } )
             .then( data => {
 
-                console.log("Deleted member id: " + id);
+                console.log("Updated member id: " + data.id);
 
             } )
             .catch(error => { console.log(error); })
@@ -108,3 +108,5 @@ const MemberApi = {
     }
 
 }
+
+export default MemberApi;

@@ -2,9 +2,21 @@
 
 import React, { useEffect, useState } from "react";
 import MemberCard from "./MemberCard";
+import MemberApi from "../apis/MemberApi";
 
 const TeamMembers = () => {
   const [members, setMembers] = useState([]);
+  const [addedMember, setAddedMember] = useState({
+    id: 0,
+    team: '',
+    name: '',
+    jersey_num: 0,
+    assists: 0,
+    scores: 0,
+    playtime: 0,
+    faults: 0
+  })
+  const [ap, setAp] = useState(false)
 
   const dummyMembers = [
     {
@@ -36,21 +48,37 @@ const TeamMembers = () => {
     },
   ];
 
+  let token;
+
   // Simulate API call
   useEffect(() => {
-    // Replace this with your actual API call
-    const fetchData = async () => {
-      try {
-        const response = await fetch("your-api-endpoint");
-        const data = await response.json();
-        setMembers(data); // Assuming data is an array of member objects
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+    
+    token = localStorage.getItem('jwt')
+    MemberApi.getMyMember(token, setMembers)
 
-    fetchData();
   }, []);
+
+  const handleChange = (event) => {
+    setAddedMember({
+        ...addedMember,
+        [event.target.name]: event.target.value
+    })
+  }
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    MemberApi.addMember(token, addedMember, members, setMembers)
+    setAddedMember({
+      id: 0,
+      team: '',
+      name: '',
+      jersey_num: 0,
+      assists: 0,
+      scores: 0,
+      playtime: 0,
+      faults: 0
+    })
+  }
 
   return (
     <div className="container mt-5">
@@ -61,6 +89,88 @@ const TeamMembers = () => {
           </div>
         ))}
       </div>
+      <button className="btn btn-primary" onClick={() => setAp(!ap)}>
+        {ap ? "Cancel" : "Add Player"}
+      </button>
+      { ap && 
+        <div className="card-body">
+          <div className="form-group">
+            <label htmlFor="teamName">Name:</label>
+            <input
+              type="text"
+              id="name"
+              className="form-control"
+              name='name'
+              value={addedMember.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="teamName">Jersey_num:</label>
+            <input
+              type="number"
+              id="jerseynum"
+              className="form-control"
+              name='jersey_num'
+              value={addedMember.jersey_num}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="teamName">Scores:</label>
+            <input
+              type="number"
+              id="scores"
+              className="form-control"
+              name='scores'
+              value={addedMember.scores}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="teamName">Assists:</label>
+            <input
+              type="number"
+              id="assists"
+              className="form-control"
+              name='assists'
+              value={addedMember.assists}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="teamName">Playtime:</label>
+            <input
+              type="number"
+              id="playtime"
+              className="form-control"
+              name='playtime'
+              value={addedMember.playtime}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="teamName">Faults:</label>
+            <input
+              type="number"
+              id="faults"
+              className="form-control"
+              name='faults'
+              value={addedMember.faults}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        <button type="submit" className="btn btn-primary mt-2" onClick={submitHandler}>
+          Create Member
+        </button>
+      </div>
+      }
     </div>
   );
 };
