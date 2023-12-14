@@ -41,7 +41,7 @@ const CreateAccount = () => {
               ManagerApi.createUser(account, setAccount);
               // console.log("Created user " + account.username);
               alert("Account successfully created");
-              history("/home");
+              history("/");
             }
           })
     }
@@ -49,7 +49,7 @@ const CreateAccount = () => {
 
   if (isLoggedIn) {
     // If the user is already logged in, redirect to the Home page
-    history("/home");
+    history("/");
   }
 
   return (

@@ -1,6 +1,6 @@
 
 // const BASE = "http://localhost:8080"  // use this if running locally
-const BASE = "http://0.0.0.0:8080" // edit this with your AWS endpoint
+const BASE = "http://35.164.107.214:8080" // edit this with your AWS endpoint
 const URI = BASE + "/api"
 
 const StudentApi = {

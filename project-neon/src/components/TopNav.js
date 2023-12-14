@@ -29,7 +29,7 @@ const TopNav = () => {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
           <li className="nav-item active">
-            <Link className="nav-link" to="/home">
+            <Link className="nav-link" to="/">
               Home
             </Link>
           </li>
@@ -44,7 +44,7 @@ const TopNav = () => {
           <li className="nav-item logout">
             {isLoggedIn ? (
               <li className="nav-item active">
-                <Link className="nav-link" to="/home" onClick={logout}>
+                <Link className="nav-link" to="/" onClick={logout}>
                   <strong>Logout</strong>
                 </Link>
               </li>
