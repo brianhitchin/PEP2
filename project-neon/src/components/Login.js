@@ -38,6 +38,14 @@ const Login = () => {
 
   return (
     <div className="container mt-5">
+
+      <div>
+        <h1 className="text-white text-center">
+          Welcome to Neon!
+        </h1>
+        <hr className="text-white"/>
+      </div>
+
       <div className="row justify-content-center">
         <div className="col-md-6">
 
