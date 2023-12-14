@@ -2,6 +2,7 @@
 
 import React, {useState} from 'react';
 import MemberApi from "../apis/MemberApi";
+import "../index.css"
 
 const MemberCard = (props) => {
 
