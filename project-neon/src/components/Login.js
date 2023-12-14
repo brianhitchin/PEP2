@@ -4,6 +4,7 @@ import LoggedInScreen from './LoggedInScreen';
 import { useAuth } from './AuthContext';
 import TeamApi from '../apis/TeamApi';
 import ManagerApi from '../apis/ManagerApi';
+import "../index.css"
 
 const Login = () => {
   const [username, setUsername] = useState('');

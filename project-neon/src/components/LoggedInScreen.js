@@ -4,6 +4,7 @@ import { useState } from "react";
 import TeamMembers from "./TeamMembers";
 import ManagerApi from "../apis/ManagerApi";
 import TeamApi from "../apis/TeamApi";
+import "../index.css"
 
 const LoggedInScreen = ({ onCreateTeam }) => {
 

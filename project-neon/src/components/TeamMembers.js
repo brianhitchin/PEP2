@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import MemberCard from "./MemberCard";
 import MemberApi from "../apis/MemberApi";
-
+import "../index.css"
 const TeamMembers = () => {
   const [members, setMembers] = useState([]);
   const [addedMember, setAddedMember] = useState({
