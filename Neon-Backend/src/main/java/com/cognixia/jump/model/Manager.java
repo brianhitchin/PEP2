@@ -1,6 +1,7 @@
 package com.cognixia.jump.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -17,30 +18,37 @@ public class Manager implements Serializable {
         ROLE_MANAGER, ROLE_ADMIN
     }
 
+    @Schema(description = "Id of the manager")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer managerId;
 
+    @Schema(description = "Name of the manager", example = "John Doe", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(nullable = false)
     @NotBlank
     private String name;
 
+    @Schema(description = "Username for the manager account", example = "john_doe", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(unique = true, nullable = false)
     @NotBlank
     private String username;
 
+    @Schema(description = "Password for the manager account", example = "Secr3tPassw0rd", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(nullable = false)
     @NotBlank
     private String password;
 
+    @Schema(description = "Team of the manager", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "team_id", nullable = true, unique = true)
     private Team team;
 
+    @Schema(description = "Role of the manager", example = "ROLE_MANAGER", requiredMode = Schema.RequiredMode.REQUIRED)
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
+    @Schema(description = "Account enabled for the manager", example = "true")
     @Column(columnDefinition = "boolean default true")
     private boolean enabled;
 
