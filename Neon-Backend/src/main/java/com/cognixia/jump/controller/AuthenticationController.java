@@ -4,6 +4,7 @@ import com.cognixia.jump.config.AuthenticationRequest;
 import com.cognixia.jump.config.AuthenticationResponse;
 import com.cognixia.jump.exception.InvalidLoginException;
 import com.cognixia.jump.util.JwtUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,7 +30,8 @@ public class AuthenticationController {
     @Autowired
     JwtUtil jwtUtil;
 
-    // #4 Create JWT
+    @Operation( summary = "Authenticate each manager with a JWT Token",
+    description = "Provides the JWT token for managers who are in the neon_db database. The manager must provide their username and password in the body")
     @CrossOrigin
     @PostMapping("api/authenticate")
     public ResponseEntity<?> createJwtToken(@RequestBody AuthenticationRequest request) throws Exception {

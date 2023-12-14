@@ -1,5 +1,7 @@
 package com.cognixia.jump.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -7,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,31 +18,39 @@ import javax.persistence.GenerationType;
 public class Member implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	@Schema(description = "Id of the member", example = "1001")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
+	@Schema(description = "team of the member")
 	@ManyToOne
 	@JoinColumn( name="team_id", referencedColumnName = "team_id", nullable = true)
 	private Team team;
-	
+
+	@Schema(description = "Name of the member", example = "Mary Doe")
 	@NotBlank
 	private String name;
 
-
+	@Schema(description = "Jersey number of the member", example = "24")
+	@Min(0)
 	private Integer jersey_num;
-	
 
+	@Schema(description = "Score record of the member", example = "10")
+	@Min(0)
 	private Integer scores;
-	
 
+	@Schema(description = "Assist record of the member", example = "23")
+	@Min(0)
 	private Integer assists;
-	
 
+	@Schema(description = "Playtime record of the member in minutes", example = "2043")
+	@Min(0)
 	private Integer playtime;
-	
 
+	@Schema(description = "fault record of the member", example = "3")
+	@Min(0)
 	private Integer faults;
 	
 	public Member() {

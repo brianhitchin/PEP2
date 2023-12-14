@@ -34,7 +34,7 @@ const TopNav = () => {
             </Link>
           </li>
           <li className="nav-item active">
-            <Link className="nav-link" to="/home">
+            <Link className="nav-link" to="http://localhost:8080/swagger-ui/index.html">
               Docs
             </Link>
           </li>

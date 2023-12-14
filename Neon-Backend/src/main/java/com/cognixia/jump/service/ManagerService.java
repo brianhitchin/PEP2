@@ -1,5 +1,6 @@
 package com.cognixia.jump.service;
 
+import com.cognixia.jump.exception.ResourceAlreadyExistsException;
 import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.Manager;
 import com.cognixia.jump.repository.ManagerRepository;
@@ -23,7 +24,11 @@ public class ManagerService {
         return repo.findAll();
     }
 
-    public Manager createManager(Manager manager){
+    public Manager createManager(Manager manager) throws ResourceAlreadyExistsException {
+
+        // Ensure that manager does not already exist
+        if(repo.findByUsername(manager.getUsername()).isPresent())
+            throw new ResourceAlreadyExistsException("Username");
 
         manager.setManagerId(null);
         manager.setPassword(encoder.encode(manager.getPassword()));

@@ -17,25 +17,31 @@ import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Entity
 public class Team implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
+
+	@Schema(description = "Id of the team", example = "101")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer team_Id;
-	
+
+	@Schema(description = "Name of the team", example = "Bulldogs")
 	@NotBlank
 	private String name;
-	
+
+	@Schema(description = "Type of the team", example = "Basketball")
 	@NotBlank
 	private String type;
-	
+
+	@Schema(description = "Manager of the team")
 	@OneToOne( fetch = FetchType.LAZY, mappedBy = "team" )
     @JsonIgnore
     private Manager manager;
-	
+
+	@Schema(description = "Members of the team")
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@OneToMany(mappedBy="team", cascade = CascadeType.ALL)
 	private List<Member> member; //---------------THIS NEEDS TO BE IMPORTED LATER-------------------
