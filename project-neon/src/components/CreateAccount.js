@@ -35,11 +35,11 @@ const CreateAccount = () => {
       ManagerApi.doesUsernameExist(account)
           .then(usernameExists => {
             if (usernameExists) {
-              console.log("Username already exists");
+              // console.log("Username already exists");
               alert("This username already exists.");
             } else {
               ManagerApi.createUser(account, setAccount);
-              console.log("Created user " + account.username);
+              // console.log("Created user " + account.username);
               alert("Account successfully created");
               history("/home");
             }

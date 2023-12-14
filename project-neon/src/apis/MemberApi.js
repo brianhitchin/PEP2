@@ -38,7 +38,7 @@ const MemberApi = {
         .catch(error => { console.log(error); })
     },
 
-    deleteMember: (token, id, setMember) => {
+    deleteMember: (token, id, setMembers, members) => {
 
         let myToken = "Bearer " + token;
 
@@ -52,7 +52,8 @@ const MemberApi = {
             .then( result => {
 
                 if (result.ok) {
-                    console.log("Member deleted successfully.");
+                    setMembers(members.filter(member => member.id !== id))
+                    //console.log("Member deleted successfully.");
                 } else {
                     console.log("Failed to delete member. Status: " + result.status);
                 }
@@ -81,7 +82,7 @@ const MemberApi = {
             } )
             .then( data => {
 
-                console.log("Updated member id: " + data.id);
+                // console.log("Updated member id: " + data.id);
 
             } )
             .catch(error => { console.log(error); })

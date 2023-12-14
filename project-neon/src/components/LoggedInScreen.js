@@ -9,8 +9,8 @@ const LoggedInScreen = ({ onCreateTeam }) => {
 
   const [hasTeam, setTeam] = useState(false);
   const [teamData, setTeamData] = useState({
-    id: 0, 
-    name: "", 
+    id: 0,
+    name: "",
     type: ""
   });
 
@@ -26,7 +26,7 @@ const LoggedInScreen = ({ onCreateTeam }) => {
           // Team exists
           setTeam(true);
           setTeamData(data); // Update teamData with the fetched data
-          console.log(teamData)
+          // console.log(teamData)
         } else {
           // No team found
           setTeam(false);
@@ -36,7 +36,7 @@ const LoggedInScreen = ({ onCreateTeam }) => {
         console.log(error);
       });
   }, []);
-  
+
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">

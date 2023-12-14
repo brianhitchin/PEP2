@@ -10,7 +10,7 @@ const TopNav = () => {
       alert(`You need to log in to access ${itemName}`);
       // Prevents actions from being taken
     }
-    // additional logic here if necessary 
+    // additional logic here if necessary
   };
 
   return (
@@ -33,7 +33,12 @@ const TopNav = () => {
               Home
             </Link>
           </li>
-          
+          <li className="nav-item active">
+            <Link className="nav-link" to="/home">
+              Docs
+            </Link>
+          </li>
+
         </ul>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item logout">
@@ -45,7 +50,7 @@ const TopNav = () => {
               </>
             ) : (
               <a>
-                
+
               </a>
             )}
           </li>

@@ -73,7 +73,10 @@ const ManagerApi = {
             .then(response => {
                 if (!response.ok) {
                     // Log more details about the response
-                    console.error('Authentication failed. Response:', response);
+                    // console.error('Authentication failed. Response:', response);
+                    if(response.status === 404){
+                        alert("Invalid username or password. Please try again.")
+                    }
                     return Promise.reject('Authentication failed');
                 }
                 return response.json();
@@ -83,7 +86,7 @@ const ManagerApi = {
             })
             .catch(error => {
                 // Log more details about the error
-                console.error('An error occurred during authentication:', error);
+                // console.error('An error occurred during authentication:', error);
                 throw error; // Propagate the error to the next catch block
             });
     },
