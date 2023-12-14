@@ -1,7 +1,6 @@
 // MemberCard.js
 
 import React, {useState} from 'react';
-import {Collapse} from "bootstrap";
 import MemberApi from "../apis/MemberApi";
 
 const MemberCard = (props) => {
@@ -44,7 +43,7 @@ const MemberCard = (props) => {
 
   const deleteMember = (id) => {
 
-    MemberApi.deleteMember(localStorage.getItem("jwt"), id, setMember)
+    MemberApi.deleteMember(localStorage.getItem("jwt"), id, props.setMembers, props.members)
 
   }
 
@@ -55,15 +54,15 @@ const MemberCard = (props) => {
         </div>
         <div className="card-body">
           <p><strong>Jersey Number:</strong> {member.jersey_num}</p>
-          <p><strong>Assists:</strong> {member.assists}</p>
-          <p><strong>Faults:</strong> {member.faults}</p>
+          <hr/>
           <p><strong>Playtime:</strong> {member.playtime}</p>
           <p><strong>Scores:</strong> {member.scores}</p>
-          <p><strong>Team ID:</strong> {member.team.team_Id}</p>
+          <p><strong>Assists:</strong> {member.assists}</p>
+          <p><strong>Faults:</strong> {member.faults}</p>
+
           <div className="text-center">
-            <button className="btn btn-primary m-3"
-                    onClick={() => toggleUpdate()}
-            >
+            <button className="btn btn-secondary m-3"
+                    onClick={() => toggleUpdate()}>
               Update
             </button>
             <button className="btn btn-danger m-3"
@@ -74,73 +73,80 @@ const MemberCard = (props) => {
 
           {/*  Collapse  */}
           { open ? <div className="card-body">
-                <div className="form-group">
+                <div className="form-group form-control-sm">
                   <label htmlFor="teamName">Name:</label>
                   <input
                       type="text"
                       id="name"
                       className="form-control"
                       name='name'
+                      min="0"
                       value={member.name}
                       onChange={handleChange}
                       required
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group form-control-sm">
                   <label htmlFor="teamName">Jersey_num:</label>
                   <input
                       type="number"
                       id="jerseynum"
                       className="form-control"
                       name='jersey_num'
+                      min="0"
                       value={member.jersey_num}
                       onChange={handleChange}
                       required
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="teamName">Scores:</label>
-                  <input
-                      type="number"
-                      id="scores"
-                      className="form-control"
-                      name='scores'
-                      value={member.scores}
-                      onChange={handleChange}
-                      required
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="teamName">Assists:</label>
-                  <input
-                      type="number"
-                      id="assists"
-                      className="form-control"
-                      name='assists'
-                      value={member.assists}
-                      onChange={handleChange}
-                      required
-                  />
-                </div>
-                <div className="form-group">
+                <div className="form-group form-control-sm">
                   <label htmlFor="teamName">Playtime:</label>
                   <input
                       type="number"
                       id="playtime"
                       className="form-control"
                       name='playtime'
+                      min="0"
                       value={member.playtime}
                       onChange={handleChange}
                       required
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group form-control-sm">
+                  <label htmlFor="teamName">Scores:</label>
+                  <input
+                      type="number"
+                      id="scores"
+                      className="form-control"
+                      name='scores'
+                      min="0"
+                      value={member.scores}
+                      onChange={handleChange}
+                      required
+                  />
+                </div>
+                <div className="form-group form-control-sm">
+                  <label htmlFor="teamName">Assists:</label>
+                  <input
+                      type="number"
+                      id="assists"
+                      className="form-control"
+                      name='assists'
+                      min="0"
+                      value={member.assists}
+                      onChange={handleChange}
+                      required
+                  />
+                </div>
+
+                <div className="form-group form-control-sm">
                   <label htmlFor="teamName">Faults:</label>
                   <input
                       type="number"
                       id="faults"
                       className="form-control"
                       name='faults'
+                      min="0"
                       value={member.faults}
                       onChange={handleChange}
                       required
@@ -149,7 +155,7 @@ const MemberCard = (props) => {
                 <div className="text-center">
                   <button className="btn btn-primary m-1"
                           onClick={updateMember}>
-                    Submit
+                    Confirm Changes
                   </button>
                 </div>
 

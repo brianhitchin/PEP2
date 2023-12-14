@@ -18,7 +18,7 @@ const Login = () => {
     if (username.trim() !== '' && password.trim() !== '') {
 
       // Attempt to log in
-      
+
       ManagerApi.login(username, password)
           .then(token => {
 
@@ -27,7 +27,7 @@ const Login = () => {
             login();
           })
           .catch(error => {
-            console.log('Login failed: ', error)
+            // console.log('Login failed: ', error)
           })
     }
   };

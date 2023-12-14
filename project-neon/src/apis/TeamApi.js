@@ -12,11 +12,11 @@ const TeamApi = {
       },
     })
       .then((result) => {
-        console.log("TeamApi result: " + result);
+        // console.log("TeamApi result: " + result);
         return result.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
 
         // Check if the team exists in the response
         if (data.name != null) {
@@ -50,12 +50,12 @@ const TeamApi = {
     })
         .then( result => result.json() )
         .then( data => {
-            console.log(data)
+            // console.log(data)
             if(typeof data.team_Id !== 'undefined') {
-                console.log("CREATED TEAM:")
-                console.log("data")
+                // console.log("CREATED TEAM:")
+                // console.log("data")
             } else {
-                alert("This team cannot be created for some reason.")
+                // alert("This team cannot be created for some reason.")
             }
         })
         .catch(error => {

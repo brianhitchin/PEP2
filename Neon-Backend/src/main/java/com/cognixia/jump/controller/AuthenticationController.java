@@ -2,6 +2,7 @@ package com.cognixia.jump.controller;
 
 import com.cognixia.jump.config.AuthenticationRequest;
 import com.cognixia.jump.config.AuthenticationResponse;
+import com.cognixia.jump.exception.InvalidLoginException;
 import com.cognixia.jump.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class AuthenticationController {
 
         } catch (BadCredentialsException e) {
             // provide our own message on why login didn't work
-            throw new Exception("Incorrect username or password");
+            throw new InvalidLoginException();
         }
 
         // as long as no exception was thrown, user is valid
