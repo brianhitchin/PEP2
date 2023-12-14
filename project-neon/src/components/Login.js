@@ -40,13 +40,17 @@ const Login = () => {
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
+
           <div className="card">
-            <div className="card-header">
-              <h3>Login</h3>
+
+            <div className="card-header text-center text-white" style={{backgroundImage:"url('https://img.freepik.com/free-vector/abstract-neon-lights-background-design_52683-44643.jpg')"}}>
+              <h2>Login</h2>
             </div>
+
             <div className="card-body">
               <form onSubmit={handleSubmit}>
-                <div className="form-group">
+
+                  <div className="form-group">
                   <label htmlFor="username">Username:</label>
                   <input
                     type="text"
@@ -54,9 +58,11 @@ const Login = () => {
                     className="form-control"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    required
-                  />
+                    required/>
                 </div>
+
+                <br/>
+
                 <div className="form-group">
                   <label htmlFor="password">Password:</label>
                   <input
@@ -65,21 +71,32 @@ const Login = () => {
                     className="form-control"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
+                    required/>
                 </div>
-                <button type="submit" className="btn btn-primary mt-2">
-                  Login
-                </button>
+
+                <br/>
+
+                <div className="text-center">
+                  <button type="submit" className="btn btn-dark mt-2 px-5">
+                    Login
+                  </button>
+                </div>
+
+
                 {/* "Create Account" button */}
-              <Link to="/create">
-                <button className="btn btn-danger btn-create-account mt-2 float-end">
-                  Create Account
-                </button>
-              </Link>
+
+
               </form>
+
             </div>
           </div>
+
+            <Link to="/create">
+              <button className="btn btn-light btn-create-account mt-4 float-end">
+                Create Account
+              </button>
+            </Link>
+
         </div>
       </div>
     </div>

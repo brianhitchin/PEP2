@@ -56,10 +56,13 @@ const CreateAccount = () => {
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
+
           <div className="card">
-            <div className="card-header">
-              <h3>Create Account</h3>
+
+            <div className="card-header text-center">
+              <h2>Create Account</h2>
             </div>
+
             <div className="card-body">
               <form onSubmit={createAccount}>
 
@@ -76,6 +79,8 @@ const CreateAccount = () => {
                   />
                 </div>
 
+                <br/>
+
                 <div className="form-group">
                   <label htmlFor="username">Username:</label>
                   <input
@@ -88,6 +93,8 @@ const CreateAccount = () => {
                     required
                   />
                 </div>
+
+                <br/>
 
                 <div className="form-group">
                   <label htmlFor="password">Password:</label>
@@ -102,13 +109,19 @@ const CreateAccount = () => {
                   />
                 </div>
 
-                <button type="submit" className="btn btn-primary mt-2">
-                  Create
-                </button>
+                <br/>
+<div className="text-center">
+  <button type="submit" className="btn btn-dark mt-2 px-5">
+    Create
+  </button>
+</div>
+
 
               </form>
             </div>
           </div>
+
+
         </div>
       </div>
     </div>

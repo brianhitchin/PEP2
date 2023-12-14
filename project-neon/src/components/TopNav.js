@@ -43,15 +43,14 @@ const TopNav = () => {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item logout">
             {isLoggedIn ? (
-              <>
+              <li className="nav-item active">
                 <Link className="nav-link" to="/home" onClick={logout}>
-                  Logout
+                  <strong>Logout</strong>
                 </Link>
-              </>
+              </li>
             ) : (
-              <a>
-
-              </a>
+              <>
+              </>
             )}
           </li>
         </ul>

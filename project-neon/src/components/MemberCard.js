@@ -37,6 +37,7 @@ const MemberCard = (props) => {
 
   const updateMember = () => {
 
+    setOpen(!open);
     MemberApi.updateMember(localStorage.getItem("jwt"), member);
 
   };
@@ -48,24 +49,33 @@ const MemberCard = (props) => {
   }
 
   return (
-      <div className="card mb-3">
+      <div className="card d-inline-block m-4" style={{width:"250px"}} data-bs-theme="dark">
         <div className="card-header text-center">
           <h4>{member.name}</h4>
         </div>
         <div className="card-body">
-          <p><strong>Jersey Number:</strong> {member.jersey_num}</p>
+          <div className="text-center">
+            <p><strong>#{member.jersey_num}</strong> </p>
+          </div>
+
           <hr/>
-          <p><strong>Playtime:</strong> {member.playtime}</p>
-          <p><strong>Scores:</strong> {member.scores}</p>
-          <p><strong>Assists:</strong> {member.assists}</p>
-          <p><strong>Faults:</strong> {member.faults}</p>
+
+          <div className="text-start">
+            <p><strong>Playtime:</strong> {member.playtime} minutes</p>
+            <p><strong>Scores:</strong> {member.scores}</p>
+            <p><strong>Assists:</strong> {member.assists}</p>
+            <p><strong>Faults:</strong> {member.faults}</p>
+          </div>
+
+
+          <hr/>
 
           <div className="text-center">
-            <button className="btn btn-secondary m-3"
+            <button className="btn btn-light px-3 mx-2"
                     onClick={() => toggleUpdate()}>
               Update
             </button>
-            <button className="btn btn-danger m-3"
+            <button className="btn btn-danger px-3 mx-2"
                     onClick={() => deleteMember(member.id)}>
               Delete
             </button>
@@ -74,20 +84,19 @@ const MemberCard = (props) => {
           {/*  Collapse  */}
           { open ? <div className="card-body">
                 <div className="form-group form-control-sm">
-                  <label htmlFor="teamName">Name:</label>
+                  <label htmlFor="teamName"><small>Name:</small></label>
                   <input
                       type="text"
                       id="name"
-                      className="form-control"
+                      className="form-control form-control-sm"
                       name='name'
                       min="0"
                       value={member.name}
                       onChange={handleChange}
-                      required
-                  />
+                      required/>
                 </div>
                 <div className="form-group form-control-sm">
-                  <label htmlFor="teamName">Jersey_num:</label>
+                  <label htmlFor="teamName"><small>Jersey_num:</small></label>
                   <input
                       type="number"
                       id="jerseynum"
@@ -100,7 +109,7 @@ const MemberCard = (props) => {
                   />
                 </div>
                 <div className="form-group form-control-sm">
-                  <label htmlFor="teamName">Playtime:</label>
+                  <label htmlFor="teamName"><small>Playtime:</small></label>
                   <input
                       type="number"
                       id="playtime"
@@ -113,7 +122,7 @@ const MemberCard = (props) => {
                   />
                 </div>
                 <div className="form-group form-control-sm">
-                  <label htmlFor="teamName">Scores:</label>
+                  <label htmlFor="teamName"><small>Scores:</small></label>
                   <input
                       type="number"
                       id="scores"
@@ -126,7 +135,7 @@ const MemberCard = (props) => {
                   />
                 </div>
                 <div className="form-group form-control-sm">
-                  <label htmlFor="teamName">Assists:</label>
+                  <label htmlFor="teamName"><small>Assists:</small></label>
                   <input
                       type="number"
                       id="assists"
@@ -152,6 +161,9 @@ const MemberCard = (props) => {
                       required
                   />
                 </div>
+
+                <hr/>
+
                 <div className="text-center">
                   <button className="btn btn-primary m-1"
                           onClick={updateMember}>
