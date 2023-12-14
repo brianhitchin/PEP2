@@ -5,7 +5,6 @@ import {useNavigate} from "react-router-dom";
 const BASE = "http://35.164.107.214:8080" // edit this with your AWS endpoint
 const URI = BASE + "/api"
 
-
 const ManagerApi = {
 
     getAll: (setStudentList) => {
@@ -64,6 +63,8 @@ const ManagerApi = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
             },
             body: JSON.stringify({
                 username: username,
@@ -71,6 +72,8 @@ const ManagerApi = {
             }),
         })
             .then(response => {
+                console.log(response)
+                console.log("update")
                 if (!response.ok) {
                     // Log more details about the response
                     // console.error('Authentication failed. Response:', response);
@@ -85,6 +88,7 @@ const ManagerApi = {
                 return data.jwt;
             })
             .catch(error => {
+                console.log("error update")
                 // Log more details about the error
                 // console.error('An error occurred during authentication:', error);
                 throw error; // Propagate the error to the next catch block
