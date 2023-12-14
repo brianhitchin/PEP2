@@ -28,7 +28,7 @@ const history = useNavigate();
     TeamApi.addTeam(team, localStorage.getItem("jwt"))
 
     alert('Team successfully created');
-    history("/home");
+    history("/");
   };
 
   return (
