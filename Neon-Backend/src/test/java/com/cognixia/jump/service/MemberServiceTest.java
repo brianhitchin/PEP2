@@ -63,8 +63,9 @@ public class MemberServiceTest {
 		
 		
 		List<Member> allMembers = new ArrayList<Member>();
-		allMembers.add( new Member(1, testTeam, "test1", 10, 10, 10, 10, 10) );
-		allMembers.add( new Member(2, testTeam, "test2", 20, 20, 20, 20, 20) );
+
+		allMembers.add( new Member(1, testTeam, "test1", 10, 10, 10, 10, 10, true, "www.url.com/image/10") );
+		allMembers.add( new Member(2, testTeam, "test2", 20, 20, 20, 20, 20, true, "www.url.com/image/20") );
 		
 		when( repo.findAll() ).thenReturn(allMembers);
 		
@@ -84,7 +85,7 @@ public class MemberServiceTest {
 		
 		String header = "header";
         String username = "brian";
-        Member testMember = new Member(1, testTeam, "test1", 10, 10, 10, 10, 10);
+        Member testMember = new Member(1, testTeam, "test1", 10, 10, 10, 10, 10, true, "www.url.com/image/10");
         TestMembers.add(testMember);
         testManager.setTeam(testTeam);
 		        
@@ -103,7 +104,7 @@ public class MemberServiceTest {
 		
 		String header = "header";
         String username = "brian";
-		Member testMember = new Member(1, testTeam, "test1", 10, 10, 10, 10, 10);
+		Member testMember = new Member(1, testTeam, "test1", 10, 10, 10, 10, 10, true, "www.url.com/image/10");
         TestMembers.add(testMember);
         testManager.setTeam(testTeam);
              

@@ -1,10 +1,10 @@
 
-// const BASE = "http://localhost:8080"  // use this if running locally
-const BASE = "http://35.164.107.214:8080" // edit this with your AWS endpoint
+const BASE = "http://localhost:8080"  // use this if running locally
+// const BASE = "http://35.164.107.214:8080" // edit this with your AWS endpoint
 const URI = BASE + "/api"
 
 const StudentApi = {
-    
+
     getAll: (setStudentList) => {
 
         fetch(URI + "/students")
@@ -16,7 +16,7 @@ const StudentApi = {
     },
 
     add: (student) => {
-        
+
         fetch(URI + "/add/student", {
             method: "POST",
             body: JSON.stringify(student),
@@ -31,7 +31,7 @@ const StudentApi = {
                     console.log(data);
 
                     alert(`STUDENT CREATED \n` +
-                        `------------------------\n` + 
+                        `------------------------\n` +
                         `ID: ${data.id}\n` +
                         `First Name: ${data.firstName}\n` +
                         `Last Name: ${data.lastName}\n` +
@@ -45,7 +45,7 @@ const StudentApi = {
                 }
 
             } )
-            .catch( error => { 
+            .catch( error => {
                 console.log(error);
             } )
 
@@ -85,7 +85,7 @@ const StudentApi = {
                 else {
                     alert("Error updating student, email choosen may already be in use by another student")
                 }
-                
+
             } )
             .catch(error => { console.log(error); })
 

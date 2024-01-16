@@ -49,15 +49,21 @@ public class Member implements Serializable {
 	@Min(0)
 	private Integer playtime;
 
-	@Schema(description = "fault record of the member", example = "3")
+	@Schema(description = "Fault record of the member", example = "3")
 	@Min(0)
 	private Integer faults;
+
+	@Schema(description = "Whether member is active", example = "true")
+	private Boolean active;
+
+	@Schema(description = "Image url of the member", example = "true")
+	private String image;
 	
 	public Member() {
 		
 	}
 
-	public Member(Integer id, Team team, String name, Integer jersey_num, Integer scores, Integer assists, Integer playtime, Integer faults) {
+	public Member(Integer id, Team team, String name, Integer jersey_num, Integer scores, Integer assists, Integer playtime, Integer faults, Boolean active, String image) {
 		this.id = id;
 		this.team = team;
 		this.name = name;
@@ -66,6 +72,8 @@ public class Member implements Serializable {
 		this.assists = assists;
 		this.playtime = playtime;
 		this.faults = faults;
+		this.active = active;
+		this.image = image;
 	}
 
 	public Integer getId() {
@@ -132,10 +140,36 @@ public class Member implements Serializable {
 		return team;
 	}
 
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	@Override
 	public String toString() {
-		return "Member [id=" + id + ", name=" + name + ", jersey_num=" + jersey_num + ", scores=" + scores
-				+ ", assists=" + assists + ", playtime=" + playtime + ", faults=" + faults + "]";
+		return "Member[" +
+				"id=" + id +
+				", team=" + team +
+				", name='" + name + '\'' +
+				", jersey_num=" + jersey_num +
+				", scores=" + scores +
+				", assists=" + assists +
+				", playtime=" + playtime +
+				", faults=" + faults +
+				", active=" + active +
+				", image='" + image + '\'' +
+				']';
 	}
 
 	@Override
@@ -143,11 +177,11 @@ public class Member implements Serializable {
 		if (this == o) return true;
 		if (!(o instanceof Member)) return false;
 		Member member = (Member) o;
-		return Objects.equals(getId(), member.getId()) && Objects.equals(getTeam(), member.getTeam()) && Objects.equals(getName(), member.getName()) && Objects.equals(getJersey_num(), member.getJersey_num()) && Objects.equals(getScores(), member.getScores()) && Objects.equals(getAssists(), member.getAssists()) && Objects.equals(getPlaytime(), member.getPlaytime()) && Objects.equals(getFaults(), member.getFaults());
+		return Objects.equals(getId(), member.getId()) && Objects.equals(getTeam(), member.getTeam()) && Objects.equals(getName(), member.getName()) && Objects.equals(getJersey_num(), member.getJersey_num()) && Objects.equals(getScores(), member.getScores()) && Objects.equals(getAssists(), member.getAssists()) && Objects.equals(getPlaytime(), member.getPlaytime()) && Objects.equals(getFaults(), member.getFaults()) && Objects.equals(getActive(), member.getActive()) && Objects.equals(getImage(), member.getImage());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getTeam(), getName(), getJersey_num(), getScores(), getAssists(), getPlaytime(), getFaults());
+		return Objects.hash(getId(), getTeam(), getName(), getJersey_num(), getScores(), getAssists(), getPlaytime(), getFaults(), getActive(), getImage());
 	}
 }
