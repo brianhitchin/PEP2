@@ -4,10 +4,12 @@ import CreateTeam from './components/CreateTeam';
 import Home from './components/Home';
 import Login from './components/Login';
 import TestPage from './components/TestPage';
+import { useTheme } from './components/ThemeContext';
 import TopNav from './components/TopNav';
 import {Routes, Route} from 'react-router-dom';
 
 function App() {
+  const {isDarkMode, toggleDarkMode } = useTheme();
   return (
     <div className="App">
       <header className="App-header">

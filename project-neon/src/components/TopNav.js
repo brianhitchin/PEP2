@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "./AuthContext";
 import { Link } from "react-router-dom";
+import { useTheme } from "./ThemeContext";
 
 const TopNav = () => {
   const { isLoggedIn, logout } = useAuth();
+  const { isDarkMode, toggleDarkMode } = useTheme();
 
   const handleItemClick = (itemName) => {
     if (!isLoggedIn) {
@@ -13,8 +15,22 @@ const TopNav = () => {
     // additional logic here if necessary
   };
 
+  const changeBodyBackgroundColor = () => {
+    console.log("CHANGING COLOR");
+    document.body.style.backgroundColor = isDarkMode ? "#fff" : "#21252b";
+  };
+
+  useEffect(() => {
+    // Call changeBodyBackgroundColor when isDarkMode changes
+    changeBodyBackgroundColor();
+  }, [isDarkMode]);
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav
+      className={`navbar navbar-expand-lg ${
+        isDarkMode ? "navbar-dark bg-dark" : "navbar-light bg-light"
+      }`}
+    >
       <button
         className="navbar-toggler"
         type="button"
@@ -34,11 +50,13 @@ const TopNav = () => {
             </Link>
           </li>
           <li className="nav-item active">
-            <Link className="nav-link" to="http://35.164.107.214:8080/swagger-ui/index.html">
+            <Link
+              className="nav-link"
+              to="http://35.164.107.214:8080/swagger-ui/index.html"
+            >
               Docs
             </Link>
           </li>
-
         </ul>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item logout">
@@ -49,9 +67,19 @@ const TopNav = () => {
                 </Link>
               </li>
             ) : (
-              <>
-              </>
+              <>{/* Login button or other components */}</>
             )}
+          </li>
+          <li className="nav-item">
+            <button
+              className="btn btn-link nav-link"
+              onClick={() => {
+                toggleDarkMode();
+                changeBodyBackgroundColor();
+              }}
+            >
+              {isDarkMode ? "Light Mode" : "Dark Mode"}
+            </button>
           </li>
         </ul>
       </div>

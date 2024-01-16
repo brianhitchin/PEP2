@@ -5,11 +5,13 @@ import { useAuth } from './AuthContext';
 import TeamApi from '../apis/TeamApi';
 import ManagerApi from '../apis/ManagerApi';
 import "../index.css"
+import { useTheme } from './ThemeContext';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { isLoggedIn, login } = useAuth();
+  const {isDarkMode, toggleDarkMode } = useTheme();
 
   const handleSubmit = (e) => {
 
@@ -39,9 +41,8 @@ const Login = () => {
 
   return (
     <div className="container mt-5">
-
       <div>
-        <h1 className="text-white text-center">
+        <h1 className={`text-center ${isDarkMode ? 'text-black' : 'text-white'}`}>
           Welcome to Neon!
         </h1>
         <hr className="text-white"/>
