@@ -4,14 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,18 +30,18 @@ public class Team implements Serializable{
 	private String type;
 
 	@Schema(description = "Manager of the team")
-	@OneToOne( fetch = FetchType.LAZY, mappedBy = "team" )
-    @JsonIgnore
-    private Manager manager;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Manager manager;
 
 	@Schema(description = "Members of the team")
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@OneToMany(mappedBy="team", cascade = CascadeType.ALL)
-	private List<Member> member; //---------------THIS NEEDS TO BE IMPORTED LATER-------------------
+	private List<Member> member;
 	
 	public Team() {
 		
 	}
+
 	public Team(Integer team_Id, @NotBlank String name, @NotBlank String type, Manager manager, List<Member> member) {
 		super();
 		this.team_Id = team_Id;
@@ -57,6 +50,7 @@ public class Team implements Serializable{
 		this.manager = manager;
 		this.member = member;
 	}
+
 	public Integer getTeam_Id() {
 		return team_Id;
 	}
@@ -86,6 +80,17 @@ public class Team implements Serializable{
 	}
 	public void setMember(List<Member> member) {
 		this.member = member;
+	}
+
+	@Override
+	public String toString() {
+		return "Team[" +
+				"team_Id=" + team_Id +
+				", name='" + name + '\'' +
+				", type='" + type + '\'' +
+				", manager=" + manager +
+				", member=" + member +
+				']';
 	}
 
 	@Override

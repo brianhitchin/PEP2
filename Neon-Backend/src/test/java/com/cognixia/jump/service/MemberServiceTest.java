@@ -43,18 +43,9 @@ public class MemberServiceTest {
 	
 	@InjectMocks
 	private MemberService service;
-	
-	/*
-	@BeforeAll
-	static void setup() {
-		List<Member> TestMembers = new ArrayList<Member>();
-		Manager testManager = new Manager(1, "Test", "test", "test", null, true);
-		Team testTeam = new Team(1, "Test team", "Test type", testManager, TestMembers);
-	}
-	*/
-	
+
 	List<Member> TestMembers = new ArrayList<Member>();
-	Manager testManager = new Manager(1, "Test", "test", "test", null, true);
+	Manager testManager = new Manager(1, "Test", "test", "test", null, Manager.Role.ROLE_MANAGER,true);
 	Team testTeam = new Team(1, "Test team", "Test type", testManager, TestMembers);
 	
 	@Test
@@ -87,14 +78,16 @@ public class MemberServiceTest {
         String username = "brian";
         Member testMember = new Member(1, testTeam, "test1", 10, 10, 10, 10, 10, true, "www.url.com/image/10");
         TestMembers.add(testMember);
-        testManager.setTeam(testTeam);
+		List<Team> teams = new ArrayList<>();
+		teams.add(testTeam);
+        testManager.setTeams(teams);
 		        
         when(util.extractUsername(header)).thenReturn("brian");
         when(managerRepo.findByUsername(username)).thenReturn(Optional.of(testManager));
         
 		int id = 1;	
 						
-		boolean deleted = service.deleteMember("Bearer header", id);
+		boolean deleted = service.deleteMember("Bearer header", id, testTeam.getTeam_Id());
 		assertTrue(deleted);
 		
 	}
@@ -106,7 +99,9 @@ public class MemberServiceTest {
         String username = "brian";
 		Member testMember = new Member(1, testTeam, "test1", 10, 10, 10, 10, 10, true, "www.url.com/image/10");
         TestMembers.add(testMember);
-        testManager.setTeam(testTeam);
+		List<Team> teams = new ArrayList<>();
+		teams.add(testTeam);
+		testManager.setTeams(teams);
              
         when(repo.save(Mockito.any())).thenReturn(testMember);
 		

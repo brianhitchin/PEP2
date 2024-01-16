@@ -32,7 +32,7 @@ public class TeamService {
 		return repo.findAll();
 	}
 	
-	public Team getMyTeam(String header) {
+	public List<Team> getMyTeams(String header) {
 		
 		if( header == null || !header.startsWith("Bearer "))
             return null; 
@@ -44,14 +44,16 @@ public class TeamService {
 		
 		if (foundManager.isPresent()) {
 			Manager manager = foundManager.get();
-			return manager.getTeam();
+
+			// Get the manager's teams
+			return manager.getTeams();
 		}
 		
 		return null;
 		
 	}
 	
-	public Team addTeam(String header, Team newTeam) throws ManagerHasTeamException, ResourceNotFoundException {
+	public Team addTeam(String header, Team newTeam) throws ResourceNotFoundException {
 		
 		if( header == null || !header.startsWith("Bearer "))
             throw new ResourceNotFoundException("token"); 
@@ -60,16 +62,11 @@ public class TeamService {
         String username = jwtUtil.extractUsername(jwt);
 		
 		Manager foundManager = managerRepo.findByUsername(username).get();
-		
-		if (foundManager.getTeam() != null) {
-			throw new ManagerHasTeamException(); 
-		}
-			
+
 		newTeam.setTeam_Id(-1);
-		Team added = repo.save(newTeam);
-		foundManager.setTeam(newTeam);
-		managerRepo.save(foundManager);
-		return added;
+		newTeam.setManager(foundManager);
+
+		return repo.save(newTeam);
 
 	}
 	

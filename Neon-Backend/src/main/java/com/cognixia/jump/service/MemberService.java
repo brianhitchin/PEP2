@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.cognixia.jump.exception.ResourceDoesNotBelongException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class MemberService {
 		return repo.findAll();
 	}
 	
-	public List<Member> getMembersByTeam(String header) throws ResourceNotFoundException {
+	public List<Member> getMembersByTeam(String header, Integer team_id) throws ResourceNotFoundException, ResourceDoesNotBelongException {
 		
 		if( header == null || !header.startsWith("Bearer "))
             throw new ResourceNotFoundException("token"); 
@@ -46,11 +47,57 @@ public class MemberService {
         String username = jwtUtil.extractUsername(jwt);
 		
 		Manager foundManager = managerRepo.findByUsername(username).get();
-		
-		return repo.memberByTeam(foundManager.getTeam().getTeam_Id());
+
+		List<Team> teams = foundManager.getTeams();
+		for(Team team : teams){
+
+			if(team.getTeam_Id().equals(team_id)){
+				return repo.memberByTeam(team.getTeam_Id());
+			}
+		}
+
+		throw new ResourceDoesNotBelongException("team", "manager");
 	}
-	
-	public boolean deleteMember(String header, Integer memberId) throws ResourceNotFoundException {
+
+	public Member addMember(String header, Member member, Integer team_id) throws ResourceNotFoundException, ResourceDoesNotBelongException {
+
+		if( header == null || !header.startsWith("Bearer "))
+			throw new ResourceNotFoundException("token");
+
+		String jwt = header.substring(7);
+		String username = jwtUtil.extractUsername(jwt);
+
+		List<Team> foundManagerTeams = managerRepo.findByUsername(username).get().getTeams();
+
+		Team teamFound = null;
+
+		// Get specific Team to add member to
+		for(int i = 0; i < foundManagerTeams.size(); i++){
+
+			if(foundManagerTeams.get(i).getTeam_Id().equals(team_id))
+				teamFound = foundManagerTeams.get(i);
+		}
+
+		if(teamFound == null){
+			throw new ResourceDoesNotBelongException("team", "manager");
+		}
+
+		member.setId(null);
+		member.setTeam(teamFound);
+		Member created = repo.save(member);
+
+		//Add to team
+		List<Member> allMembers = teamFound.getMember();
+		allMembers.add(created);
+
+		teamFound.setMember(allMembers);
+
+		teamRepo.save(teamFound);
+
+		return created;
+	}
+
+	public boolean deleteMember(String header, Integer memberId, Integer team_id) throws ResourceNotFoundException, ResourceDoesNotBelongException {
 
 		if( header == null || !header.startsWith("Bearer "))
             throw new ResourceNotFoundException("token"); 
@@ -59,15 +106,26 @@ public class MemberService {
         String username = jwtUtil.extractUsername(jwt);
 
 		Manager manager = managerRepo.findByUsername(username).get();
-		Team team = manager.getTeam();
+		List<Team> teams = manager.getTeams();
+
+		Team team = null;
+
+		// Get specific Team to add member to
+		for(int i = 0; i < teams.size(); i++){
+
+			if(teams.get(i).getTeam_Id().equals(team_id))
+				team = teams.get(i);
+		}
+
+		if(team == null){
+			throw new ResourceDoesNotBelongException("team", "manager");
+		}
+
 		List<Member> members = team.getMember();
 
 		for (int i = 0; i < members.size(); i++) {
-			System.out.println(members);
-			System.out.println("Member " + members.get(i).getId() + " || memberID: " + memberId);
 
 			if (members.get(i).getId().equals(memberId)) {
-				System.out.println("DELETE HERE");
 
 				// Remove member from list
 				Member memberToDelete = members.get(i);
@@ -81,7 +139,8 @@ public class MemberService {
 				teamRepo.save(team);
 
 				// Update manager
-				manager.setTeam(team);
+				// # NEED TO TEST IF TEAMS IS UPDATED CORRECTLY
+				manager.setTeams(teams);
 				managerRepo.save(manager);
 
 				return true;
@@ -92,38 +151,16 @@ public class MemberService {
 
 	}
 	
-	public Member editMember(String header, Member editedMember) throws ResourceNotFoundException {
+	public Member editMember(String header, Member editedMember) throws ResourceNotFoundException, ResourceDoesNotBelongException {
 		
 		if( header == null || !header.startsWith("Bearer "))
-            throw new ResourceNotFoundException("token"); 
+            throw new ResourceNotFoundException("token");
 
         repo.save(editedMember);
 		return editedMember;
         
 	}
 
-	public Member createMember(String header, Member member) throws ResourceNotFoundException {
 
-		if( header == null || !header.startsWith("Bearer "))
-			throw new ResourceNotFoundException("token");
-
-		String jwt = header.substring(7);
-		String username = jwtUtil.extractUsername(jwt);
-
-		Team foundManagerTeam = managerRepo.findByUsername(username).get().getTeam();
-
-		member.setId(null);
-		member.setTeam(foundManagerTeam);
-		Member created = repo.save(member);
-
-		//Add to team
-		List<Member> allMembers = foundManagerTeam.getMember();
-		allMembers.add(created);
-
-		foundManagerTeam.setMember(allMembers);
-
-		teamRepo.save(foundManagerTeam);
-
-		return created;
-	}
 }
+
