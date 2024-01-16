@@ -21,8 +21,8 @@ const MemberCard = (props) => {
     assists: props.member.assists,
     scores: props.member.scores,
     playtime: props.member.playtime,
-    faults: props.member.faults
-
+    faults: props.member.faults,
+    image: props.member.image
   });
 
   const handleChange = (event) => {
@@ -53,6 +53,9 @@ const MemberCard = (props) => {
       <div className="card d-inline-block m-4" style={{width:"250px"}} data-bs-theme="dark">
         <div className="card-header text-center">
           <h4>{member.name}</h4>
+        </div>
+        <div>
+          <img src={member.image} class="img-fluid"></img>
         </div>
         <div className="card-body">
           <div className="text-center">
@@ -161,6 +164,21 @@ const MemberCard = (props) => {
                       onChange={handleChange}
                       required
                   />
+                </div>
+
+                <div className="form-group form-control-sm">
+                  <label htmlFor="image"><small>New Image URL:</small></label>
+                  <input
+                      type="text"
+                      id="image"
+                      className="form-control form-control-sm"
+                      name='image'
+                      min="0"
+                      value={member.image}
+                      onChange={handleChange}
+                      required/>
+                  <p style={{padding: "5px"}}>Image preview:</p>
+                  <img src={member.image} class="img-fluid" />
                 </div>
 
                 <hr/>
