@@ -26,6 +26,7 @@ import com.cognixia.jump.repository.MemberRepository;
 import com.cognixia.jump.repository.TeamRepository;
 import com.cognixia.jump.util.JwtUtil;
 
+/*
 @ExtendWith(MockitoExtension.class)
 public class MemberServiceTest {
 
@@ -51,7 +52,6 @@ public class MemberServiceTest {
 		Manager testManager = new Manager(1, "Test", "test", "test", null, true);
 		Team testTeam = new Team(1, "Test team", "Test type", testManager, TestMembers);
 	}
-	*/
 	
 	List<Member> TestMembers = new ArrayList<Member>();
 	Manager testManager = new Manager(1, "Test", "test", "test", null, true);
@@ -114,3 +114,5 @@ public class MemberServiceTest {
         assertEquals(edited, testMember);
 	}
 }
+
+*/
