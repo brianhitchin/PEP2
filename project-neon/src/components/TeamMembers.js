@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import MemberCard from "./MemberCard";
 import MemberApi from "../apis/MemberApi";
 import "../index.css"
+
 const TeamMembers = () => {
   const [members, setMembers] = useState([]);
   const [addedMember, setAddedMember] = useState({
@@ -14,7 +15,8 @@ const TeamMembers = () => {
     assists: 0,
     scores: 0,
     playtime: 0,
-    faults: 0
+    faults: 0,
+    image: ""
   })
   const [ap, setAp] = useState(false)
 
@@ -35,21 +37,38 @@ const TeamMembers = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    if(addedMember.name !== "") {
-      // console.log('addedmember', addedMember)
-      MemberApi.addMember(localStorage.getItem('jwt'), addedMember, members, setMembers)
-      setAddedMember({
+    if (!addedMember.image.endsWith(".png") && !addedMember.image.endsWith(".jpg")) {
+
+      const new_json = {
         id: 0,
         team: null,
-        name: '',
-        jersey_num: 0,
-        assists: 0,
-        scores: 0,
-        playtime: 0,
-        faults: 0
-      })
-      setAp(false)
+        name: addedMember.name,
+        jersey_num: addedMember.jersey_num,
+        assists: addedMember.assists,
+        scores: addedMember.scores,
+        playtime: addedMember.playtime,
+        faults: addedMember.faults,
+        image: 'https://upload.wikimedia.org/wikipedia/commons/a/af/Default_avatar_profile.jpg'
+      }
+      
+      MemberApi.addMember(localStorage.getItem('jwt'), new_json, members, setMembers)
+
+    } else {
+      MemberApi.addMember(localStorage.getItem('jwt'), addedMember, members, setMembers)
     }
+  
+    setAddedMember({
+      id: 0,
+      team: null,
+      name: '',
+      jersey_num: 0,
+      assists: 0,
+      scores: 0,
+      playtime: 0,
+      faults: 0,
+      image: ""
+    })
+    setAp(false)
   }
 
   return (
@@ -157,11 +176,21 @@ const TeamMembers = () => {
                     onChange={handleChange}
                     required/>
               </div>
+
+              <div className="form-group form-control-sm">
+                <label htmlFor="teamName"><small>Image URL:</small></label>
+                <input
+                    type="text"
+                    id="image"
+                    className="form-control"
+                    name='image'
+                    value={addedMember.image}
+                    onChange={handleChange}
+                    required/>
+              </div>
+
             </div>
           </div>
-
-
-
 
       <div className="text-center">
         <button type="submit" className="btn btn-dark mt-3 px-5" onClick={submitHandler}>
