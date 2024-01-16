@@ -1,11 +1,13 @@
 package com.cognixia.jump.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -38,10 +40,10 @@ public class Manager implements Serializable {
     @NotBlank
     private String password;
 
-    @Schema(description = "Team of the manager", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "team_id", nullable = true, unique = true)
-    private Team team;
+    @Schema(description = "Teams of the manager", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy="manager", cascade = CascadeType.ALL)
+    private List<Team> teams;
 
     @Schema(description = "Role of the manager", example = "ROLE_MANAGER", requiredMode = Schema.RequiredMode.REQUIRED)
     @Enumerated(EnumType.STRING)
@@ -55,12 +57,13 @@ public class Manager implements Serializable {
     // Constructors
     public Manager() {}
 
-    public Manager(Integer id, String name, String username, String password, Team team, boolean enabled){
-        this.managerId = id;
+    public Manager(Integer managerId, String name, String username, String password, List<Team> teams, Role role, boolean enabled) {
+        this.managerId = managerId;
         this.name = name;
         this.username = username;
         this.password = password;
-        this.team = team;
+        this.teams = teams;
+        this.role = role;
         this.enabled = enabled;
     }
 
@@ -97,12 +100,12 @@ public class Manager implements Serializable {
         this.password = password;
     }
 
-    public Team getTeam() {
-        return team;
+    public List<Team> getTeams() {
+        return teams;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 
     public boolean isEnabled() {
@@ -128,7 +131,7 @@ public class Manager implements Serializable {
                 ", name='" + name + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", team=" + team +
+                ", teams=" + teams +
                 ", role=" + role +
                 ", enabled=" + enabled +
                 ']';
@@ -139,11 +142,11 @@ public class Manager implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Manager)) return false;
         Manager manager = (Manager) o;
-        return isEnabled() == manager.isEnabled() && Objects.equals(getManagerId(), manager.getManagerId()) && Objects.equals(getName(), manager.getName()) && Objects.equals(getUsername(), manager.getUsername()) && Objects.equals(getPassword(), manager.getPassword()) && Objects.equals(getTeam(), manager.getTeam()) && getRole() == manager.getRole();
+        return isEnabled() == manager.isEnabled() && Objects.equals(getManagerId(), manager.getManagerId()) && Objects.equals(getName(), manager.getName()) && Objects.equals(getUsername(), manager.getUsername()) && Objects.equals(getPassword(), manager.getPassword()) && Objects.equals(getTeams(), manager.getTeams()) && getRole() == manager.getRole();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getManagerId(), getName(), getUsername(), getPassword(), getTeam(), getRole(), isEnabled());
+        return Objects.hash(getManagerId(), getName(), getUsername(), getPassword(), getTeams(), getRole(), isEnabled());
     }
 }

@@ -27,7 +27,7 @@ public class ManagerController {
     @Operation(summary = "Get all managers in the manager table",
     description = "Gets all managers in the manager table from neon_db database.")
     @CrossOrigin
-    @GetMapping("/managers")
+    @GetMapping("admin/managers")
     public ResponseEntity<?> getAllManagers() {
         return ResponseEntity.status(200).body(service.getAllManagers());
     }
@@ -47,4 +47,21 @@ public class ManagerController {
         return ResponseEntity.status(201).body(newManager);
 
     }
+
+    // ## ADMIN LOGIN
+//    @Operation(summary = "Creates an admin in the manager table",
+//            description = "Creates an admin in the manager table from neon_db database." +
+//                    "Admin must provide a name, username and password.")
+//    @ApiResponses({
+//            @ApiResponse(responseCode = "201", description = "Manager account has been created"),
+//            @ApiResponse(responseCode = "400", description = "Username already exists")
+//    })
+//    @CrossOrigin
+//    @PostMapping("/signup")
+//    public ResponseEntity<?> createManager(@RequestBody Manager manager) throws ResourceAlreadyExistsException {
+//
+//        Manager newManager = service.createManager(manager);
+//        return ResponseEntity.status(201).body(newManager);
+//
+//    }
 }

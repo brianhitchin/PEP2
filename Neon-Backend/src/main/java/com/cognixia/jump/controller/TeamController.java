@@ -35,24 +35,25 @@ public class TeamController {
 	@Operation(summary = "Get all teams in the team table",
 			description = "Get all teams in the team table from the neon_db database.")
 	@CrossOrigin
-	@GetMapping("/teams")
-	public List<Team> getAllTeams() {
-		return service.getAllTeams();		
+	@GetMapping("admin/teams")
+	public ResponseEntity<?> getAllTeams() {
+		return ResponseEntity.status(200).body(service.getAllTeams());
 	}
 
-	@Operation(summary = "Get the team of the current manager",
-			description = "Get the team of the manager that is currently logged in. " +
+
+	@Operation(summary = "Get the teams of the current manager",
+			description = "Get the teams of the manager that is currently logged in. " +
 					"The manager must be logged in using a JWT token to access their team.")
 	@ApiResponses(
 			@ApiResponse(responseCode = "200",
-					description = "Team has been found")
+					description = "Teams has been found")
 	)
 	@CrossOrigin
-	@GetMapping("/team")
-	public ResponseEntity<?> getTeam(@RequestHeader(value="authorization") String header ) {
+	@GetMapping("/teams")
+	public ResponseEntity<?> getTeams(@RequestHeader(value="authorization") String header) {
 		
-		Team myTeam = service.getMyTeam(header);
-		return ResponseEntity.status(200).body(myTeam);
+		List<Team> myTeams = service.getMyTeams(header);
+		return ResponseEntity.status(200).body(myTeams);
 		
 	}
 
@@ -64,7 +65,7 @@ public class TeamController {
 					description = "Team has been created")
 	)
 	@CrossOrigin
-	@PostMapping("/team/add")
+	@PostMapping("/teams")
 	public ResponseEntity<?> addTeam(@RequestHeader(value="authorization") String header, @RequestBody Team newTeam) throws ResourceNotFoundException, ManagerHasTeamException {
 
 		Team createdTeam = service.addTeam(header, newTeam);
