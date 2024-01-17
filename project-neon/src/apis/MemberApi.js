@@ -29,6 +29,10 @@ const MemberApi = {
 
         let myToken = "Bearer " + token;
 
+        if (member.name === undefined || member.name === '') {
+            member.name = "(Empty)";
+        }
+
         fetch(URI + "/members/" + team_id,  {
             method: 'POST',
             body: JSON.stringify(member),
@@ -74,7 +78,12 @@ const MemberApi = {
 
         let myToken = "Bearer " + token;
 
-        fetch(URI + "/members",  {
+        if (member && member.name !== undefined && member.name === '') {
+            alert("Member name cannot be blank.");
+            return Promise.resolve(false);
+        }
+
+        return fetch(URI + "/members",  {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json",
@@ -84,14 +93,16 @@ const MemberApi = {
         })
             .then( result => {
 
-                return result.json()
-            } )
-            .then( data => {
+                if (result.ok) {
 
-                // console.log("Updated member id: " + data.id);
-
+                    return Promise.resolve(true); // Return a resolved Promise with 'true'
+                }
+                return Promise.resolve(false);
             } )
-            .catch(error => { console.log(error); })
+            .catch(error => {
+                console.log(error);
+                return Promise.resolve(false);
+            })
 
     }
 

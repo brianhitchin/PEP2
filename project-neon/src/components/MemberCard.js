@@ -13,7 +13,7 @@ const MemberCard = (props) => {
     id: props.member.id,
     team: {
       team_Id: props.member.team.team_Id,
-      name: props.member.team.name,
+      name: props.member.team.name ,
       type: props.member.team.type
     },
     name: props.member.name,
@@ -38,8 +38,12 @@ const MemberCard = (props) => {
 
   const updateMember = () => {
 
-    setOpen(!open);
-    MemberApi.updateMember(localStorage.getItem("jwt"), member, props.team_id);
+    MemberApi.updateMember(localStorage.getItem("jwt"), member, props.team_id)
+        .then(success => {
+          if (success) {
+            setOpen(!open)
+          }
+        });
 
   };
 
@@ -87,7 +91,7 @@ const MemberCard = (props) => {
 
           {/*  Collapse  */}
           { open ? <div className="card-body">
-                <div className="form-group form-control-sm">
+                <form className="form-group form-control-sm">
                   <label htmlFor="teamName"><small>Name:</small></label>
                   <input
                       type="text"
@@ -98,7 +102,7 @@ const MemberCard = (props) => {
                       value={member.name}
                       onChange={handleChange}
                       required/>
-                </div>
+                </form>
                 <div className="form-group form-control-sm">
                   <label htmlFor="teamName"><small>Jersey_num:</small></label>
                   <input
