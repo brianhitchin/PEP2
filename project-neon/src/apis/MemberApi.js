@@ -6,11 +6,11 @@ const URI = BASE + "/api"
 
 const MemberApi = {
 
-    getMyMember: (token, setMembers) => {
+    getMyMember: (token, setMembers, team_id) => {
 
         let myToken = "Bearer " + token;
 
-        fetch(URI + "/mymembers", {
+        fetch(URI + "/members/" + team_id, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": myToken
@@ -18,17 +18,18 @@ const MemberApi = {
         })
         .then( result => result.json() )
         .then( data => {
+            console.log("DATA OF MEMBERS: ", data)
             setMembers([...data])
         })
         .catch(error => { console.log(error); })
 
     },
 
-    addMember: (token, member, memberList, setMembers) => {
+    addMember: (token, member, memberList, setMembers, team_id) => {
 
         let myToken = "Bearer " + token;
 
-        fetch(URI + "/members/add",  {
+        fetch(URI + "/members/" + team_id,  {
             method: 'POST',
             body: JSON.stringify(member),
             headers: {
@@ -41,11 +42,13 @@ const MemberApi = {
         .catch(error => { console.log(error); })
     },
 
-    deleteMember: (token, id, setMembers, members) => {
+    deleteMember: (token, member_id, setMembers, members, team_id) => {
 
         let myToken = "Bearer " + token;
 
-        fetch(URI + "/members/" + id,  {
+        console.log("URI: ", URI + "/members/" + member_id + "/" + team_id)
+
+        fetch(URI + "/members/" + member_id + "/" + team_id,  {
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json",
@@ -55,7 +58,7 @@ const MemberApi = {
             .then( result => {
 
                 if (result.ok) {
-                    setMembers(members.filter(member => member.id !== id))
+                    setMembers(members.filter(member => member.id !== member_id))
                     //console.log("Member deleted successfully.");
                 } else {
                     console.log("Failed to delete member. Status: " + result.status);
@@ -71,7 +74,7 @@ const MemberApi = {
 
         let myToken = "Bearer " + token;
 
-        fetch(URI + "/mymembers",  {
+        fetch(URI + "/members",  {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json",

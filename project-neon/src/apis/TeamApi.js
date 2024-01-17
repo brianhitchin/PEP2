@@ -8,7 +8,7 @@ const TeamApi = {
   getTeam: (token) => {
     let myToken = "Bearer " + token;
 
-    return fetch(URI + "/team", {
+    return fetch(URI + "/teams", {
       headers: {
         "Content-Type": "application/json",
         Authorization: myToken,
@@ -20,9 +20,10 @@ const TeamApi = {
       })
       .then((data) => {
         // console.log(data);
-
+          console.log("DATA", data)
         // Check if the team exists in the response
-        if (data.name != null) {
+        if (data[0] != null) {
+            console.log("Do we get in here?")
           return data; // Return the team data if a team exists
         } else {
           return null; // Return null if there's no team
@@ -45,7 +46,7 @@ const TeamApi = {
   },
   addTeam: (team, token) => {
     let myToken = "Bearer " + token;
-    fetch(URI + "/team/add", {
+    fetch(URI + "/teams", {
         method: "POST",
         body: JSON.stringify(team),
         headers: { "Content-Type": "application/json",

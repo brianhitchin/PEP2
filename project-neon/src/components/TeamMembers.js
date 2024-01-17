@@ -5,7 +5,7 @@ import MemberCard from "./MemberCard";
 import MemberApi from "../apis/MemberApi";
 import "../index.css"
 
-const TeamMembers = () => {
+const TeamMembers = (props) => {
   const [members, setMembers] = useState([]);
   const [addedMember, setAddedMember] = useState({
     id: 0,
@@ -22,8 +22,7 @@ const TeamMembers = () => {
 
   // Simulate API call
   useEffect(() => {
-
-    MemberApi.getMyMember(localStorage.getItem('jwt'), setMembers)
+    MemberApi.getMyMember(localStorage.getItem('jwt'), setMembers, props.team_id)
 
   }, []);
 
@@ -50,13 +49,13 @@ const TeamMembers = () => {
         faults: addedMember.faults,
         image: 'https://upload.wikimedia.org/wikipedia/commons/a/af/Default_avatar_profile.jpg'
       }
-      
-      MemberApi.addMember(localStorage.getItem('jwt'), new_json, members, setMembers)
+
+      MemberApi.addMember(localStorage.getItem('jwt'), new_json, members, setMembers, props.team_id)
 
     } else {
-      MemberApi.addMember(localStorage.getItem('jwt'), addedMember, members, setMembers)
+      MemberApi.addMember(localStorage.getItem('jwt'), addedMember, members, setMembers, props.team_id)
     }
-  
+
     setAddedMember({
       id: 0,
       team: null,
@@ -78,16 +77,20 @@ const TeamMembers = () => {
             <small><strong>You do not currently have any members.</strong></small>)}
         {members.map((member) => (
           <div key={member.id} style={{width:"275px"}} className="d-inline-block ">
-            <MemberCard member={member} setMembers={setMembers} members={members}/>
+            <MemberCard member={member} setMembers={setMembers} members={members} team_id={props.team_id}/>
           </div>
         ))}
       </div>
 
       <div className="text-center">
         <hr/>
-        <button className="btn btn-dark" onClick={() => setAp(!ap)}>
+        <button className="btn btn-dark mx-2 px-3" onClick={() => {props.setViewTeam(true)}}>
+          Go Back
+        </button>
+        <button className="btn btn-dark mx-2 px-3" onClick={() => setAp(!ap)}>
           {ap ? "Cancel" : "Add Player"}
         </button>
+
       </div>
 
 
