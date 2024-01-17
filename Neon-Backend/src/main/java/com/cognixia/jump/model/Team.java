@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,6 +32,7 @@ public class Team implements Serializable{
 
 	@Schema(description = "Manager of the team")
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Manager manager;
 
 	@Schema(description = "Members of the team")

@@ -38,16 +38,19 @@ public class SecurityConfiguration {
 
         http.csrf().disable()
                 .authorizeRequests()
-
                 .antMatchers(HttpMethod.GET, "/api/admin/managers").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/admin/teams").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/admin/members").hasRole("ADMIN")
+
+
+
                 .antMatchers(HttpMethod.GET, "/api/teams").hasRole("MANAGER")
                 .antMatchers(HttpMethod.POST, "/api/teams/*").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/api/members/*").hasRole("MANAGER")
                 .antMatchers(HttpMethod.POST, "/api/members/*").hasRole("MANAGER")
                 .antMatchers(HttpMethod.DELETE, "/api/members/*").hasRole("MANAGER")
                 .antMatchers(HttpMethod.PUT, "/api/members").hasRole("MANAGER")
+                .antMatchers(HttpMethod.POST, "/api/admin").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/signup").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
                 .anyRequest().permitAll()

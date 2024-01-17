@@ -3,19 +3,14 @@ package com.cognixia.jump.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.cognixia.jump.model.Manager;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cognixia.jump.exception.ManagerHasTeamException;
 import com.cognixia.jump.exception.ResourceNotFoundException;
@@ -36,7 +31,7 @@ public class TeamController {
 			description = "Get all teams in the team table from the neon_db database.")
 	@CrossOrigin
 	@GetMapping("admin/teams")
-	public ResponseEntity<?> getAllTeams() {
+	public ResponseEntity<?> getAllTeams(@RequestHeader(value="authorization") String header) {
 		return ResponseEntity.status(200).body(service.getAllTeams());
 	}
 
@@ -70,6 +65,55 @@ public class TeamController {
 
 		Team createdTeam = service.addTeam(header, newTeam);
 		return ResponseEntity.status(201).body(createdTeam);
+
+	}
+
+	// ## Admin Endpoints
+
+	@Operation(summary = "Finds a team in the team table by its ID",
+			description = "Finds a team in the team table by its ID from neon_db database." +
+					"Used by admins to manage teams")
+	@ApiResponses({
+			@ApiResponse(responseCode = "200", description = "Team has been found"),
+			@ApiResponse(responseCode = "404", description = "Team was not found")
+	})
+	@CrossOrigin
+	@GetMapping("/admin/teams/{id}")
+	public ResponseEntity<?> getTeamById(@PathVariable Integer id) throws ResourceNotFoundException {
+
+		Team team = service.getTeamById(id);
+		return ResponseEntity.status(200).body(team);
+
+	}
+
+	@Operation(summary = "Updates a team in the team table",
+			description = "Updates a team in the team table from neon_db database." +
+					"Used by admins to update teams")
+	@ApiResponses({
+			@ApiResponse(responseCode = "200", description = "Team has been updated"),
+	})
+	@CrossOrigin
+	@PatchMapping("/admin/teams")
+	public ResponseEntity<?> updateTeam(@RequestBody Team team) {
+
+		Team updatedTeam = service.updateTeam(team);
+		return ResponseEntity.status(200).body(updatedTeam);
+
+	}
+
+	@Operation(summary = "Deletes a team in the team table",
+			description = "Deletes a team in the team table from neon_db database." +
+					"Used by admins to delete teams")
+	@ApiResponses({
+			@ApiResponse(responseCode = "200", description = "Team has been deleted"),
+			@ApiResponse(responseCode = "404", description = "Team was not found")
+	})
+	@CrossOrigin
+	@DeleteMapping("/admin/teams/{id}")
+	public ResponseEntity<?> deleteTeam(@PathVariable Integer id) throws ResourceNotFoundException {
+
+		Team teamDeleted = service.deleteTeam(id);
+		return ResponseEntity.status(200).body(teamDeleted);
 
 	}
 

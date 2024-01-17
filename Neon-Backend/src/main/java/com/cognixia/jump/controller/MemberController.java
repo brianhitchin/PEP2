@@ -34,7 +34,7 @@ public class MemberController {
 		)
 	@CrossOrigin
 	@GetMapping("admin/members")
-	public ResponseEntity<?> getAllMembers() {
+	public ResponseEntity<?> getAllMembers(@RequestHeader(value="authorization") String header) {
 		return ResponseEntity.status(200).body(service.getAllMembers());
 	}
 
@@ -94,4 +94,52 @@ public class MemberController {
 		return ResponseEntity.status(200).body(service.editMember(header, editMember));
 	}
 
+	// ## Admin Endpoints
+
+	@Operation(summary = "Finds a member in the member table by its ID",
+			description = "Finds a member in the member table by its ID from neon_db database." +
+					"Used by admins to manage members")
+	@ApiResponses({
+			@ApiResponse(responseCode = "200", description = "Member has been found"),
+			@ApiResponse(responseCode = "404", description = "Member was not found")
+	})
+	@CrossOrigin
+	@GetMapping("/admin/members/{id}")
+	public ResponseEntity<?> getMemberById(@PathVariable Integer id) throws ResourceNotFoundException {
+
+		Member member = service.getMemberById(id);
+		return ResponseEntity.status(200).body(member);
+
+	}
+
+	@Operation(summary = "Updates a member in the member table",
+			description = "Updates a member in the member table from neon_db database." +
+					"Used by admins to update members")
+	@ApiResponses({
+			@ApiResponse(responseCode = "200", description = "Member has been updated"),
+	})
+	@CrossOrigin
+	@PatchMapping("/admin/members")
+	public ResponseEntity<?> updateMember(@RequestBody Member member) {
+
+		Member updatedMember = service.updateMember(member);
+		return ResponseEntity.status(200).body(updatedMember);
+
+	}
+
+	@Operation(summary = "Deletes a member in the member table",
+			description = "Deletes a member in the member table from neon_db database." +
+					"Used by admins to delete members")
+	@ApiResponses({
+			@ApiResponse(responseCode = "200", description = "Member has been deleted"),
+			@ApiResponse(responseCode = "404", description = "Member was not found")
+	})
+	@CrossOrigin
+	@DeleteMapping("/admin/Members/{id}")
+	public ResponseEntity<?> deleteMember(@PathVariable Integer id) throws ResourceNotFoundException {
+
+		Member teamDeleted = service.deleteMember(id);
+		return ResponseEntity.status(200).body(teamDeleted);
+
+	}
 }

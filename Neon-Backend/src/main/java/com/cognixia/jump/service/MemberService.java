@@ -161,6 +161,30 @@ public class MemberService {
         
 	}
 
+	public Member getMemberById(Integer id) throws ResourceNotFoundException {
+
+		Optional<Member> memberFound = repo.findById(id);
+
+		if(memberFound.isPresent()){
+			return memberFound.get();
+		}
+		else{
+			throw new ResourceNotFoundException("Member");
+		}
+	}
+
+	public Member updateMember(Member member) {
+
+		return repo.save(member);
+	}
+
+	public Member deleteMember(Integer id) throws ResourceNotFoundException {
+
+		Member toDelete = getMemberById(id);
+		repo.delete(toDelete);
+		return toDelete;
+	}
+
 
 }
 
