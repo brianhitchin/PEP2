@@ -39,13 +39,13 @@ const MemberCard = (props) => {
   const updateMember = () => {
 
     setOpen(!open);
-    MemberApi.updateMember(localStorage.getItem("jwt"), member);
+    MemberApi.updateMember(localStorage.getItem("jwt"), member, props.team_id);
 
   };
 
   const deleteMember = (id) => {
 
-    MemberApi.deleteMember(localStorage.getItem("jwt"), id, props.setMembers, props.members)
+    MemberApi.deleteMember(localStorage.getItem("jwt"), id, props.setMembers, props.members, props.team_id)
 
   }
 
@@ -55,7 +55,7 @@ const MemberCard = (props) => {
           <h4>{member.name}</h4>
         </div>
         <div>
-          <img src={member.image} class="img-fluid"></img>
+          <img src={member.image} class="img-fluid"/>
         </div>
         <div className="card-body">
           <div className="text-center">

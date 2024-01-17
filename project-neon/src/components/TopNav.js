@@ -52,7 +52,8 @@ const TopNav = () => {
           <li className="nav-item active">
             <Link
               className="nav-link"
-              to="http://35.164.107.214:8080/swagger-ui/index.html"
+              to="http://localhost:8080/swagger-ui/index.html"
+              // to="http://35.164.107.214:8080/swagger-ui/index.html"
             >
               Docs
             </Link>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import TeamApi from '../apis/TeamApi';
 
-const CreateTeam = () => {
+const CreateTeam = (props) => {
 
 const history = useNavigate();
   // State to store input values
@@ -28,6 +28,13 @@ const history = useNavigate();
     TeamApi.addTeam(team, localStorage.getItem("jwt"))
 
     alert('Team successfully created');
+    history("/");
+  };
+
+  const goBack = (e) => {
+    e.preventDefault();
+
+
     history("/");
   };
 

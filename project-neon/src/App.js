@@ -7,6 +7,7 @@ import TestPage from './components/TestPage';
 import { useTheme } from './components/ThemeContext';
 import TopNav from './components/TopNav';
 import {Routes, Route} from 'react-router-dom';
+import Team from "./components/Team";
 
 function App() {
   const {isDarkMode, toggleDarkMode } = useTheme();
@@ -22,6 +23,7 @@ function App() {
             <Route path = '/testpage' element = {<TestPage/>} exact />
             <Route path = '/create' element = {<CreateAccount/>} exact />
             <Route path = '/createTeam' element = {<CreateTeam/>} exact />
+            <Route path = '/team' element = {<Team/>} exact />
           </Routes>
         </div>
 
