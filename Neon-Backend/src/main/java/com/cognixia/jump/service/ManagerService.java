@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ManagerService {
@@ -33,5 +34,29 @@ public class ManagerService {
         manager.setManagerId(null);
         manager.setPassword(encoder.encode(manager.getPassword()));
         return repo.save(manager);
+    }
+
+    public Manager getManagerById(Integer id) throws ResourceNotFoundException {
+
+        Optional<Manager> managerFound = repo.findById(id);
+
+        if(managerFound.isPresent()){
+            return managerFound.get();
+        }
+        else{
+            throw new ResourceNotFoundException("Manager");
+        }
+    }
+
+    public Manager updateManager(Manager manager) {
+
+        return repo.save(manager);
+    }
+
+    public Manager deleteManager(Integer id) throws ResourceNotFoundException {
+
+        Manager toDelete = getManagerById(id);
+        repo.delete(toDelete);
+        return toDelete;
     }
 }

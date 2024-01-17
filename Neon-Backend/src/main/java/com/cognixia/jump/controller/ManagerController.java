@@ -48,20 +48,71 @@ public class ManagerController {
 
     }
 
-    // ## ADMIN LOGIN
-//    @Operation(summary = "Creates an admin in the manager table",
-//            description = "Creates an admin in the manager table from neon_db database." +
-//                    "Admin must provide a name, username and password.")
-//    @ApiResponses({
-//            @ApiResponse(responseCode = "201", description = "Manager account has been created"),
-//            @ApiResponse(responseCode = "400", description = "Username already exists")
-//    })
-//    @CrossOrigin
-//    @PostMapping("/signup")
-//    public ResponseEntity<?> createManager(@RequestBody Manager manager) throws ResourceAlreadyExistsException {
-//
-//        Manager newManager = service.createManager(manager);
-//        return ResponseEntity.status(201).body(newManager);
-//
-//    }
+    // ## ADMIN ENDPOINT ##
+    @Operation(summary = "Creates an admin in the manager table",
+            description = "Creates an admin in the manager table from neon_db database." +
+                    "Admin must provide a name, username and password.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Manager account has been created"),
+            @ApiResponse(responseCode = "400", description = "Username already exists")
+    })
+    @CrossOrigin
+    @PostMapping("/admin")
+    public ResponseEntity<?> createAdmin(@RequestBody Manager admin) throws ResourceAlreadyExistsException {
+
+        Manager newAdmin = service.createManager(admin);
+        return ResponseEntity.status(201).body(newAdmin);
+
+    }
+
+    @Operation(summary = "Finds a manager in the manager table by its ID",
+            description = "Finds a manager in the manager table by its ID from neon_db database." +
+                    "Used by admins to manage team managers")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Manager has been found"),
+            @ApiResponse(responseCode = "404", description = "Manager was not found")
+    })
+    @CrossOrigin
+    @GetMapping("/admin/manager/{id}")
+    public ResponseEntity<?> getManagerById(@PathVariable Integer id) throws ResourceNotFoundException {
+
+        Manager manager = service.getManagerById(id);
+        return ResponseEntity.status(200).body(manager);
+
+    }
+
+    @Operation(summary = "Updates a manager in the manager table",
+            description = "Updates a manager in the manager table from neon_db database." +
+                    "Used by admins to update team managers")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Manager has been updated"),
+    })
+    @CrossOrigin
+    @PatchMapping("/admin/manager")
+    public ResponseEntity<?> updateManager(@RequestBody Manager manager) {
+
+        Manager updatedManager = service.updateManager(manager);
+        return ResponseEntity.status(200).body(updatedManager);
+
+    }
+
+    @Operation(summary = "Deletes a manager in the manager table",
+            description = "Deletes a manager in the manager table from neon_db database." +
+                    "Used by admins to delete team managers")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Manager has been deleted"),
+            @ApiResponse(responseCode = "404", description = "Manager was not found")
+    })
+    @CrossOrigin
+    @DeleteMapping("/admin/manager/{id}")
+    public ResponseEntity<?> deleteManager(@PathVariable Integer id) throws ResourceNotFoundException {
+
+        Manager managerDeleted = service.deleteManager(id);
+        return ResponseEntity.status(200).body(managerDeleted);
+
+    }
+
+
+
+
 }
