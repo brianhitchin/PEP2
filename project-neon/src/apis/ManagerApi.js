@@ -130,7 +130,7 @@ const ManagerApi = {
     },
 
     // Keeping the setManager to set the FE state, if needed but line 131 is not needed
-    updateManager: (manager, setManager, token) => {
+    updateManager: (manager, token) => {
 
         let myToken = "Bearer " + token;
 
@@ -141,11 +141,7 @@ const ManagerApi = {
                 "Content-Type": "application/json",
                 "Authorization": myToken}
         })
-            .then( newResult => newResult.json() )
-            .then( newData => {
-
-                setManager(newData);
-            })
+            .then( newResult => {return newResult.json()} )
             .catch( error => {
                 console.log(error);
             })
@@ -156,25 +152,17 @@ const ManagerApi = {
 
         let myToken = "Bearer " + token;
 
-        return fetch(URI + "/admin/manager/" + id, {
+        fetch(URI + "/admin/manager/" + id, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": myToken}
         })
-            .then( result => {
-
-                if (result.ok) {
-
-                    return Promise.resolve(true); // Return a resolved Promise with 'true'
-                }
-                return Promise.resolve(false);
-            } )
-            .catch(error => {
-                console.log(error);
-                return Promise.resolve(false);
-            })
-    }
+            .then( newResult => {return newResult.json() })
+        .catch(error => {
+            console.log(error);
+        })
+}
 }
 
 export default ManagerApi;
