@@ -104,6 +104,60 @@ const MemberApi = {
                 return Promise.resolve(false);
             })
 
+    },
+
+    // Admin Endpoints
+
+    // Member Endpoints
+    // We can set the member through state or return the member as a JSON (doing both)
+    getMemberById: (id, setMember) => {
+        return fetch(URI + "/admin/members/" + id)
+            .then( result => result.json() )
+            .then( data => {
+                setMember(data);
+                return data;
+            })
+            .catch( error => {
+                console.log(error);
+                return false;
+            })
+    },
+
+    // Keeping the setMember to set the FE state, if needed but line 136 is not needed
+    adminUpdateMember: (member, setMember) => {
+        fetch(URI + "/admin/members", {
+            method: "PATCH",
+            body: JSON.stringify(member),
+            headers: { "Content-Type": "application/json" }
+        })
+            .then( newResult => newResult.json() )
+            .then( newData => {
+
+                setMember(newData);
+            })
+            .catch( error => {
+                console.log(error);
+            })
+    },
+
+    // Returning true if deleted, false if not [using promise]
+    adminDeleteMember: (id) => {
+        return fetch(URI + "/admin/members/" + id, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" }
+        })
+            .then( result => {
+
+                if (result.ok) {
+
+                    return Promise.resolve(true); // Return a resolved Promise with 'true'
+                }
+                return Promise.resolve(false);
+            } )
+            .catch(error => {
+                console.log(error);
+                return Promise.resolve(false);
+            })
     }
 
 }

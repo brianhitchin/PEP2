@@ -4,12 +4,12 @@ const URI = BASE + "/api"
 
 const ManagerApi = {
 
-    getAll: (setStudentList) => {
+    getAll: (setManagerList) => {
 
-        fetch(URI + "/students")
+        fetch(URI + "/admin/managers")
             .then( result => result.json() )
             .then( data => {
-                setStudentList(data)
+                setManagerList(data)
             } )
             .catch( error => { console.log(error) } )
     },
@@ -102,6 +102,58 @@ const ManagerApi = {
                 throw error; // Propagate the error to the next catch block
             });
     },
+
+    // Manager Endpoints
+    // We can set the manager through state or return the manager as a JSON (doing both)
+    getManagerById: (id, setManager) => {
+        return fetch(URI + "/admin/manager/" + id)
+            .then( result => result.json() )
+            .then( data => {
+                setManager(data);
+                return data;
+            })
+            .catch( error => {
+                console.log(error);
+                return false;
+            })
+    },
+
+    // Keeping the setManager to set the FE state, if needed but line 131 is not needed
+    updateManager: (manager, setManager) => {
+        fetch(URI + "/admin/manager", {
+            method: "PATCH",
+            body: JSON.stringify(manager),
+            headers: { "Content-Type": "application/json" }
+        })
+            .then( newResult => newResult.json() )
+            .then( newData => {
+
+                setManager(newData);
+            })
+            .catch( error => {
+                console.log(error);
+            })
+    },
+
+    // Returning true if deleted, false if not [using promise]
+    deleteManager: (id) => {
+        return fetch(URI + "/admin/manager/" + id, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" }
+        })
+            .then( result => {
+
+                if (result.ok) {
+
+                    return Promise.resolve(true); // Return a resolved Promise with 'true'
+                }
+                return Promise.resolve(false);
+            } )
+            .catch(error => {
+                console.log(error);
+                return Promise.resolve(false);
+            })
+    }
 }
 
 export default ManagerApi;
