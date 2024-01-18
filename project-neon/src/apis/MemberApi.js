@@ -108,6 +108,16 @@ const MemberApi = {
 
     // Admin Endpoints
 
+    getAllMembers: (setMemberList) => {
+
+        fetch(URI + "/admin/managers")
+            .then( result => result.json() )
+            .then( data => {
+                setMemberList(data)
+            } )
+            .catch( error => { console.log(error) } )
+    },
+    
     // Member Endpoints
     // We can set the member through state or return the member as a JSON (doing both)
     getMemberById: (id, setMember) => {
