@@ -11,7 +11,7 @@ const TeamApi = {
     return fetch(URI + "/teams", {
       headers: {
         "Content-Type": "application/json",
-        Authorization: myToken,
+        "Authorization": myToken,
       },
     })
       .then((result) => {
@@ -34,8 +34,16 @@ const TeamApi = {
         return null; // Return null in case of an error
       });
   },
-  getAll: (setTeamList) => {
-    return fetch(URI + "/teams")
+  getAll: (setTeamList, token) => {
+
+      let myToken = "Bearer " + token;
+
+    return fetch(URI + "/teams", {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": myToken,
+        }
+    })
       .then((result) => result.json())
       .then((data) => {
         setTeamList(data);
@@ -49,8 +57,9 @@ const TeamApi = {
     fetch(URI + "/teams", {
         method: "POST",
         body: JSON.stringify(team),
-        headers: { "Content-Type": "application/json",
-                    Authorization: myToken}
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": myToken}
     })
         .then( result => result.json() )
         .then( data => {
@@ -66,17 +75,20 @@ const TeamApi = {
             console.log(error);
         })
   },
-  adminUpdateTeam: (team) => {
+  adminUpdateTeam: (team, token) => {
 
     if (team && team.name !== undefined && team.name === '') {
         alert("Team name cannot be blank.");
         return Promise.resolve(false);
     }
 
+      let myToken = "Bearer " + token;
+
     return fetch(URI + "/admin/teams",  {
         method: 'PATCH',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": myToken
         },
         body: JSON.stringify(team)
     })
@@ -93,12 +105,15 @@ const TeamApi = {
             return Promise.resolve(false);
         })
   },
-  adminDeleteTeam: (team_id, setTeam, team) => {
+  adminDeleteTeam: (team_id, setTeam, team, token) => {
+
+      let myToken = "Bearer " + token;
 
     fetch(URI + "/admins/teams/" + team_id,  {
         method: 'DELETE',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": myToken
         }
     })
         .then( result => {
@@ -112,9 +127,15 @@ const TeamApi = {
         } )
         .catch(error => { console.log(error); })
   },
-  adminGetOneTeam: (team_id, setTeam) => {
+  adminGetOneTeam: (team_id, setTeam, token) => {
 
-    fetch(URI + "/admins/teams/" + team_id)
+      let myToken = "Bearer " + token;
+
+    fetch(URI + "/admins/teams/" + team_id, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": myToken
+        },})
     .then((resp) => resp.json())
     .then((data) => setTeam(data))
     .catch((e) => console.log(e))

@@ -108,20 +108,31 @@ const MemberApi = {
 
     // Admin Endpoints
 
-    getAllMembers: (setMemberList) => {
+    getAllMembers: (setMemberList, token) => {
 
-        fetch(URI + "/admin/managers")
+        let myToken = "Bearer " + token;
+
+        fetch(URI + "/admin/managers", {headers: {
+                "Content-Type": "application/json",
+                "Authorization": myToken
+            },})
             .then( result => result.json() )
             .then( data => {
                 setMemberList(data)
             } )
             .catch( error => { console.log(error) } )
     },
-    
+
     // Member Endpoints
     // We can set the member through state or return the member as a JSON (doing both)
-    getMemberById: (id, setMember) => {
-        return fetch(URI + "/admin/members/" + id)
+    getMemberById: (id, setMember, token) => {
+
+        let myToken = "Bearer " + token;
+
+        return fetch(URI + "/admin/members/" + id, {headers: {
+                "Content-Type": "application/json",
+                "Authorization": myToken
+            },})
             .then( result => result.json() )
             .then( data => {
                 setMember(data);
@@ -134,11 +145,17 @@ const MemberApi = {
     },
 
     // Keeping the setMember to set the FE state, if needed but line 136 is not needed
-    adminUpdateMember: (member, setMember) => {
+    adminUpdateMember: (member, setMember, token) => {
+
+        let myToken = "Bearer " + token;
+
         fetch(URI + "/admin/members", {
             method: "PATCH",
             body: JSON.stringify(member),
-            headers: { "Content-Type": "application/json" }
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": myToken
+            }
         })
             .then( newResult => newResult.json() )
             .then( newData => {
@@ -151,10 +168,15 @@ const MemberApi = {
     },
 
     // Returning true if deleted, false if not [using promise]
-    adminDeleteMember: (id) => {
+    adminDeleteMember: (id, token) => {
+
+        let myToken = "Bearer " + token;
+
         return fetch(URI + "/admin/members/" + id, {
             method: "DELETE",
-            headers: { "Content-Type": "application/json" }
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": myToken}
         })
             .then( result => {
 

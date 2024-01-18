@@ -135,7 +135,7 @@ public class MemberController {
 			@ApiResponse(responseCode = "404", description = "Member was not found")
 	})
 	@CrossOrigin
-	@DeleteMapping("/admin/Members/{id}")
+	@DeleteMapping("/admin/members/{id}")
 	public ResponseEntity<?> deleteMember(@PathVariable Integer id) throws ResourceNotFoundException {
 
 		Member teamDeleted = service.deleteMember(id);
