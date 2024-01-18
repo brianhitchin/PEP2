@@ -59,4 +59,14 @@ public class ManagerService {
         repo.delete(toDelete);
         return toDelete;
     }
+
+    public Manager getManagerByUsername(String username) throws ResourceNotFoundException {
+
+        Optional<Manager> manager = repo.findByUsername(username);
+
+        if(manager.isPresent())
+            return manager.get();
+        else
+            throw new ResourceNotFoundException("Manager");
+    }
 }

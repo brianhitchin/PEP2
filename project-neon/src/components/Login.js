@@ -11,6 +11,7 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { isLoggedIn, login } = useAuth();
+  const { isAdmin, adminLogin } = useAuth();
   const {isDarkMode, toggleDarkMode } = useTheme();
 
   const handleSubmit = (e) => {
@@ -27,7 +28,19 @@ const Login = () => {
 
             // store to localStorage
             localStorage.setItem('jwt', token)
-            login();
+
+            // Get User by its username
+            ManagerApi.findUserByUsername(username)
+                .then( data =>{
+
+                  if(data.role === "ROLE_MANAGER"){
+                    login();
+                  }
+                  else if(data.role === "ROLE_ADMIN"){
+                    adminLogin();
+                  }
+
+                })
           })
           .catch(error => {
             // console.log('Login failed: ', error)
@@ -37,6 +50,10 @@ const Login = () => {
 
   if (isLoggedIn) {
     return <LoggedInScreen />;
+  }
+
+  if (isAdmin) {
+    // return <AdminDashboard />;
   }
 
   return (
