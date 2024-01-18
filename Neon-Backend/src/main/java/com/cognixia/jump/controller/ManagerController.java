@@ -112,6 +112,15 @@ public class ManagerController {
 
     }
 
+    @Operation(summary = "Gets a manager user in the manager table by their username",
+            description = "Gets a manager user in the manager table by their username from neon_db database.")
+    @CrossOrigin
+    @GetMapping("/managers/{username}")
+    public ResponseEntity<?> getManagerByUsername(@PathVariable String username) throws ResourceNotFoundException {
+        Manager manager = service.getManagerByUsername(username);
+        return ResponseEntity.status(200).body(manager);
+    }
+
 
 
 

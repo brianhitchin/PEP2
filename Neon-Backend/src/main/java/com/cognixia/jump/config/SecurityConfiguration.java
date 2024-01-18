@@ -52,6 +52,7 @@ public class SecurityConfiguration {
                 .antMatchers(HttpMethod.PUT, "/api/members").hasRole("MANAGER")
                 .antMatchers(HttpMethod.POST, "/api/admin").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/signup").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/managers/*").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
                 .anyRequest().permitAll()
                 .and()

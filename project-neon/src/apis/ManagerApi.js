@@ -14,6 +14,16 @@ const ManagerApi = {
             .catch( error => { console.log(error) } )
     },
 
+    findUserByUsername: (username) => {
+
+        return fetch(URI + "/managers/" + username)
+            .then( result => result.json() )
+            .then( data => {
+               return data;
+            } )
+            .catch( error => { console.log(error) } )
+    },
+
     doesUsernameExist: (account) => {
 
         // First, Check if the username already exists in the DB
@@ -82,6 +92,7 @@ const ManagerApi = {
                 return response.json();
             })
             .then(data => {
+                console.log(data)
                 return data.jwt;
             })
             .catch(error => {
