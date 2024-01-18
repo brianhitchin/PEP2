@@ -1,17 +1,56 @@
 import React, { useState, useEffect } from "react";
 import ManagerApi from "../apis/ManagerApi";
+import MemberApi from "../apis/MemberApi";
 
 const ManageManagers = () => {
   const [users, setUsers] = useState([]);
 
-  const handleUpdate = (userId) => {
-    // Handle the update logic for the selected user
-    console.log(`Update user with ID ${userId}`);
+  // Collapse for Updating each Manager
+  const [open, setOpen] = useState([]);
+
+  const handleChange = (index, event) => {
+
+    console.log(event)
+    console.log(index)
+    console.log("index undefined?", users[index])
+
+    const updatedUsers = [...users];
+    updatedUsers[index] = {
+      ...updatedUsers[index],
+      [event.target.name]: event.target.value,
+    };
+
+    setUsers(updatedUsers);
+  };
+
+  const updateManager = (index) => {
+
+    ManagerApi.updateManager(users[index],localStorage.getItem("jwt"))
+
+    setOpen((prevOpen) => {
+      const tempOpen = [...prevOpen];
+      tempOpen[index] = !tempOpen[index];
+      return tempOpen;
+    });
+
+
+  };
+
+  const handleUpdate = (index) => {
+    setOpen((prevOpen) => {
+      const tempOpen = [...prevOpen];
+      tempOpen[index] = !tempOpen[index];
+      return tempOpen;
+    });
   };
 
   const handleDelete = (userId) => {
     // Handle the delete logic for the selected user
-    console.log(`Delete user with ID ${userId}`);
+
+    console.log(userId)
+    ManagerApi.deleteManager(userId, localStorage.getItem("jwt"))
+    setUsers(users.filter(user => user.managerId !== userId))
+
   };
 
   useEffect(() => {
@@ -20,6 +59,8 @@ const ManageManagers = () => {
       .then((data) => {
             console.log("User data: ", data);
         setUsers(data);
+        const temp = new Array(data.length).fill(false)
+        setOpen(temp)
       })
       .catch((error) => {
         console.error("Error fetching user data:", error);
@@ -38,12 +79,12 @@ const ManageManagers = () => {
             </div>
           </div>
 
+
           {/* Display Users List */}
           {users.map((user, index) => (
             <div
-              key={user.id}
-              className={`card mb-0 ${index === 0 ? "rounded-top" : ""} ${index === users.length - 1 ? "rounded-bottom" : ""}`}
-            >
+              key={user.managerId}
+              className={`card mb-0 ${index === 0 ? "rounded-top" : ""} ${index === users.length - 1 ? "rounded-bottom" : ""}`}>
               <div className="card-body d-flex justify-content-between align-items-center">
                 <div>
                   <h5 className="card-title">{user.name}</h5>
@@ -51,13 +92,69 @@ const ManageManagers = () => {
                 <div>
                   <button
                     className="btn btn-primary mr-2"
-                    onClick={() => handleUpdate(user.id)}
+                    onClick={() => handleUpdate(index
+                    )}
                   >
                     Update
                   </button>
+
+                  {/*  Collapse  */}
+                  { open[index] ? <div className="card-body">
+                        <form className="form-group form-control-sm">
+                          <label htmlFor="teamName"><small>Name:</small></label>
+                          <input
+                              type="text"
+                              id="name"
+                              className="form-control form-control-sm"
+                              name='name'
+                              value={user.name}
+                              onChange={(e) => {handleChange(index, e)}}
+                              required/>
+                        </form>
+                        <div className="form-group form-control-sm">
+                          <label htmlFor="teamName"><small>Username:</small></label>
+                          <input
+                              type="text"
+                              id="username"
+                              className="form-control"
+                              name='username'
+                              value={user.username}
+                              onChange={(e) => {handleChange(index, e)}}
+                              required
+                          />
+                        </div>
+                        <div className="form-group form-control-sm">
+                          <label htmlFor="teamName"><small>Role:</small></label>
+                          <input
+                              type="text"
+                              id="role"
+                              className="form-control"
+                              name='role'
+                              min="0"
+                              value={user.role}
+                              onChange={(e) => {handleChange(index, e)}}
+                              required
+                          />
+                        </div>
+
+                        <hr/>
+
+                        <div className="text-center">
+                          <button className="btn btn-primary m-1"
+                                  onClick={() => {updateManager(index)}}>
+                            Confirm Changes
+                          </button>
+                        </div>
+
+                      </div>
+
+                      : null}
+
+
                   <button
                     className="btn btn-danger"
-                    onClick={() => handleDelete(user.id)}
+                    onClick={() => handleDelete(user.managerId
+                    )}
                   >
                     Delete
                   </button>
@@ -65,6 +162,8 @@ const ManageManagers = () => {
               </div>
             </div>
           ))}
+
+
 
         </div>
       </div>

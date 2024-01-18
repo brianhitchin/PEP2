@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 const AdminDashboard = () => {
   return (
@@ -12,7 +13,7 @@ const AdminDashboard = () => {
               <h5>Manage Managers</h5>
             </div>
             <div className="card-body text-center">
-              <button className="btn btn-dark">Manage</button>
+              <Link to="/admin/managers" className="btn btn-dark">Manage</Link>
             </div>
           </div>
 
