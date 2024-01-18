@@ -65,6 +65,59 @@ const TeamApi = {
         .catch(error => {
             console.log(error);
         })
+  },
+  adminUpdateTeam: (team) => {
+
+    if (team && team.name !== undefined && team.name === '') {
+        alert("Team name cannot be blank.");
+        return Promise.resolve(false);
+    }
+
+    return fetch(URI + "/admin/teams",  {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(team)
+    })
+        .then( result => {
+
+            if (result.ok) {
+
+                return Promise.resolve(true); // Return a resolved Promise with 'true'
+            }
+            return Promise.resolve(false);
+        } )
+        .catch(error => {
+            console.log(error);
+            return Promise.resolve(false);
+        })
+  },
+  adminDeleteTeam: (team_id, setTeam, team) => {
+
+    fetch(URI + "/admins/teams/" + team_id,  {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then( result => {
+
+            if (result.ok) {
+                setTeam(team.filter(team => team.id !== team_id))
+            } else {
+                console.log("Failed to delete team. Status: " + result.status);
+            }
+
+        } )
+        .catch(error => { console.log(error); })
+  },
+  adminGetOneTeam: (team_id, setTeam) => {
+
+    fetch(URI + "/admins/teams/" + team_id)
+    .then((resp) => resp.json())
+    .then((data) => setTeam(data))
+    .catch((e) => console.log(e))
   }
 };
 
