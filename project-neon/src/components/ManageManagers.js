@@ -16,8 +16,9 @@ const ManageManagers = () => {
 
   useEffect(() => {
     // Fetch user data (THIS NEEDS TO BE UPDATED WITH WHATEVER IT IS CALLED)
-    ManagerApi.getUsers()
+    ManagerApi.getAll(localStorage.getItem("jwt"))
       .then((data) => {
+            console.log("User data: ", data);
         setUsers(data);
       })
       .catch((error) => {
