@@ -39,11 +39,17 @@ public class SecurityConfiguration {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/admin/managers").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/admin/manager/*").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/api/admin/manager").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/admin/manager/*").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/admin/teams").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/admin/teams/*").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/api/admin/teams").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/admin/teams/*").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/admin/members").hasRole("ADMIN")
-
-
-
+                .antMatchers(HttpMethod.GET, "/api/admin/members/*").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/api/admin/members").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/admin/members/*").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/teams").hasRole("MANAGER")
                 .antMatchers(HttpMethod.POST, "/api/teams/*").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/api/members/*").hasRole("MANAGER")

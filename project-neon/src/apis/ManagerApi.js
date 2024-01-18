@@ -110,8 +110,14 @@ const ManagerApi = {
 
     // Manager Endpoints
     // We can set the manager through state or return the manager as a JSON (doing both)
-    getManagerById: (id, setManager) => {
-        return fetch(URI + "/admin/manager/" + id)
+    getManagerById: (id, setManager, token) => {
+        let myToken = "Bearer " + token;
+        return fetch(URI + "/admin/manager/" + id, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": myToken
+            }
+        })
             .then( result => result.json() )
             .then( data => {
                 setManager(data);
@@ -124,11 +130,16 @@ const ManagerApi = {
     },
 
     // Keeping the setManager to set the FE state, if needed but line 131 is not needed
-    updateManager: (manager, setManager) => {
+    updateManager: (manager, setManager, token) => {
+
+        let myToken = "Bearer " + token;
+
         fetch(URI + "/admin/manager", {
             method: "PATCH",
             body: JSON.stringify(manager),
-            headers: { "Content-Type": "application/json" }
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": myToken}
         })
             .then( newResult => newResult.json() )
             .then( newData => {
@@ -141,10 +152,15 @@ const ManagerApi = {
     },
 
     // Returning true if deleted, false if not [using promise]
-    deleteManager: (id) => {
+    deleteManager: (id, token) => {
+
+        let myToken = "Bearer " + token;
+
         return fetch(URI + "/admin/manager/" + id, {
             method: "DELETE",
-            headers: { "Content-Type": "application/json" }
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": myToken}
         })
             .then( result => {
 
