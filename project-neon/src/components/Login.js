@@ -6,12 +6,14 @@ import TeamApi from '../apis/TeamApi';
 import ManagerApi from '../apis/ManagerApi';
 import "../index.css"
 import { useTheme } from './ThemeContext';
+import { useAdmin } from './AdminContext';
+import AdminDashboard from './AdminDashboard';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { isLoggedIn, login } = useAuth();
-  const { isAdmin, adminLogin } = useAuth();
+  const { isAdmin, adminLogin } = useAdmin();
   const {isDarkMode, toggleDarkMode } = useTheme();
 
   const handleSubmit = (e) => {
@@ -38,6 +40,7 @@ const Login = () => {
                   }
                   else if(data.role === "ROLE_ADMIN"){
                     adminLogin();
+                    login();
                   }
 
                 })
@@ -48,12 +51,12 @@ const Login = () => {
     }
   };
 
-  if (isLoggedIn) {
+  if (isLoggedIn && !isAdmin) {
     return <LoggedInScreen />;
   }
 
   if (isAdmin) {
-    // return <AdminDashboard />;
+    return <AdminDashboard/>;
   }
 
   return (

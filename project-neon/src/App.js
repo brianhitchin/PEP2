@@ -9,8 +9,7 @@ import TopNav from './components/TopNav';
 import {Routes, Route} from 'react-router-dom';
 import Team from "./components/Team";
 import AdminDashboard from './components/AdminDashboard';
-import ManageManagers from './components/DummyManageManagers';
-import DummyManageManagers from './components/DummyManageManagers';
+import ManageManagers from './components/ManageManagers';
 
 function App() {
   const {isDarkMode, toggleDarkMode } = useTheme();
@@ -28,7 +27,7 @@ function App() {
             <Route path = '/createTeam' element = {<CreateTeam/>} exact />
             <Route path = '/team' element = {<Team/>} exact />
             <Route path = '/admin' element = {<AdminDashboard/>} exact />
-            <Route path = '/admin/managers' element = {<DummyManageManagers/>} exact />
+            <Route path = '/admin/managers' element = {<ManageManagers/>} exact />
           </Routes>
         </div>
 

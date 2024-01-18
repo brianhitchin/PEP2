@@ -4,12 +4,17 @@ const URI = BASE + "/api"
 
 const ManagerApi = {
 
-    getAll: (setManagerList) => {
-
-        fetch(URI + "/admin/managers")
+    getAll: (token) => {
+        let myToken = "Bearer " + token;
+        return fetch(URI + "/admin/managers", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": myToken
+            }
+        })
             .then( result => result.json() )
             .then( data => {
-                setManagerList(data)
+                return data
             } )
             .catch( error => { console.log(error) } )
     },

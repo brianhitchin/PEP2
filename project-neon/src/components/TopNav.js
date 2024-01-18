@@ -2,10 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "./AuthContext";
 import { Link } from "react-router-dom";
 import { useTheme } from "./ThemeContext";
+import { useAdmin } from "./AdminContext";
 
 const TopNav = () => {
+  const handleLogout = () => {
+    if(isAdmin)
+      adminLogout()
+    logout()
+  }
   const { isLoggedIn, logout } = useAuth();
   const { isDarkMode, toggleDarkMode } = useTheme();
+  const { isAdmin, adminLogout } = useAdmin();
 
   const handleItemClick = (itemName) => {
     if (!isLoggedIn) {
@@ -63,7 +70,7 @@ const TopNav = () => {
           <li className="nav-item logout">
             {isLoggedIn ? (
               <li className="nav-item active">
-                <Link className="nav-link" to="/" onClick={logout}>
+                <Link className="nav-link" to="/" onClick={handleLogout}>
                   <strong>Logout</strong>
                 </Link>
               </li>
