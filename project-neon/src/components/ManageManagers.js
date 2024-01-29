@@ -39,7 +39,7 @@ const ManageManagers = () => {
   };
 
   const handleDelete = (userId) => {
-    
+
     // Handle the delete logic for the selected user
     ManagerApi.deleteManager(userId, localStorage.getItem("jwt"))
     setUsers(users.filter(user => user.managerId !== userId))

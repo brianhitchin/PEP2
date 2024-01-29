@@ -46,6 +46,11 @@ const LoggedInScreen = ({ onCreateTeam }) => {
 
   const deleteTeam = (id) => {
     TeamApi.deleteTeam(id, localStorage.getItem("jwt"));
+    setTeamData(teamData.filter(team => team.team_Id !== id))
+
+    if(teamData.length === 1){
+      setTeam(false);
+    }
   }
 
   return (

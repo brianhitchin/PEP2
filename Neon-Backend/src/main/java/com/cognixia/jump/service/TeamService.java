@@ -3,6 +3,8 @@ package com.cognixia.jump.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.cognixia.jump.model.Member;
+import com.cognixia.jump.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ public class TeamService {
 
 	@Autowired
 	TeamRepository repo;
+
+	@Autowired
+	MemberRepository memberRepo;
 	
 	@Autowired
 	ManagerRepository managerRepo;
@@ -95,6 +100,24 @@ public class TeamService {
 		myTeam.setType(team.getType());
 
 		return repo.save(myTeam);
+	}
+
+	public Team deleteMyTeam(String header, Integer id) throws ResourceNotFoundException {
+
+		if( header == null || !header.startsWith("Bearer "))
+			throw new ResourceNotFoundException("token");
+
+		String jwt = header.substring(7);
+		String username = jwtUtil.extractUsername(jwt);
+
+		Manager foundManager = managerRepo.findByUsername(username).get();
+
+		Team toDelete = getTeamById(id);
+
+		memberRepo.deleteAll(toDelete.getMember());
+
+		repo.delete(toDelete);
+		return toDelete;
 	}
 
 	public Team deleteTeam(Integer id) throws ResourceNotFoundException {
