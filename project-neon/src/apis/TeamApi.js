@@ -95,6 +95,23 @@ const TeamApi = {
         console.log(error);
       });
   },
+  deleteTeam: (team_id, token) => {
+    let myToken = "Bearer " + token;
+
+    fetch(URI + "/teams/" + team_id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: myToken,
+      },
+    })
+      .then((result) => {
+        return result.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
 
   adminDeleteTeam: (team_id, token) => {
     let myToken = "Bearer " + token;
