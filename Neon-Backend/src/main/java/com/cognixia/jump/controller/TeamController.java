@@ -68,6 +68,22 @@ public class TeamController {
 
 	}
 
+	@Operation(summary = "Delete the selected team of the current manager",
+			description = "Delete the selected team of the manager that is currently logged in. " +
+					"The manager must be logged in using a JWT token to delete a team.")
+	@ApiResponses(
+			@ApiResponse(responseCode = "200",
+					description = "Team has been deleted")
+	)
+	@CrossOrigin
+	@DeleteMapping("/teams/{id}")
+	public ResponseEntity<?> deleteManagerTeam(@RequestHeader(value="authorization") String header, @PathVariable Integer id ) throws ResourceNotFoundException {
+
+		Team teamDeleted = service.deleteMyTeam(header, id);
+		return ResponseEntity.status(200).body(teamDeleted);
+
+	}
+
 	// ## Admin Endpoints
 
 	@Operation(summary = "Finds a team in the team table by its ID",
