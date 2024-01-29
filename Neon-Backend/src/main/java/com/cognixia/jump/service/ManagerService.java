@@ -54,8 +54,6 @@ public class ManagerService {
 
     public Manager updateManager(Manager manager, String header) throws ResourceNotFoundException, InvalidUpdateException {
 
-        System.out.println("DID THIS RUN?!");
-
         // Prevent the currently logged-in user from updating itself
         if(header == null || !header.startsWith("Bearer "))
             throw new ResourceNotFoundException("token");

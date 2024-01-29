@@ -7,7 +7,7 @@ const AdminDashboard = () => {
       <div className="row justify-content-center">
         <div className="col-md-6">
 
-          {/* Manage Members Section */}
+          {/* Manage Managers Section */}
           <div className="card">
             <div className="card-header text-center">
               <h5>Manage Managers</h5>
@@ -27,13 +27,13 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Manage Something Else Section */}
+          {/* Manage Members Section */}
           <div className="card mt-3">
             <div className="card-header text-center">
               <h5>Manage Members</h5>
             </div>
             <div className="card-body text-center">
-              <button className="btn btn-dark">Manage</button>
+              <Link to="/admin/members" className="btn btn-dark">Manage</Link>
             </div>
           </div>
 

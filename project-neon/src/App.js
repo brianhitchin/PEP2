@@ -11,6 +11,7 @@ import Team from "./components/Team";
 import AdminDashboard from './components/AdminDashboard';
 import ManageManagers from './components/ManageManagers';
 import ManageTeams from './components/ManageTeams';
+import ManageMembers from "./components/ManageMembers";
 
 function App() {
   const {isDarkMode, toggleDarkMode } = useTheme();
@@ -30,6 +31,7 @@ function App() {
             <Route path = '/admin' element = {<AdminDashboard/>} exact />
             <Route path = '/admin/managers' element = {<ManageManagers/>} exact />
             <Route path = '/admin/teams' element = {<ManageTeams/>} exact />
+            <Route path = '/admin/members' element = {<ManageMembers/>} exact />
           </Routes>
         </div>
 

@@ -10,9 +10,6 @@ const ManageTeams = () => {
   const [open, setOpen] = useState([]);
 
   const handleChange = (index, event) => {
-    console.log(event);
-    console.log(index);
-    console.log("index undefined?", teams[index]);
 
     const updatedTeams = [...teams];
     updatedTeams[index] = {
@@ -32,8 +29,6 @@ const ManageTeams = () => {
       tempOpen[index] = !tempOpen[index];
       return tempOpen;
     });
-
-    window.location.reload();
   };
 
   const handleUpdate = (index) => {

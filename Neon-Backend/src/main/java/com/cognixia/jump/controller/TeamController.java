@@ -94,7 +94,7 @@ public class TeamController {
 	})
 	@CrossOrigin
 	@PatchMapping("/admin/teams")
-	public ResponseEntity<?> updateTeam(@RequestBody Team team) {
+	public ResponseEntity<?> updateTeam(@RequestBody Team team) throws ResourceNotFoundException {
 
 		Team updatedTeam = service.updateTeam(team);
 		return ResponseEntity.status(200).body(updatedTeam);

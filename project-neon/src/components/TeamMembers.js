@@ -16,6 +16,7 @@ const TeamMembers = (props) => {
     scores: 0,
     playtime: 0,
     faults: 0,
+    active: true,
     image: ""
   })
   const [ap, setAp] = useState(false)
@@ -47,6 +48,7 @@ const TeamMembers = (props) => {
         scores: addedMember.scores,
         playtime: addedMember.playtime,
         faults: addedMember.faults,
+        active: true,
         image: 'https://upload.wikimedia.org/wikipedia/commons/a/af/Default_avatar_profile.jpg'
       }
 
