@@ -42,16 +42,14 @@ const ManageTeams = () => {
   const handleDelete = (teamId) => {
     // Handle the delete logic for the selected team
 
-    console.log(teamId);
     TeamApi.adminDeleteTeam(teamId, localStorage.getItem("jwt"));
-    setTeams(teams.filter((team) => team.teamId !== teamId));
+    setTeams(teams.filter((team) => team.team_Id !== teamId));
   };
 
   useEffect(() => {
-    // Fetch team data (THIS NEEDS TO BE UPDATED WITH WHATEVER IT IS CALLED)
+    // Fetch team data
     TeamApi.adminGetAll(localStorage.getItem("jwt"))
       .then((data) => {
-        console.log("Team data: ", data);
         setTeams(data);
         const temp = new Array(data.length).fill(false);
         setOpen(temp);
@@ -145,7 +143,7 @@ const ManageTeams = () => {
 
                   <button
                     className="btn btn-danger"
-                    onClick={() => handleDelete(team.teamId)}
+                    onClick={() => handleDelete(team.team_Id)}
                   >
                     Delete
                   </button>

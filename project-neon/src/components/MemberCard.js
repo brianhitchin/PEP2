@@ -22,6 +22,7 @@ const MemberCard = (props) => {
     scores: props.member.scores,
     playtime: props.member.playtime,
     faults: props.member.faults,
+    active: props.member.active,
     image: props.member.image
   });
 
@@ -59,7 +60,7 @@ const MemberCard = (props) => {
           <h4>{member.name}</h4>
         </div>
         <div>
-          <img src={member.image} class="img-fluid"/>
+          <img src={member.image} className="img-fluid" alt={member.name}/>
         </div>
         <div className="card-body">
           <div className="text-center">
@@ -182,7 +183,7 @@ const MemberCard = (props) => {
                       onChange={handleChange}
                       required/>
                   <p style={{padding: "5px"}}>Image preview:</p>
-                  <img src={member.image} class="img-fluid" />
+                  <img src={member.image} className="img-fluid"  alt={member.name}/>
                 </div>
 
                 <hr/>

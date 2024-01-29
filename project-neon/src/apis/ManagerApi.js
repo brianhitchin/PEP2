@@ -29,20 +29,15 @@ const ManagerApi = {
             .catch( error => { console.log(error) } )
     },
 
-    doesUsernameExist: (account) => {
+    doesUsernameExist: (username) => {
 
         // First, Check if the username already exists in the DB
-        return fetch(URI + "/managers")
+        return fetch(URI + "/managers/" + username)
             .then( result => result.json() )
             .then( data => {
 
-                    for (let x of data) {
-                        if (x.username === account.username) {
-                            // Username is already in the database
-                            return true;
-                        }
-                    }
-                    return false;
+               return data.username != null;
+
             })
             .catch( error => {
                     console.log(error);
@@ -84,8 +79,6 @@ const ManagerApi = {
             }),
         })
             .then(response => {
-                console.log(response)
-                console.log("update")
                 if (!response.ok) {
                     // Log more details about the response
                     // console.error('Authentication failed. Response:', response);
@@ -97,14 +90,14 @@ const ManagerApi = {
                 return response.json();
             })
             .then(data => {
-                console.log(data)
                 return data.jwt;
             })
             .catch(error => {
-                console.log("error update")
+                console.log("error update:")
                 // Log more details about the error
                 // console.error('An error occurred during authentication:', error);
-                throw error; // Propagate the error to the next catch block
+                // Propagate the error to the next catch block
+                throw error;
             });
     },
 

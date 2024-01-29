@@ -40,7 +40,6 @@ const LoggedInScreen = ({ onCreateTeam }) => {
 
   const manageTeam = (id) => {
 
-    console.log("Team id", id)
     setViewTeam(false);
     setTeamId(id);
   }

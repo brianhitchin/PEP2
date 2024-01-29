@@ -10,10 +10,6 @@ const ManageManagers = () => {
 
   const handleChange = (index, event) => {
 
-    console.log(event)
-    console.log(index)
-    console.log("index undefined?", users[index])
-
     const updatedUsers = [...users];
     updatedUsers[index] = {
       ...updatedUsers[index],
@@ -55,7 +51,7 @@ const ManageManagers = () => {
     // Fetch user data (THIS NEEDS TO BE UPDATED WITH WHATEVER IT IS CALLED)
     ManagerApi.getAll(localStorage.getItem("jwt"))
       .then((data) => {
-            console.log("User data: ", data);
+
         setUsers(data);
         const temp = new Array(data.length).fill(false)
         setOpen(temp)

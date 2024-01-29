@@ -19,10 +19,9 @@ const TeamApi = {
       })
       .then((data) => {
         // console.log(data);
-        console.log("DATA", data);
+
         // Check if the team exists in the response
         if (data[0] != null) {
-          console.log("Do we get in here?");
           return data; // Return the team data if a team exists
         } else {
           return null; // Return null if there's no team
@@ -100,7 +99,7 @@ const TeamApi = {
   adminDeleteTeam: (team_id, token) => {
     let myToken = "Bearer " + token;
 
-    fetch(URI + "/admins/teams/" + team_id, {
+    fetch(URI + "/admin/teams/" + team_id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
