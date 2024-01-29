@@ -43,7 +43,6 @@ const ManageMembers = () => {
     const handleDelete = (memberId) => {
 
         // Handle the delete logic for the selected member
-        console.log(memberId)
         MemberApi.adminDeleteMember(memberId, localStorage.getItem("jwt"))
         setMembers(members.filter(member => member.id !== memberId))
 

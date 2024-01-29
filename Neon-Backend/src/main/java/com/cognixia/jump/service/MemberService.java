@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.cognixia.jump.exception.ResourceDoesNotBelongException;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,10 @@ import com.cognixia.jump.repository.ManagerRepository;
 import com.cognixia.jump.repository.MemberRepository;
 import com.cognixia.jump.repository.TeamRepository;
 import com.cognixia.jump.util.JwtUtil;
+
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 @Service
 public class MemberService {
@@ -156,8 +161,24 @@ public class MemberService {
 		if( header == null || !header.startsWith("Bearer "))
             throw new ResourceNotFoundException("token");
 
-        repo.save(editedMember);
-		return editedMember;
+		Optional<Member> memberOptional = repo.findById(editedMember.getId());
+
+		if(memberOptional.isEmpty()){
+			throw new ResourceNotFoundException("member");
+		}
+
+		Member myMember = memberOptional.get();
+		myMember.setName(editedMember.getName());
+		myMember.setJersey_num(editedMember.getJersey_num());
+		myMember.setScores(editedMember.getScores());
+		myMember.setAssists(editedMember.getAssists());
+		myMember.setPlaytime(editedMember.getPlaytime());
+		myMember.setFaults(editedMember.getFaults());
+		myMember.setActive(editedMember.getActive());
+		myMember.setImage(editedMember.getImage());
+
+        repo.save(myMember);
+		return myMember;
         
 	}
 
@@ -174,6 +195,8 @@ public class MemberService {
 	}
 
 	public Member updateMember(Member member) {
+
+
 
 		return repo.save(member);
 	}

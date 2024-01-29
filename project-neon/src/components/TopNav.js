@@ -23,7 +23,7 @@ const TopNav = () => {
   };
 
   const changeBodyBackgroundColor = () => {
-    console.log("CHANGING COLOR");
+
     document.body.style.backgroundColor = isDarkMode ? "#fff" : "#21252b";
   };
 
@@ -69,11 +69,11 @@ const TopNav = () => {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item logout">
             {isLoggedIn ? (
-              <li className="nav-item active">
+              <div className="nav-item active">
                 <Link className="nav-link" to="/" onClick={handleLogout}>
                   <strong>Logout</strong>
                 </Link>
-              </li>
+              </div>
             ) : (
               <>{/* Login button or other components */}</>
             )}

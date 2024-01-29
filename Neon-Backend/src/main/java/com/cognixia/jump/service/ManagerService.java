@@ -79,8 +79,10 @@ public class ManagerService {
 
         Optional<Manager> manager = repo.findByUsername(username);
 
-        if(manager.isPresent())
+        if(manager.isPresent()) {
+            System.out.println("MANAGER HERE: " + manager.get().getUsername());
             return manager.get();
+        }
         else
             throw new ResourceNotFoundException("Manager");
     }

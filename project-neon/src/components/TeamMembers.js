@@ -67,6 +67,7 @@ const TeamMembers = (props) => {
       scores: 0,
       playtime: 0,
       faults: 0,
+      active: true,
       image: ""
     })
     setAp(false)

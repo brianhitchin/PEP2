@@ -32,7 +32,7 @@ const CreateAccount = () => {
 
     if (account.username.trim() !== "" && account.password.trim() !== "" && account.name.trim() !== "") {
 
-      ManagerApi.doesUsernameExist(account)
+      ManagerApi.doesUsernameExist(account.username)
           .then(usernameExists => {
             if (usernameExists) {
               // console.log("Username already exists");

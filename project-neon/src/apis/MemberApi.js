@@ -18,7 +18,7 @@ const MemberApi = {
         })
         .then( result => result.json() )
         .then( data => {
-            console.log("DATA OF MEMBERS: ", data)
+
             setMembers([...data])
         })
         .catch(error => { console.log(error); })
@@ -26,6 +26,8 @@ const MemberApi = {
     },
 
     addMember: (token, member, memberList, setMembers, team_id) => {
+
+
 
         let myToken = "Bearer " + token;
 
@@ -49,8 +51,6 @@ const MemberApi = {
     deleteMember: (token, member_id, setMembers, members, team_id) => {
 
         let myToken = "Bearer " + token;
-
-        console.log("URI: ", URI + "/members/" + member_id + "/" + team_id)
 
         fetch(URI + "/members/" + member_id + "/" + team_id,  {
             method: 'DELETE',
