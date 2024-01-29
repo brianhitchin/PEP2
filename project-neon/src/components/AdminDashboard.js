@@ -23,7 +23,7 @@ const AdminDashboard = () => {
               <h5>Manage Teams</h5>
             </div>
             <div className="card-body text-center">
-              <button className="btn btn-dark">Manage</button>
+            <Link to="/admin/teams" className="btn btn-dark">Manage</Link>
             </div>
           </div>
 
