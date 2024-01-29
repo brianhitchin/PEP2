@@ -4,7 +4,11 @@ import com.cognixia.jump.exception.InvalidUpdateException;
 import com.cognixia.jump.exception.ResourceAlreadyExistsException;
 import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.Manager;
+import com.cognixia.jump.model.Member;
+import com.cognixia.jump.model.Team;
 import com.cognixia.jump.repository.ManagerRepository;
+import com.cognixia.jump.repository.MemberRepository;
+import com.cognixia.jump.repository.TeamRepository;
 import com.cognixia.jump.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +22,12 @@ public class ManagerService {
 
     @Autowired
     ManagerRepository repo;
+
+    @Autowired
+    TeamRepository teamRepository;
+
+    @Autowired
+    MemberRepository memberRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -71,6 +81,16 @@ public class ManagerService {
     public Manager deleteManager(Integer id) throws ResourceNotFoundException {
 
         Manager toDelete = getManagerById(id);
+
+        // When we delete this manager, we need to delete it's team and it's members
+        List<Team> teams = toDelete.getTeams();
+
+        for(Team t: teams){
+
+            memberRepository.deleteAll(t.getMember());
+            teamRepository.delete(t);
+        }
+
         repo.delete(toDelete);
         return toDelete;
     }

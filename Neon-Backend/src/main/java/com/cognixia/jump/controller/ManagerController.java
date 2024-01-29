@@ -75,7 +75,7 @@ public class ManagerController {
     })
     @CrossOrigin
     @GetMapping("/admin/manager/{id}")
-    public ResponseEntity<?> getManagerById(@PathVariable Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<?> getManagerById(@PathVariable Integer id, @RequestHeader(value="authorization") String header) throws ResourceNotFoundException {
 
         Manager manager = service.getManagerById(id);
         return ResponseEntity.status(200).body(manager);
@@ -106,7 +106,7 @@ public class ManagerController {
     })
     @CrossOrigin
     @DeleteMapping("/admin/manager/{id}")
-    public ResponseEntity<?> deleteManager(@PathVariable Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<?> deleteManager(@PathVariable Integer id, @RequestHeader(value="authorization") String header) throws ResourceNotFoundException {
 
         Manager managerDeleted = service.deleteManager(id);
         return ResponseEntity.status(200).body(managerDeleted);
