@@ -44,6 +44,10 @@ const LoggedInScreen = ({ onCreateTeam }) => {
     setTeamId(id);
   }
 
+  const deleteTeam = (id) => {
+    TeamApi.deleteTeam(id, localStorage.getItem("jwt"));
+  }
+
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -63,7 +67,8 @@ const LoggedInScreen = ({ onCreateTeam }) => {
                           <div key={team.team_Id} className="card">
                             <div className="card-body">
                               <h5 className="card-title">{team.name} - {team.type}</h5>
-                              <button onClick={() => {manageTeam(team.team_Id)}} className="btn btn-dark">Manage</button>
+                              <button onClick={() => {manageTeam(team.team_Id)}} className="btn btn-dark me-2">Manage</button>
+                              <button onClick={() => {deleteTeam(team.team_Id)}} className="btn btn-danger">Delete</button>
                             </div>
                           </div>
                       ))}
