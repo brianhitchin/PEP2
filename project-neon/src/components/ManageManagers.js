@@ -33,7 +33,7 @@ const ManageManagers = () => {
       return tempOpen;
     });
 
-
+    window.location.reload()
   };
 
   const handleUpdate = (index) => {

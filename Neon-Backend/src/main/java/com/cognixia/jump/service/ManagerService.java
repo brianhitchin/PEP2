@@ -1,5 +1,6 @@
 package com.cognixia.jump.service;
 
+import com.cognixia.jump.exception.InvalidUpdateException;
 import com.cognixia.jump.exception.ResourceAlreadyExistsException;
 import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.Manager;
@@ -20,6 +21,9 @@ public class ManagerService {
 
     @Autowired
     PasswordEncoder encoder;
+
+    @Autowired
+    JwtUtil jwtUtil;
 
     public List<Manager> getAllManagers() {
         return repo.findAll();
@@ -48,7 +52,20 @@ public class ManagerService {
         }
     }
 
-    public Manager updateManager(Manager manager) {
+    public Manager updateManager(Manager manager, String header) throws ResourceNotFoundException, InvalidUpdateException {
+
+        System.out.println("DID THIS RUN?!");
+
+        // Prevent the currently logged-in user from updating itself
+        if(header == null || !header.startsWith("Bearer "))
+            throw new ResourceNotFoundException("token");
+
+        String jwt = header.substring(7);
+        String username = jwtUtil.extractUsername(jwt);
+
+        if(manager.getUsername().equals(username)){
+            throw new InvalidUpdateException("admin");
+        }
 
         return repo.save(manager);
     }
