@@ -1,5 +1,6 @@
 package com.cognixia.jump.controller;
 
+import com.cognixia.jump.exception.InvalidUpdateException;
 import com.cognixia.jump.exception.ManagerHasTeamException;
 import com.cognixia.jump.exception.ResourceAlreadyExistsException;
 import com.cognixia.jump.exception.ResourceNotFoundException;
@@ -89,9 +90,9 @@ public class ManagerController {
     })
     @CrossOrigin
     @PatchMapping("/admin/manager")
-    public ResponseEntity<?> updateManager(@RequestBody Manager manager) {
+    public ResponseEntity<?> updateManager(@RequestBody Manager manager, @RequestHeader(value="authorization") String header) throws ResourceNotFoundException, InvalidUpdateException {
 
-        Manager updatedManager = service.updateManager(manager);
+        Manager updatedManager = service.updateManager(manager, header);
         return ResponseEntity.status(200).body(updatedManager);
 
     }

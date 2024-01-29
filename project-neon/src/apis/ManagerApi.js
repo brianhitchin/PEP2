@@ -143,7 +143,8 @@ const ManagerApi = {
         })
             .then( newResult => {return newResult.json()} )
             .catch( error => {
-                console.log(error);
+                alert("Failed to update user");
+                console.error(error);
             })
     },
 
