@@ -82,9 +82,19 @@ public class TeamService {
 		}
 	}
 
-	public Team updateTeam(Team team) {
+	public Team updateTeam(Team team) throws ResourceNotFoundException {
 
-		return repo.save(team);
+		Optional<Team> teamOptional = repo.findById(team.getTeam_Id());
+
+		if(teamOptional.isEmpty()){
+			throw new ResourceNotFoundException("team");
+		}
+
+		Team myTeam = teamOptional.get();
+		myTeam.setName(team.getName());
+		myTeam.setType(team.getType());
+
+		return repo.save(myTeam);
 	}
 
 	public Team deleteTeam(Integer id) throws ResourceNotFoundException {

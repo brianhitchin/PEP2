@@ -141,9 +141,16 @@ const ManagerApi = {
                 "Content-Type": "application/json",
                 "Authorization": myToken}
         })
-            .then( newResult => {return newResult.json()} )
+            .then( newResult => {
+                return newResult;
+            } )
+            .then( (data) => {
+                if(!data.ok){
+                    alert("Cannot update currently logged in admin");
+                }
+            })
             .catch( error => {
-                alert("Failed to update user");
+                alert("Cannot update currently logged in admin");
                 console.error(error);
             })
     },

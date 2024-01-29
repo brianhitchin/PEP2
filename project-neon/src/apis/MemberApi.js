@@ -108,19 +108,21 @@ const MemberApi = {
 
     // Admin Endpoints
 
-    getAllMembers: (setMemberList, token) => {
+    getAllMembers: (token) => {
 
         let myToken = "Bearer " + token;
 
-        fetch(URI + "/admin/managers", {headers: {
+        return fetch(URI + "/admin/members", {
+                headers: {
                 "Content-Type": "application/json",
                 "Authorization": myToken
-            },})
+                }})
             .then( result => result.json() )
             .then( data => {
-                setMemberList(data)
+                console.log("DATA", data)
+                return data;
             } )
-            .catch( error => { console.log(error) } )
+            .catch( error => { console.log(error)} )
     },
 
     // Member Endpoints
@@ -145,7 +147,7 @@ const MemberApi = {
     },
 
     // Keeping the setMember to set the FE state, if needed but line 136 is not needed
-    adminUpdateMember: (member, setMember, token) => {
+    adminUpdateMember: (member, token) => {
 
         let myToken = "Bearer " + token;
 
@@ -159,37 +161,29 @@ const MemberApi = {
         })
             .then( newResult => newResult.json() )
             .then( newData => {
-
-                setMember(newData);
+                return newData
             })
             .catch( error => {
                 console.log(error);
             })
     },
 
-    // Returning true if deleted, false if not [using promise]
     adminDeleteMember: (id, token) => {
 
         let myToken = "Bearer " + token;
 
-        return fetch(URI + "/admin/members/" + id, {
+        fetch(URI + "/admin/members/" + id, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": myToken}
         })
-            .then( result => {
-
-                if (result.ok) {
-
-                    return Promise.resolve(true); // Return a resolved Promise with 'true'
-                }
-                return Promise.resolve(false);
-            } )
-            .catch(error => {
-                console.log(error);
-                return Promise.resolve(false);
-            })
+        .then( result => {
+            return result;
+        } )
+        .catch(error => {
+            console.log(error);
+        })
     }
 
 }

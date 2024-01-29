@@ -77,12 +77,11 @@ const TeamApi = {
   adminUpdateTeam: (team, token) => {
     if (team && team.name !== undefined && team.name === "") {
       alert("Team name cannot be blank.");
-      return Promise.resolve(false);
     }
 
     let myToken = "Bearer " + token;
 
-    return fetch(URI + "/admin/teams", {
+    fetch(URI + "/admin/teams", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -91,16 +90,13 @@ const TeamApi = {
       body: JSON.stringify(team),
     })
       .then((result) => {
-        if (result.ok) {
-          return Promise.resolve(true); // Return a resolved Promise with 'true'
-        }
-        return Promise.resolve(false);
+        return result;
       })
       .catch((error) => {
         console.log(error);
-        return Promise.resolve(false);
       });
   },
+
   adminDeleteTeam: (team_id, token) => {
     let myToken = "Bearer " + token;
 

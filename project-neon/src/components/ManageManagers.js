@@ -32,8 +32,6 @@ const ManageManagers = () => {
       tempOpen[index] = !tempOpen[index];
       return tempOpen;
     });
-
-    window.location.reload()
   };
 
   const handleUpdate = (index) => {
