@@ -1,5 +1,4 @@
-
-const BASE = "http://localhost:8080"  // use this if running locally
+const BASE = "http://localhost:8080"; // use this if running locally
 
 // const BASE = "http://35.164.107.214:8080"; // edit this with your AWS endpoint
 const URI = BASE + "/api";
@@ -11,7 +10,7 @@ const TeamApi = {
     return fetch(URI + "/teams", {
       headers: {
         "Content-Type": "application/json",
-        "Authorization": myToken,
+        Authorization: myToken,
       },
     })
       .then((result) => {
@@ -20,10 +19,10 @@ const TeamApi = {
       })
       .then((data) => {
         // console.log(data);
-          console.log("DATA", data)
+        console.log("DATA", data);
         // Check if the team exists in the response
         if (data[0] != null) {
-            console.log("Do we get in here?")
+          console.log("Do we get in here?");
           return data; // Return the team data if a team exists
         } else {
           return null; // Return null if there's no team
@@ -35,14 +34,13 @@ const TeamApi = {
       });
   },
   getAll: (setTeamList, token) => {
-
-      let myToken = "Bearer " + token;
+    let myToken = "Bearer " + token;
 
     return fetch(URI + "/teams", {
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": myToken,
-        }
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: myToken,
+      },
     })
       .then((result) => result.json())
       .then((data) => {
@@ -55,91 +53,98 @@ const TeamApi = {
   addTeam: (team, token) => {
     let myToken = "Bearer " + token;
     fetch(URI + "/teams", {
-        method: "POST",
-        body: JSON.stringify(team),
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": myToken}
+      method: "POST",
+      body: JSON.stringify(team),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: myToken,
+      },
     })
-        .then( result => result.json() )
-        .then( data => {
-            // console.log(data)
-            if(typeof data.team_Id !== 'undefined') {
-                // console.log("CREATED TEAM:")
-                // console.log("data")
-            } else {
-                // alert("This team cannot be created for some reason.")
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        })
+      .then((result) => result.json())
+      .then((data) => {
+        // console.log(data)
+        if (typeof data.team_Id !== "undefined") {
+          // console.log("CREATED TEAM:")
+          // console.log("data")
+        } else {
+          // alert("This team cannot be created for some reason.")
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   adminUpdateTeam: (team, token) => {
-
-    if (team && team.name !== undefined && team.name === '') {
-        alert("Team name cannot be blank.");
-        return Promise.resolve(false);
+    if (team && team.name !== undefined && team.name === "") {
+      alert("Team name cannot be blank.");
+      return Promise.resolve(false);
     }
 
-      let myToken = "Bearer " + token;
+    let myToken = "Bearer " + token;
 
-    return fetch(URI + "/admin/teams",  {
-        method: 'PATCH',
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": myToken
-        },
-        body: JSON.stringify(team)
+    return fetch(URI + "/admin/teams", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: myToken,
+      },
+      body: JSON.stringify(team),
     })
-        .then( result => {
-
-            if (result.ok) {
-
-                return Promise.resolve(true); // Return a resolved Promise with 'true'
-            }
-            return Promise.resolve(false);
-        } )
-        .catch(error => {
-            console.log(error);
-            return Promise.resolve(false);
-        })
+      .then((result) => {
+        if (result.ok) {
+          return Promise.resolve(true); // Return a resolved Promise with 'true'
+        }
+        return Promise.resolve(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        return Promise.resolve(false);
+      });
   },
-  adminDeleteTeam: (team_id, setTeam, team, token) => {
+  adminDeleteTeam: (team_id, token) => {
+    let myToken = "Bearer " + token;
 
-      let myToken = "Bearer " + token;
+    fetch(URI + "/admins/teams/" + team_id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: myToken,
+      },
+    })
+      .then((result) => {
+        return result.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+  adminGetOneTeam: (team_id, setTeam, token) => {
+    let myToken = "Bearer " + token;
 
-    fetch(URI + "/admins/teams/" + team_id,  {
-        method: 'DELETE',
+    fetch(URI + "/admins/teams/" + team_id, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: myToken,
+      },
+    })
+      .then((resp) => resp.json())
+      .then((data) => setTeam(data))
+      .catch((e) => console.log(e));
+  },
+  adminGetAll:(token) => {
+    let myToken = "Bearer " + token;
+    return fetch(URI + "/admin/teams", {
         headers: {
             "Content-Type": "application/json",
             "Authorization": myToken
         }
     })
-        .then( result => {
-
-            if (result.ok) {
-                setTeam(team.filter(team => team.id !== team_id))
-            } else {
-                console.log("Failed to delete team. Status: " + result.status);
-            }
-
+        .then( result => result.json() )
+        .then( data => {
+            return data
         } )
-        .catch(error => { console.log(error); })
-  },
-  adminGetOneTeam: (team_id, setTeam, token) => {
-
-      let myToken = "Bearer " + token;
-
-    fetch(URI + "/admins/teams/" + team_id, {
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": myToken
-        },})
-    .then((resp) => resp.json())
-    .then((data) => setTeam(data))
-    .catch((e) => console.log(e))
-  }
+        .catch( error => { console.log(error) } )
+},
 };
 
 export default TeamApi;

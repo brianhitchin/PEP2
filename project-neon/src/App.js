@@ -10,6 +10,7 @@ import {Routes, Route} from 'react-router-dom';
 import Team from "./components/Team";
 import AdminDashboard from './components/AdminDashboard';
 import ManageManagers from './components/ManageManagers';
+import ManageTeams from './components/ManageTeams';
 
 function App() {
   const {isDarkMode, toggleDarkMode } = useTheme();
@@ -28,6 +29,7 @@ function App() {
             <Route path = '/team' element = {<Team/>} exact />
             <Route path = '/admin' element = {<AdminDashboard/>} exact />
             <Route path = '/admin/managers' element = {<ManageManagers/>} exact />
+            <Route path = '/admin/teams' element = {<ManageTeams/>} exact />
           </Routes>
         </div>
 

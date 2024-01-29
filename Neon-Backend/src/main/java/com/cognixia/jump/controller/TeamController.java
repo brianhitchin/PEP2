@@ -30,7 +30,7 @@ public class TeamController {
 	@Operation(summary = "Get all teams in the team table",
 			description = "Get all teams in the team table from the neon_db database.")
 	@CrossOrigin
-	@GetMapping("admin/teams")
+	@GetMapping("/admin/teams")
 	public ResponseEntity<?> getAllTeams(@RequestHeader(value="authorization") String header) {
 		return ResponseEntity.status(200).body(service.getAllTeams());
 	}
