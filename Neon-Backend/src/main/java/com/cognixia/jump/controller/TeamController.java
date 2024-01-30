@@ -18,6 +18,8 @@ import com.cognixia.jump.model.Team;
 import com.cognixia.jump.repository.TeamRepository;
 import com.cognixia.jump.service.TeamService;
 
+import javax.validation.Valid;
+
 @Tag(name = "Team", description = "The API for managing teams")
 @CrossOrigin
 @RestController
@@ -93,7 +95,7 @@ public class TeamController {
 	)
 	@CrossOrigin
 	@PatchMapping("/teams")
-	public ResponseEntity<?> updateMyTeam(@RequestHeader(value="authorization") String header, @RequestBody Team team) throws ResourceNotFoundException {
+	public ResponseEntity<?> updateMyTeam(@RequestHeader(value="authorization") String header, @Valid @RequestBody Team team) throws ResourceNotFoundException {
 
 		Team updated = service.updateTeam(team);
 		return ResponseEntity.status(200).body(updated);

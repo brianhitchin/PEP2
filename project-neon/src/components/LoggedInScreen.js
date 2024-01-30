@@ -31,12 +31,15 @@ const LoggedInScreen = ({ onCreateTeam }) => {
   };
 
   const deleteTeam = (id) => {
-    TeamApi.deleteTeam(id, localStorage.getItem("jwt")).then(() => {
-      setTeamData(teamData.filter((team) => team.team_Id !== id));
-      if (teamData.length === 1) {
-        setTeam(false);
-      }
-    });
+
+    TeamApi.deleteTeam(id, localStorage.getItem("jwt"))
+
+    setTeamData(teamData.filter((team) => team.team_Id !== id));
+
+    if (teamData.length === 1) {
+      setTeam(false);
+    }
+
   };
 
   const handleChange = (index, event) => {
@@ -59,6 +62,12 @@ const LoggedInScreen = ({ onCreateTeam }) => {
     const updatedTeam = { ...teamData[index] };
     // Implement your update logic here using TeamApi
     TeamApi.updateTeam(updatedTeam, localStorage.getItem("jwt"));
+
+    setOpenUpdate((prevState) => {
+      const temp = [...openUpdate];
+      temp[index] = !openUpdate[index]
+      return temp
+    });
   };
 
   return (
@@ -91,7 +100,7 @@ const LoggedInScreen = ({ onCreateTeam }) => {
                           Delete
                         </button>
                         {openUpdate[index] && (
-                          <div className="mt-3">
+                          <div className="mt-3 text-center">
                             <input
                               type="text"
                               className="form-control mb-2"
@@ -110,12 +119,7 @@ const LoggedInScreen = ({ onCreateTeam }) => {
                               onChange={(e) => {handleChange(index, e)}}
                               required
                             />
-                            <button
-                              className="btn btn-dark mb-1 ms-2"
-                              onClick={() => updateTeam(index, team)}
-                            >
-                              Confirm Changes
-                            </button>
+
                           </div>
                         )}
                         <button
@@ -124,6 +128,17 @@ const LoggedInScreen = ({ onCreateTeam }) => {
                         >
                           Update Info
                         </button>
+
+                        { openUpdate[index] && (
+                            <button
+                                className="btn btn-dark ms-2"
+                                onClick={() => updateTeam(index, team)}
+                            >
+                              Confirm Changes
+                            </button>
+                        )
+                        }
+
                       </div>
                     </div>
                   ))}
@@ -160,7 +175,7 @@ const LoggedInScreen = ({ onCreateTeam }) => {
           ) : (
             <div className="card h-100">
               <div className="card-header text-center">
-                <h5>Filler text</h5>
+                <h5>Members</h5>
               </div>
               <div className="card-body">
                 <TeamMembers team_id={teamId} setViewTeam={setViewTeam} />

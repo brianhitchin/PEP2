@@ -53,7 +53,6 @@ const ManageMembers = () => {
         // Fetch member data
         MemberApi.getAllMembers(localStorage.getItem("jwt"))
             .then((data) => {
-                console.log("User data: ", data);
                 setMembers(data);
                 const temp = new Array(data.length).fill(false)
                 setOpen(temp)
@@ -86,7 +85,7 @@ const ManageMembers = () => {
                                 </div>
                                 <div>
                                     <button
-                                        className="btn btn-primary mr-2"
+                                        className="btn btn-primary mx-2"
                                         onClick={(e) => handleUpdate(e, index)}>
                                         Update
                                     </button>
@@ -181,7 +180,7 @@ const ManageMembers = () => {
                                             <hr/>
 
                                             <div className="text-center">
-                                                <button className="btn btn-primary m-1"
+                                                <button className="btn btn-dark m-1"
                                                         type="submit"
                                                         onClick={() => {updateMember(index)}}>
                                                     Confirm Changes
@@ -193,7 +192,7 @@ const ManageMembers = () => {
 
 
                                     <button
-                                        className="btn btn-danger"
+                                        className="btn btn-danger mx-2"
                                         onClick={() => handleDelete(member.id)}>
                                         Delete
                                     </button>

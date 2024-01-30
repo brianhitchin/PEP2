@@ -76,6 +76,12 @@ const TeamApi = {
   adminUpdateTeam: (team, token) => {
     if (team && team.name !== undefined && team.name === "") {
       alert("Team name cannot be blank.");
+      return;
+    }
+
+    if (team && team.type !== undefined && team.type === "") {
+      alert("Team type cannot be blank.");
+      return;
     }
 
     let myToken = "Bearer " + token;
@@ -158,13 +164,15 @@ const TeamApi = {
         .catch( error => { console.log(error) } )
   },
   updateTeam: (team, token) => {
-    console.log(team)
+
     if (team && team.name !== undefined && team.name === "") {
       alert("Team name cannot be blank.");
+      return;
     }
 
     if (team && team.type !== undefined && team.type === "") {
       alert("Team type cannot be blank.");
+      return;
     }
 
     let myToken = "Bearer " + token;
@@ -174,13 +182,15 @@ const TeamApi = {
       body: JSON.stringify(team),
       headers: {
         "Content-Type": "application/json",
-        Authorization: myToken,
+        "Authorization": myToken,
       },
     })
       .then((result) => {
-        console.log(result)
-        return result;
+        return result.json();
       })
+        .then((data) => {
+          return data;
+        })
       .catch((error) => {
         console.log(error);
       });
