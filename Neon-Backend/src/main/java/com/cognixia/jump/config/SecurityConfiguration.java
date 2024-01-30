@@ -51,6 +51,7 @@ public class SecurityConfiguration {
                 .antMatchers(HttpMethod.PATCH, "/api/admin/members").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/admin/members/*").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/teams").hasRole("MANAGER")
+                .antMatchers(HttpMethod.PATCH, "/api/teams").hasRole("MANAGER")
                 .antMatchers(HttpMethod.POST, "/api/teams/*").hasRole("MANAGER")
                 .antMatchers(HttpMethod.DELETE, "/api/teams/*").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/api/members/*").hasRole("MANAGER")
