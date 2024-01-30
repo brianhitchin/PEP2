@@ -84,6 +84,22 @@ public class TeamController {
 
 	}
 
+	@Operation(summary = "Update the selected team of the current manager",
+			description = "Update the selected team of the manager that is currently logged in. " +
+					"The manager must be logged in using a JWT token to update a team.")
+	@ApiResponses(
+			@ApiResponse(responseCode = "200",
+					description = "Team has been Updated")
+	)
+	@CrossOrigin
+	@PatchMapping("/teams")
+	public ResponseEntity<?> updateMyTeam(@RequestHeader(value="authorization") String header, @RequestBody Team team) throws ResourceNotFoundException {
+
+		Team updated = service.updateTeam(team);
+		return ResponseEntity.status(200).body(updated);
+
+	}
+
 	// ## Admin Endpoints
 
 	@Operation(summary = "Finds a team in the team table by its ID",
