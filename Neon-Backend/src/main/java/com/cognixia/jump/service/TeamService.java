@@ -98,6 +98,7 @@ public class TeamService {
 		Team myTeam = teamOptional.get();
 		myTeam.setName(team.getName());
 		myTeam.setType(team.getType());
+		
 
 		return repo.save(myTeam);
 	}

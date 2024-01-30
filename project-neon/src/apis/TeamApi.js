@@ -158,6 +158,7 @@ const TeamApi = {
         .catch( error => { console.log(error) } )
   },
   updateTeam: (team, token) => {
+    console.log(team)
     if (team && team.name !== undefined && team.name === "") {
       alert("Team name cannot be blank.");
     }
@@ -170,13 +171,14 @@ const TeamApi = {
 
     fetch(URI + "/teams", {
       method: "PATCH",
+      body: JSON.stringify(team),
       headers: {
         "Content-Type": "application/json",
         Authorization: myToken,
       },
-      body: JSON.stringify(team),
     })
       .then((result) => {
+        console.log(result)
         return result;
       })
       .catch((error) => {
