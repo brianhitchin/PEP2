@@ -119,7 +119,7 @@ const MemberApi = {
                 }})
             .then( result => result.json() )
             .then( data => {
-                console.log("DATA", data)
+
                 return data;
             } )
             .catch( error => { console.log(error)} )

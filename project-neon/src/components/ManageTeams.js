@@ -21,7 +21,7 @@ const ManageTeams = () => {
   };
 
   const updateTeam = (index) => {
-      console.log(teams[index])
+
     TeamApi.adminUpdateTeam(teams[index], localStorage.getItem("jwt"));
 
     setOpen((prevOpen) => {
@@ -73,7 +73,7 @@ const ManageTeams = () => {
           {/* Display Users List */}
           {teams.map((team, index) => (
             <div
-              key={team.teamId}
+              key={team.team_Id}
               className={`card mb-0 ${index === 0 ? "rounded-top" : ""} ${
                 index === teams.length - 1 ? "rounded-bottom" : ""
               }`}
@@ -84,7 +84,7 @@ const ManageTeams = () => {
                 </div>
                 <div>
                   <button
-                    className="btn btn-primary mr-2"
+                    className="btn btn-primary mx-2"
                     onClick={() => handleUpdate(index)}
                   >
                     Update
@@ -130,7 +130,7 @@ const ManageTeams = () => {
 
                       <div className="text-center">
                         <button
-                          className="btn btn-primary m-1"
+                          className="btn btn-dark m-1"
                           onClick={() => {
                             updateTeam(index);
                           }}
@@ -142,7 +142,7 @@ const ManageTeams = () => {
                   ) : null}
 
                   <button
-                    className="btn btn-danger"
+                    className="btn btn-danger mx-2"
                     onClick={() => handleDelete(team.team_Id)}
                   >
                     Delete

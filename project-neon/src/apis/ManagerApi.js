@@ -93,7 +93,7 @@ const ManagerApi = {
                 return data.jwt;
             })
             .catch(error => {
-                console.log("error update:")
+                
                 // Log more details about the error
                 // console.error('An error occurred during authentication:', error);
                 // Propagate the error to the next catch block
@@ -139,11 +139,11 @@ const ManagerApi = {
             } )
             .then( (data) => {
                 if(!data.ok){
-                    alert("Cannot update currently logged in admin");
+                    alert("Error updating this user");
                 }
             })
             .catch( error => {
-                alert("Cannot update currently logged in admin");
+                alert("Error updating this user");
                 console.error(error);
             })
     },

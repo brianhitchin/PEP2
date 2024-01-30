@@ -84,7 +84,7 @@ const ManageManagers = () => {
                 </div>
                 <div>
                   <button
-                    className="btn btn-primary mr-2"
+                    className="btn btn-primary mx-2"
                     onClick={() => handleUpdate(index
                     )}
                   >
@@ -133,7 +133,7 @@ const ManageManagers = () => {
                         <hr/>
 
                         <div className="text-center">
-                          <button className="btn btn-primary m-1"
+                          <button className="btn btn-dark m-1"
                                   onClick={() => {updateManager(index)}}>
                             Confirm Changes
                           </button>
@@ -145,7 +145,7 @@ const ManageManagers = () => {
 
 
                   <button
-                    className="btn btn-danger"
+                    className="btn btn-danger mx-2"
                     onClick={() => handleDelete(user.managerId
                     )}
                   >
