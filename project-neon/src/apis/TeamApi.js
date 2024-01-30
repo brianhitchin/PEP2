@@ -156,7 +156,33 @@ const TeamApi = {
             return data
         } )
         .catch( error => { console.log(error) } )
-},
+  },
+  updateTeam: (team, token) => {
+    if (team && team.name !== undefined && team.name === "") {
+      alert("Team name cannot be blank.");
+    }
+
+    if (team && team.type !== undefined && team.type === "") {
+      alert("Team type cannot be blank.");
+    }
+
+    let myToken = "Bearer " + token;
+
+    fetch(URI + "/teams", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: myToken,
+      },
+      body: JSON.stringify(team),
+    })
+      .then((result) => {
+        return result;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
 };
 
 export default TeamApi;
